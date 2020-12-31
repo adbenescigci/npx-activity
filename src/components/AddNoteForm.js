@@ -12,10 +12,10 @@ const {dispatch} = useContext(NotesContext);
 const position = useMousePosition();
 const id = uid();
 
-const addNote= ({title,body,sDate,eDate})=>{
-  console.log({title}, sDate,eDate )
+const addNote= ({title,body,sDate,eDate,select})=>{
+  console.log({title}, sDate,eDate,select )
 
-    database.ref('notes').push({title, body, id, sDate,eDate}).then((ref)=>{
+    database.ref('notes').push({title, body, id, sDate, eDate}).then((ref)=>{
       dispatch({
         type: 'ADD_NOTE',
         title, 
@@ -23,7 +23,8 @@ const addNote= ({title,body,sDate,eDate})=>{
         id,
         key: ref.key,
         sDate,
-        eDate
+        eDate,
+        select
       })
     })
 }

@@ -12,7 +12,8 @@ const notesReducer = (state, action) => {
            id: action.id, 
            key: action.key, 
            sDate: action.sDate, 
-           eDate:action.eDate
+           eDate:action.eDate,
+           select:action.select
           }
         ]
       case 'EDIT_NOTE':
