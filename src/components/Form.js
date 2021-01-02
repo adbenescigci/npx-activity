@@ -14,6 +14,7 @@ const [endDate, setEndDate] = useState(startDate);
 
 let [select,setSelect]=useState([]);
 const selectedList= Array.from(select, x=> x[0])
+const [toogle,setToogle]=useState([])
 
 const submitForm = (e)=>{
     e.preventDefault();
@@ -30,7 +31,7 @@ const submitForm = (e)=>{
 const onClickListItem = (option)=>{
     if(!selectedList.includes(option)){
         setSelect([...select,[option,'1']])
-    }
+    } else { onRemove(option)}
     console.log('onclick p tag')
 }
 
@@ -44,35 +45,11 @@ const onChangeNumber= (e, option) => {
 }
 
 const onRemove = (option) =>{
-    const index= testArray.findIndex((el)=> el === option )
     select = select.filter((el)=>{ return el[0]!==option})
     setSelect(select)
     console.log('remove',select,option)   
 }
 
-// const onActivitySelect = (e)=>{
-
-//     if (selectedList.includes(e.target.value)) {
-//         select = select.filter((el)=> el[0] !== e.target.value)
-//     } else 
-//         select = [...select, [e.target.value,'1']]
-
-//     setSelect(select)
-// }
-
-
-// const numberOfTimes= (e,sel)=>{ 
-//     const index = selectedList.findIndex((el)=> el===sel);
-//     select[index]= [sel,e.target.value]; 
-//     setSelect(select);
-    
-//     console.log(select,index) ; 
-// }
-
-// const onRemove = (sel) => {
-//     select = select.filter((el)=> el[0] !== sel);
-//     setSelect(select)
-// }
 
 useEffect(()=>{
     console.log(select,'ts')
@@ -108,14 +85,22 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
 
         { testArray.map((option)=>
             {  
+                
+            const index= testArray.findIndex((el)=> el === option )
                 return <p 
                             key={option} 
-                            onClick={()=>onClickListItem(option)}
                         >
-                         {option} 
-                         <>
+                        <input 
+                            onChange={()=>onClickListItem(option)}
+                            type="checkbox" 
+                            id={option} 
+                            name="select" 
+                            value="activity"
+                            checked={selectedList.includes(option)}
+                        />
+                        <label > {option} </label><br/>   
                           { selectedList.includes(option) &&
-                            <>
+                            <> 
                                 <input 
                                     onChange= {(e) => onChangeNumber(e,option)}  
                                     type ='number' 
@@ -127,8 +112,7 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
                                     onClick = {()=> onRemove(option)}> x 
                                 </span>
                             </>
-                          }    
-                        </>
+                          }   
                       </p>  
            })
         }
@@ -181,6 +165,29 @@ export {Form as default}
 // </>
 
 
+// const onActivitySelect = (e)=>{
+
+//     if (selectedList.includes(e.target.value)) {
+//         select = select.filter((el)=> el[0] !== e.target.value)
+//     } else 
+//         select = [...select, [e.target.value,'1']]
+
+//     setSelect(select)
+// }
+
+
+// const numberOfTimes= (e,sel)=>{ 
+//     const index = selectedList.findIndex((el)=> el===sel);
+//     select[index]= [sel,e.target.value]; 
+//     setSelect(select);
+    
+//     console.log(select,index) ; 
+// }
+
+// const onRemove = (sel) => {
+//     select = select.filter((el)=> el[0] !== sel);
+//     setSelect(select)
+// }
 
  // <option value ='Kuran'>K Kerim</option>
             // <option value ='Cevsen'>Cevsen</option>
