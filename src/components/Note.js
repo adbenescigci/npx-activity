@@ -29,10 +29,11 @@ const Note = ({note})=> {
   const info=(
     <div>
           <h3>Title: { note.title } </h3>
-          <p> Body:{ note.body } </p>
-          <p> Position: {position.x} {position.y}</p>
+          {note.select? <> {note.select.map( el => <p key={el}>{` ${el[1]} adet ${el[0]}` }</p>  ) } </> : ''}
+          <p> Body:{ note.body } </p> 
           {note.sDate? <p>StartDate: {format(toDate(note.sDate),'dd/MM/yyyy')}</p>: ''}
           {note.sDate? <p>EndDate: {format(toDate(note.eDate),'dd/MM/yyyy')}</p>: ''}
+          <p> Position: {position.x} {position.y}</p>
         </div>
   )
     return (

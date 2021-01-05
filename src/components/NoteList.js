@@ -20,9 +20,3 @@ const NoteList = () =>{
 }
 
 export {NoteList as default}
-
-// state.notes.filter((note)=>{
-//   return note.title.includes(text) && 
-//   (!endDate || endDate >= note.eDate) && 
-//   (!startDate || note.sDate >= startDate)
-// })

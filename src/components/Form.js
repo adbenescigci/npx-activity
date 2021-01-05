@@ -14,7 +14,6 @@ const [endDate, setEndDate] = useState(startDate);
 
 let [select,setSelect]=useState([]);
 const selectedList= Array.from(select, x=> x[0])
-const [toogle,setToogle]=useState([])
 
 const submitForm = (e)=>{
     e.preventDefault();
@@ -29,25 +28,22 @@ const submitForm = (e)=>{
 }
 
 const onClickListItem = (option)=>{
+    
     if(!selectedList.includes(option)){
-        setSelect([...select,[option,'1']])
-    } else { onRemove(option)}
-    console.log('onclick p tag')
+       return setSelect([...select,[option,'1']])
+    } else  {return onRemove(option)}
 }
 
 const onChangeNumber= (e, option) => {   
-    const index= testArray.findIndex((el)=> el === option )
-    if(selectedList.includes(option)) { 
+        const index= selectedList.findIndex(el => el === option )
         select[index]= [option,e.target.value]; 
+        setSelect(select)
         console.log(select)
-        return setSelect(select)
-    }
 }
 
 const onRemove = (option) =>{
-    select = select.filter((el)=>{ return el[0]!==option})
-    setSelect(select)
-    console.log('remove',select,option)   
+    select = select.filter(el => el[0] !== option ) 
+    setSelect(select) 
 }
 
 
@@ -62,11 +58,13 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
             value={title} 
             placeholder={data.title} 
             onChange = {(e)=>setTitle(e.target.value)} 
+            required
         />
         <textarea 
             value={body} 
             placeholder={data.body} 
-            onChange = {(e)=>setBody(e.target.value)} 
+            onChange = {(e)=>setBody(e.target.value)}
+            required 
         />
         <DatePicker 
             selected={startDate}
@@ -74,6 +72,7 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
             minDate={new Date()}
             placeholderText='Start Date'
             isClearable
+            required
         />
         <DatePicker
             selected={endDate} 
@@ -81,43 +80,43 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
             minDate={startDate}
             placeholderText='End Date'
             isClearable
+            required
         />
 
         { testArray.map((option)=>
-            {  
-                
-            const index= testArray.findIndex((el)=> el === option )
-                return <p 
-                            key={option} 
-                        >
-                        <input 
-                            onChange={()=>onClickListItem(option)}
-                            type="checkbox" 
-                            id={option} 
-                            name="select" 
-                            value="activity"
-                            checked={selectedList.includes(option)}
-                        />
-                        <label > {option} </label><br/>   
-                          { selectedList.includes(option) &&
-                            <> 
-                                <input 
-                                    onChange= {(e) => onChangeNumber(e,option)}  
-                                    type ='number' 
-                                    defaultValue= '1' 
-                                    min ='1' 
-                                    max = '100'
-                                /> 
-                                <span 
-                                    onClick = {()=> onRemove(option)}> x 
-                                </span>
-                            </>
-                          }   
-                      </p>  
-           })
+            <p 
+                key={option} 
+            >
+                <input 
+                    onChange={()=>onClickListItem(option)}
+                    type="checkbox" 
+                    id={option} 
+                    name="select" 
+                    value="activity"
+                    checked={selectedList.includes(option)}
+                />
+
+                <label > {option} </label><br/> 
+
+                { selectedList.includes(option) &&
+                <> 
+                    <input 
+                        onChange= {(e) => onChangeNumber(e,option)}  
+                        type ='number' 
+                        defaultValue= '1' 
+                        min ='1' 
+                        max = '100'
+                    /> 
+                    <span 
+                        onClick = {()=> onRemove(option)}> x 
+                    </span>
+                </>
+                }   
+            </p>  
+           )
         }
 
-        <button  disabled = {!(startDate && endDate && title && body && (select.length>0))}>submit</button>
+        <button  disabled = {select.length===0}>submit</button>
     </form>  
 }
 
