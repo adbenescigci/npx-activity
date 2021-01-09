@@ -17,10 +17,10 @@ const Note = ({note})=> {
       .then(()=>dispatch({type: 'REMOVE_NOTE', id: note.id}))
   }
 
-  async function updateNote ({title,body}) {
+  async function updateNote ({title,body,sDate,eDate,selected}) {
 
-    await database.ref(`notes/${note.key}`).set({...note, title, body})
-    dispatch({type: 'EDIT_NOTE', note:{title,body}, id: note.id})
+    await database.ref(`notes/${note.key}`).set({...note, title,body,sDate,eDate,selected})
+    dispatch({type: 'EDIT_NOTE', note:{title,body,sDate,eDate,selected}, id: note.id})
     
     setEdit(false)
   }
@@ -29,7 +29,8 @@ const Note = ({note})=> {
   const info=(
     <div>
           <h3>Title: { note.title } </h3>
-          {note.select? <> {note.select.map( el => <p key={el}>{` ${el[1]} adet ${el[0]}` }</p>  ) } </> : ''}
+        
+          {note.selected? <> {note.selected.map( el => <p key={el}>{` ${el[1]} adet ${el[0]}` }</p>  ) } </> : ''}
           <p> Body:{ note.body } </p> 
           {note.sDate? <p>StartDate: {format(toDate(note.sDate),'dd/MM/yyyy')}</p>: ''}
           {note.sDate? <p>EndDate: {format(toDate(note.eDate),'dd/MM/yyyy')}</p>: ''}

@@ -12,6 +12,7 @@ const NoteList = () =>{
     const text = state.filters.text;
     const sortBy = state.filters.sortBy;
     const notes= state.notes;
+    console.log(state)
 
     return searchSelector(notes,{text,startDate,endDate,sortBy})
                       .map((note)=>(

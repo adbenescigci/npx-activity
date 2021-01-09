@@ -1,18 +1,16 @@
 import database from '../firebase/firebase';
 
-const initialNotes= () => {
-    return database.ref('notes').once('value')
-  }
+const initialNotes= () => database.ref('notes').once('value')
   
-const commonNotes = () => {
-return database.ref('ortak').once('value')
-}
+const commonNotes = () => database.ref('ortak').once('value')
+
 
 async function init() {
-
+   
     const notesOrtak= [];
     const notesPersonal= [];
-
+   
+ 
     const ortak = commonNotes().then((snapshot)=>{
         snapshot.forEach((child)=>{
         notesOrtak.push({...child.val(), key: child.key})
@@ -31,4 +29,4 @@ async function init() {
     return notes
 } 
 
-export { init as default }
+export {init as default }

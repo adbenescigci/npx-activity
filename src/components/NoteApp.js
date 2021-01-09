@@ -23,6 +23,7 @@ const notes = await init()
 useEffect(()=>{
   start()
 },[])
+
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
       <AddNoteForm />

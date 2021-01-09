@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import {getTime} from 'date-fns';
+import activityList from '../JSON/activity.json'
 
 import "react-datepicker/dist/react-datepicker.css";
 
+const activity= activityList.reduce((acc,current)=>{return [...acc,current.activity]},[])
 
 const Form = ({onSubmitForm,data})=>{
     
@@ -15,11 +17,19 @@ const [endDate, setEndDate] = useState(startDate);
 let [select,setSelect]=useState([]);
 const selectedList= Array.from(select, x=> x[0])
 
+const selectPreap = (a)=> [...a, {  
+    selectable: activityList.filter(el=>el.activity === a[0])[0].select,
+    selectedByUsers: []
+}]
+
+const selected = select.reduce((acc,current)=>
+[...acc, selectPreap(current)],[])
+
 const submitForm = (e)=>{
     e.preventDefault();
     const sDate=getTime(startDate);
     const eDate=getTime(endDate);
-    onSubmitForm({title,body,sDate,eDate,select});
+    onSubmitForm({title,body,sDate,eDate,selected});
     setTitle('');
     setBody('');
     setStartDate();
@@ -28,17 +38,16 @@ const submitForm = (e)=>{
 }
 
 const onClickListItem = (option)=>{
-    
+
     if(!selectedList.includes(option)){
        return setSelect([...select,[option,'1']])
-    } else  {return onRemove(option)}
+    } else  {return onRemove(option)} 
 }
 
 const onChangeNumber= (e, option) => {   
         const index= selectedList.findIndex(el => el === option )
         select[index]= [option,e.target.value]; 
         setSelect(select)
-        console.log(select)
 }
 
 const onRemove = (option) =>{
@@ -47,11 +56,10 @@ const onRemove = (option) =>{
 }
 
 
-useEffect(()=>{
-    console.log(select,'ts')
-},[select])
+// useEffect(()=>{
+//     console.log(select,'ts')
+// },[select])
 
-const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
 
     return <form onSubmit = {submitForm}>
         <input 
@@ -83,7 +91,7 @@ const testArray = ['Kuran','Cevsen','B Cevsen', 'K Daria'];
             required
         />
 
-        { testArray.map((option)=>
+        { activity.map((option)=>
             <p 
                 key={option} 
             >
@@ -132,64 +140,3 @@ export {Form as default}
 
 
 // <select 
-// multiple 
-// value={['default',...selectedList]} 
-// size={testArray.length + 1}
-// onChange={(e)=> onActivitySelect(e)}
-// >    
-// <option disabled value = 'default'> Seciniz </option> 
-// {testArray.map((option)=>(
-//     <option key={option} value = {option}> {option} </option>
-//    ))
-// }
-// </select>
-// <>
-
-// {selectedList.length>0 && <label >Numer of Times</label>}
-
-// {selectedList.map((sel)=>
- 
-// <p key ={sel}>
-//     {sel} 
-//     <input onChange= {(e)=> numberOfTimes(e,sel)}  
-//         type ='number' 
-//         defaultValue= '1' 
-//         min ='1' 
-//         max = '100'
-//     /> 
-//     <span onClick = {()=> onRemove(sel)}> x </span>
-// </p> 
-// )
-// }
-// </>
-
-
-// const onActivitySelect = (e)=>{
-
-//     if (selectedList.includes(e.target.value)) {
-//         select = select.filter((el)=> el[0] !== e.target.value)
-//     } else 
-//         select = [...select, [e.target.value,'1']]
-
-//     setSelect(select)
-// }
-
-
-// const numberOfTimes= (e,sel)=>{ 
-//     const index = selectedList.findIndex((el)=> el===sel);
-//     select[index]= [sel,e.target.value]; 
-//     setSelect(select);
-    
-//     console.log(select,index) ; 
-// }
-
-// const onRemove = (sel) => {
-//     select = select.filter((el)=> el[0] !== sel);
-//     setSelect(select)
-// }
-
- // <option value ='Kuran'>K Kerim</option>
-            // <option value ='Cevsen'>Cevsen</option>
-            // <option value ='B Cevsen'>B Cevsen</option>
-            // <option value= 'K Daria'>K Daria</option>
-            //value= {pieces} onChange= {(e)=>setPieces(e)} 

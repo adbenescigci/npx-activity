@@ -25,9 +25,9 @@ const Search = () => {
       dispatch({type: 'SET_END_DATE', endDate:getTime(endDate)})
     },[endDate, dispatch])
     
-    useEffect(()=>{
-      console.log(state)
-    },[state])
+    // useEffect(()=>{
+    //   console.log(state)
+    // },[state])
 
     return  <>
         <h3>Search</h3>
