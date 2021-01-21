@@ -13,7 +13,6 @@ const position = useMousePosition();
 const id = uid();
 
 const addNote= ({title,body,sDate,eDate,selected})=>{
-  console.log(selected,"selected" )
 
    database.ref('notes').push({title, body, id, sDate, eDate, selected }).then((ref)=>{
       dispatch({

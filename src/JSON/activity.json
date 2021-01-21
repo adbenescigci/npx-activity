@@ -1,0 +1,23 @@
+[
+        {
+            "activity": "Kuran",
+            "select": ["1","2","30"],
+            "type": "cüz"
+        },
+        {
+            "activity": "Cevşen",
+            "select": ["1","2","100"],
+            "type": "bab"
+        },
+        {
+            "activity": "Büyük Cevşen",
+            "select": ["Tahmidiye","Celcelutiye","Sekine","Delailü'n-Nur"],
+            "type":"hizb"
+        },
+        {
+            "activity": "El-Kulubu'd-Darıa",
+            "select": ["hizb1","hizb2","hizb40"],
+            "type": "hizb"
+        }
+]
+
