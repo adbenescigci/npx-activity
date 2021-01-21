@@ -4,6 +4,8 @@ const initialNotes= () => database.ref('notes').once('value')
   
 const commonNotes = () => database.ref('ortak').once('value')
 
+const mySelections = () => database.ref('private').once('value')
+
 
 async function init() {
    
@@ -29,4 +31,18 @@ async function init() {
     return notes
 } 
 
-export {init as default }
+async function myInit() {
+
+    const selectedItems = [];
+    
+    const mySelectedItems = mySelections().then((snapshot)=>{
+        snapshot.forEach((child)=>{
+        selectedItems.push({...child.val()})
+        })
+        return selectedItems
+    });
+    const myItems={items: [...await mySelectedItems]}
+    return myItems
+}
+
+export {myInit, init as default }

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import {getTime} from 'date-fns';
 import activityList from '../JSON/activity.json'
@@ -9,27 +9,43 @@ const activity= activityList.reduce((acc,current)=>{return [...acc,current.activ
 
 const Form = ({onSubmitForm,data})=>{
     
-const [title,setTitle] = useState('');
-const [body,setBody] = useState('');
-const [startDate, setStartDate] = useState();
-const [endDate, setEndDate] = useState(startDate);
+const [title,setTitle] = useState(data.title);
+const [body,setBody] = useState(data.body);
+const [startDate, setStartDate] = useState(data.sDate);
+const [endDate, setEndDate] = useState(data.eDate ? data.eDate : startDate);
 
 let [select,setSelect]=useState([]);
 const selectedList= Array.from(select, x=> x[0])
 
-const selectPreap = (a)=> [...a, {  
-    selectable: activityList.filter(el=>el.activity === a[0])[0].select,
-    selectedByUsers: []
-}]
+const selectPreap = (a)=> { 
+    
+    const activitySelects = activityList.filter(el=>el.activity === a[0])[0].select
 
-const selected = select.reduce((acc,current)=>
-[...acc, selectPreap(current)],[])
+    //Number of Times we need activity status
+    let numb=1
+    let wholeArray=[]
+    
+    do{
+        const selectable=Array.from(activitySelects, x=> ({name:x, status:'unRead', userToken:'', number:numb}))
+        wholeArray= wholeArray.concat([selectable])
+        numb = numb+1
+    } while(numb<=a[1])
+
+    return [...a,wholeArray]
+}
+
+const selected = select.reduce((acc,current)=>{
+    
+    return [...acc, selectPreap(current)]
+
+},[])
 
 const submitForm = (e)=>{
     e.preventDefault();
     const sDate=getTime(startDate);
     const eDate=getTime(endDate);
     onSubmitForm({title,body,sDate,eDate,selected});
+    console.log(selected)
     setTitle('');
     setBody('');
     setStartDate();
@@ -54,12 +70,6 @@ const onRemove = (option) =>{
     select = select.filter(el => el[0] !== option ) 
     setSelect(select) 
 }
-
-
-// useEffect(()=>{
-//     console.log(select,'ts')
-// },[select])
-
 
     return <form onSubmit = {submitForm}>
         <input 
@@ -139,4 +149,3 @@ export {Form as default}
 
 
 
-// <select 
