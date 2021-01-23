@@ -8,8 +8,16 @@ const privateReducer = ( state , action ) => {
           ...state,
           items:[...state.items,action.item]
         }
-        default: 
-          return state
+      case 'REMOVE_MY_NOTE':
+        const items = state.items.filter((note)=>{ 
+          return (note.id !== action.id) || (note.item!==action.item)
+        })
+        return {
+          ...state,
+          items
+        }
+      default: 
+        return state
       }
     }
   

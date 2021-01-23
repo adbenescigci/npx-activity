@@ -16,14 +16,15 @@ const Note = ({note})=> {
 
   let [selectableList,setSelectableList]=useState([]);
 
-  async function onClickSelectItems (item, index, indexSub, queryIndex)  {
+  const onClickSelectItems =  (item, index, indexSub, queryIndex) => {
     
     note.selected[index][2][queryIndex][indexSub]={...item, status:'taken', userToken:'12313'}
  
     const selected = note.selected
     updateNote ({...note,selected})
-    await database.ref(`private`).push({id:note.id, item:item.name, status: 'taken', index, indexSub, queryIndex})
-    dispatch({type: 'ADD_MY_NOTE', item: { id:note.id, item:item.name, status:'taken', index, indexSub, queryIndex}})
+    database.ref(`private`).push({id:note.id, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
+      dispatch({type: 'ADD_MY_NOTE', item: { key: el.key, id:note.id, item:item.name, status:'taken', index, indexSub, queryIndex}})
+    })
   }
 
   const onChangeQuery = (value,index)=>{

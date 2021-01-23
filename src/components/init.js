@@ -37,7 +37,7 @@ async function myInit() {
     
     const mySelectedItems = mySelections().then((snapshot)=>{
         snapshot.forEach((child)=>{
-        selectedItems.push({...child.val()})
+        selectedItems.push({...child.val(), key: child.key})
         })
         return selectedItems
     });
