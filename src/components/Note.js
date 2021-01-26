@@ -6,7 +6,7 @@ import useMousePosition from '../hooks/useMousePosition';
 
 import database from '../firebase/firebase';
 
-const Note = ({note})=> {
+const Note = ({note, place})=> {
 
   const {state,dispatch} = useContext(NoteContext);
   const [edit,setEdit] = useState(false)
@@ -22,7 +22,7 @@ const Note = ({note})=> {
  
     const selected = note.selected
     updateNote ({...note,selected})
-    database.ref(`private`).push({id:note.id, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
+    database.ref(`private/mySelections`).push({id:note.id, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
       dispatch({type: 'ADD_MY_NOTE', item: { key: el.key, id:note.id, item:item.name, status:'taken', index, indexSub, queryIndex}})
     })
   }
@@ -130,8 +130,8 @@ const Note = ({note})=> {
         {note.id.length > 3 ?
           <div>
             <button onClick={()=>setSelectActivity(!selectActivity)}> { !selectActivity ? 'Join' : 'Not Join'} </button>
-            <button onClick={onRemove}> x </button>
-            <button onClick={()=> setEdit(!edit)}> {edit? 'turn back':'edit'}</button>
+            {(place==='private') && <button onClick={onRemove}> x </button>}
+            {(place==='private') && <button onClick={()=> setEdit(!edit)}> {edit? 'turn back':'edit'}</button>}
           </div>
           : ''
         }
@@ -147,6 +147,10 @@ const Note = ({note})=> {
         }
       </div>)
   }
+
+  Note.defaultProps={
+    place: ''
+ }
 
   export {Note as default}
 

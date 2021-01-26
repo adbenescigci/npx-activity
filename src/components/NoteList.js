@@ -13,10 +13,13 @@ const NoteList = () =>{
     const sortBy = state.filters.sortBy;
     const notes= state.notes;
 
-    return searchSelector(notes,{text,startDate,endDate,sortBy})
-                      .map((note)=>(
-                        <Note key={note.key} note={note} />
-                       ))
+    return <div>
+              <h1>Notes</h1> 
+              {searchSelector(notes,{text,startDate,endDate,sortBy})
+                .map((note)=>(
+                  <Note key={note.key} note={note} />
+                 ))}
+           </div>
 }
 
 export {NoteList as default}

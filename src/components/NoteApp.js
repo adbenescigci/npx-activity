@@ -30,10 +30,9 @@ useEffect(()=>{
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
       <MyNotes/>
-      <NoteList />
       <AddNoteForm />
-      <h1>Notes</h1>
       <Search/>
+      <NoteList />
     </NotesContext.Provider>
   )
 }

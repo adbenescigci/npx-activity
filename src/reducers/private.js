@@ -9,18 +9,16 @@ const privateReducer = ( state , action ) => {
           items:[...state.items,action.item]
         }
       case 'EDIT_MY_NOTE':
-        const itemsNew = state.items.map((item)=>{
-          if(item.key===action.key){ 
-            item=action.item
-          }
-          return item
-        })
-        console.log('work my edit',action,itemsNew)
-        return {items:itemsNew}
-      
+        return {
+          ...state,
+          items:action.editedItems
+        }
+      case 'ADD_MY_ACT':
+        console.log(action)
+        return state
       case 'REMOVE_MY_NOTE':
-        const items = state.items.filter((note)=>{ 
-          return (note.id !== action.id) || (note.item!==action.item)
+        const items = state.items.filter((item)=>{ 
+          return (item.key !== action.key) 
         })
         return {
           ...state,

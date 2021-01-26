@@ -4,7 +4,7 @@ const initialNotes= () => database.ref('notes').once('value')
   
 const commonNotes = () => database.ref('ortak').once('value')
 
-const mySelections = () => database.ref('private').once('value')
+const mySelections = () => database.ref('private/mySelections').once('value')
 
 
 async function init() {

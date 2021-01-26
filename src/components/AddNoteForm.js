@@ -12,9 +12,9 @@ const {dispatch} = useContext(NotesContext);
 const position = useMousePosition();
 const id = uid();
 
-const addNote= ({title,body,sDate,eDate,selected})=>{
+async function addNote ({title,body,sDate,eDate,selected}) {
 
-   database.ref('notes').push({title, body, id, sDate, eDate, selected }).then((ref)=>{
+  await database.ref('notes').push({title, body, id, sDate, eDate, selected }).then((ref)=>{
       dispatch({
         type: 'ADD_NOTE',
         title, 
@@ -27,12 +27,11 @@ const addNote= ({title,body,sDate,eDate,selected})=>{
       })
     })
 }
-   return (
-       <>
-            <p>Add Note {position.x} - {position.y}</p>
+   return <>
+            <h2>Add NOTE</h2>
+            <p>{position.x} - {position.y}</p>
             <Form onSubmitForm={(e)=>addNote(e)}/>
-       </>
-   )
+          </>
 }
 
 export { AddNoteForm as default}

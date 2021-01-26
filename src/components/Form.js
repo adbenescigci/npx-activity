@@ -45,7 +45,6 @@ const submitForm = (e)=>{
     const sDate=getTime(startDate);
     const eDate=getTime(endDate);
     onSubmitForm({title,body,sDate,eDate,selected});
-    console.log(selected)
     setTitle('');
     setBody('');
     setStartDate();
