@@ -1,10 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { reducer, initial } from '../reducers/combineReducer';
 import NotesContext from '../context/notes-context';
-import AddNoteForm from './AddNoteForm';
-import Search from './Search';
-import NoteList from './NoteList';
-import MyNotes from './MyNotes';
+import AppRouter from '../routers/AppRouter';
 import init from './init';
 
 import '../styles/styles.scss';
@@ -27,15 +24,15 @@ useEffect(()=>{
   start()
 },[])
 
+
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
-      <MyNotes/>
-      <AddNoteForm />
-      <Search/>
-      <NoteList />
+      <AppRouter/>
     </NotesContext.Provider>
   )
 }
 
-export {NoteApp as default};
+export { NoteApp as default };
+
+
 

@@ -11,6 +11,7 @@ const Note = ({note, place})=> {
   const {state,dispatch} = useContext(NoteContext);
   const [edit,setEdit] = useState(false)
   const [selectActivity,setSelectActivity] = useState(false)
+  const [isLogged,setLogIn]= useState(true)
   const position = useMousePosition();
   const [query,setQuery]=useState(Array.from(note.selected, () => '1'))//makes query ['1',...,'1'] to preapare initial 
 
@@ -61,8 +62,8 @@ const Note = ({note, place})=> {
 
 
   useEffect(()=>{
-    console.log(state)
-  },[state])
+    console.log(state,isLogged)
+  },[state.filters])
 
 
   const info = (
@@ -125,11 +126,18 @@ const Note = ({note, place})=> {
     </div>
     )
 
+    const onJoin = ()=>{
+         if(state.filters.id !==''){
+          setSelectActivity(!selectActivity)
+      } else setLogIn(false)
+    }
+
     return (
       <div>  
         {note.id.length > 3 ?
           <div>
-            <button onClick={()=>setSelectActivity(!selectActivity)}> { !selectActivity ? 'Join' : 'Not Join'} </button>
+            <button onClick={onJoin}> { !selectActivity ? 'Join' : 'Not Join'} </button>
+            {isLogged === false && <p>You are not logged in. </p>}
             {(place==='private') && <button onClick={onRemove}> x </button>}
             {(place==='private') && <button onClick={()=> setEdit(!edit)}> {edit? 'turn back':'edit'}</button>}
           </div>

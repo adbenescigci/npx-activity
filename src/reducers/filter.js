@@ -9,6 +9,8 @@ const filterReducer= (state,action)=>{
             return {...state, endDate:action.endDate}
         case 'SORT_BY':
             return {...state, sortBy:action.sortBy}
+        case 'SET_ID':
+            return {...state, id:action.id }
         default:
             return state
     }

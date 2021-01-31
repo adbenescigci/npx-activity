@@ -10,8 +10,6 @@ const MyActivities = () =>{
     const id = state.filters.id;
     const notes= state.notes;
 
-    console.log(myActionsSelector(notes,{id}))
-
     return myActionsSelector(notes,{id}) 
                 .map((note) =>(
                         <Note key={note.key} note={note} place={'private'}/>

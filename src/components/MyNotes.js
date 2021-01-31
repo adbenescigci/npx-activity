@@ -1,7 +1,9 @@
 import {useContext, useEffect} from 'react';
 import NotesContext from '../context/notes-context';
 import {myInit} from './init';
-import MyActivities from './MyActivities'
+import MyActivities from './MyActivities';
+import AddNoteForm from './AddNoteForm';
+import {history} from '../routers/AppRouter';
 
 import database from '../firebase/firebase';
 
@@ -17,7 +19,7 @@ async function ownStart () {
 useEffect(()=>{
  ownStart()
 },[])
-
+console.log('test')
 
 async function removeMyItem (el) {
     const note = state.notes.filter(item=> item.id === el.id)[0]
@@ -53,6 +55,8 @@ const item = state.private.items
 
     return (
         <div>
+            <button onClick={()=>history.push('/')}> Ana Sayfa</button>   
+            <AddNoteForm />
             <h3>My Activities</h3>
                 <MyActivities/>
             <h3>My Selected Items</h3>
