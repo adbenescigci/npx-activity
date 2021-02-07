@@ -1,17 +1,17 @@
 import {useContext, useEffect} from 'react';
 import NotesContext from '../context/notes-context';
-import {myInit} from './init';
+import {myInit} from '../actions/init';
 import MyActivities from './MyActivities';
 import AddNoteForm from './AddNoteForm';
-import {history} from '../routers/AppRouter';
 
 import database from '../firebase/firebase';
 
 const MyNotes = () =>{   
 const { state, dispatch } = useContext (NotesContext)
+const id = state.filters.uid
 
 async function ownStart () {
-    const myItems = await myInit()
+    const myItems = await myInit({id})
         if(myItems) {
             dispatch({type: 'POPULATE_MY_NOTES', myItems})
         }
@@ -19,13 +19,13 @@ async function ownStart () {
 useEffect(()=>{
  ownStart()
 },[])
-console.log('test')
 
+console.log('mynotes')
 async function removeMyItem (el) {
     const note = state.notes.filter(item=> item.id === el.id)[0]
     note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'unRead', userToken:''}
     
-    await database.ref(`private/mySelections/${el.key}`).remove()
+    await database.ref(`private/${id}/mySelections/${el.key}`).remove()
     dispatch({type: 'REMOVE_MY_NOTE', key:el.key})
     console.log(el)
 
@@ -47,15 +47,13 @@ async function editMyItem (el) {
     await database.ref(`notes/${note.key}`).set(note)
     dispatch({type: 'EDIT_NOTE', note, id: el.id})
     
-    await database.ref(`private/mySelections/${el.key}`).set({id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
+    await database.ref(`private/${id}/mySelections/${el.key}`).set({id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
     dispatch({type: 'EDIT_MY_NOTE', editedItems})
 }
 
 const item = state.private.items
-
     return (
         <div>
-            <button onClick={()=>history.push('/')}> Ana Sayfa</button>   
             <AddNoteForm />
             <h3>My Activities</h3>
                 <MyActivities/>

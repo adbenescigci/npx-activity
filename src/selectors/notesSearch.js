@@ -1,5 +1,5 @@
 const notesSearch = (notes, {text, startDate, endDate, sortBy}) => {
-
+  
     return notes.filter((note)=>{
         return note.title.includes(text) && 
         (!endDate || endDate >= note.eDate) && 

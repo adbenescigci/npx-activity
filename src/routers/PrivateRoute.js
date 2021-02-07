@@ -1,4 +1,4 @@
-import {useContext,useEffect,useState} from 'react';
+import {useContext} from 'react';
 import { Route ,Redirect} from 'react-router-dom';
 import NoteContext from '../context/notes-context';
 
@@ -7,11 +7,7 @@ const PrivateRoute = ({
     ...rest
 }) => {
     const {state} = useContext(NoteContext);
-   const[id,setId]=useState('')
-    useEffect(()=>{
-        console.log(state.filters.id)
-        setId(state.filters.id)
-    },[state.filters.id])
+    const id =state.filters.uid
     return (
     <Route {...rest} component = {(props) => 
         id !=='' ?

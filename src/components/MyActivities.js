@@ -7,7 +7,7 @@ import myActionsSelector from '../selectors/myActionsSelector';
 const MyActivities = () =>{
 
     const { state } = useContext(NotesContext)
-    const id = state.filters.id;
+    const id = state.filters.uid;
     const notes= state.notes;
 
     return myActionsSelector(notes,{id}) 

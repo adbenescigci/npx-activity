@@ -4,7 +4,7 @@ import filterReducer from './filter';
 import privateReducer from './private';
 
 const initNotes = [];
-const initFilters = {text:'', date:0 , sortBy:'date', id:''};
+const initFilters = {text:'', date:0 , sortBy:'date', uid:''};
 const initPrivate = {items:[]};
 
 const [reducer, initial] = combineReducers({

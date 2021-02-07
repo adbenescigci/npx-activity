@@ -4,14 +4,13 @@ const initialNotes= () => database.ref('notes').once('value')
   
 const commonNotes = () => database.ref('ortak').once('value')
 
-const mySelections = () => database.ref('private/mySelections').once('value')
+const mySelections = ({id}) => database.ref(`private/${id}/mySelections`).once('value');
 
 
 async function init() {
    
     const notesOrtak= [];
     const notesPersonal= [];
-   
  
     const ortak = commonNotes().then((snapshot)=>{
         snapshot.forEach((child)=>{
@@ -31,11 +30,11 @@ async function init() {
     return notes
 } 
 
-async function myInit() {
+async function myInit(id) {
 
     const selectedItems = [];
     
-    const mySelectedItems = mySelections().then((snapshot)=>{
+    const mySelectedItems = mySelections(id).then((snapshot)=>{
         snapshot.forEach((child)=>{
         selectedItems.push({...child.val(), key: child.key})
         })

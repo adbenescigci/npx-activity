@@ -10,7 +10,7 @@ const filterReducer= (state,action)=>{
         case 'SORT_BY':
             return {...state, sortBy:action.sortBy}
         case 'SET_ID':
-            return {...state, id:action.id }
+            return {...state, uid:action.uid }
         default:
             return state
     }
