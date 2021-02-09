@@ -10,10 +10,12 @@ const MyActivities = () =>{
     const id = state.filters.uid;
     const notes= state.notes;
 
-    return myActionsSelector(notes,{id}) 
-                .map((note) =>(
-                        <Note key={note.key} note={note} place={'private'}/>
-                       ))
+    return <div> 
+                <h3>My Activities</h3>
+                {myActionsSelector(notes,{id}) 
+                    .map((note) =>(<Note key={note.key} note={note} place={'private'}/>))
+                }
+            </div>
 }
 
 export {MyActivities as default}

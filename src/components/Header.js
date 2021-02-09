@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext} from 'react';
 import NoteContext from '../context/notes-context';
 import {history} from '../routers/AppRouter';
 import {startLogOut} from '../actions/auth';
@@ -11,7 +11,7 @@ const Header = () => {
     const logOut = () => { startLogOut().then(()=>{
         dispatch({type: 'SET_ID', uid:''})
     })}
-         
+
     return <div>
             { uid !== '' ? 
                 <div>
@@ -20,10 +20,9 @@ const Header = () => {
                         <button onClick={()=>history.push('/')}> Ana Sayfa</button> :
                         <button onClick={()=>history.push(`/myPage/${uid}`)}> Go to MyPage </button> 
                     }
-                </div>: 
-                <button onClick={()=>history.push('/loginPage')}> Login </button>
-            }
-        </div>
-    }
+                </div> : <button onClick={()=> history.push('/loginPage')}> Login </button> 
+            } 
+           </div>
+        }
 
 export { Header as default }

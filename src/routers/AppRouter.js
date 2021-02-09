@@ -17,10 +17,8 @@ const AppRouter = () => {
       <div>
         <Switch>
           <Route path="/" component={MainPage} exact={true}/>
-          <Route path="/loginPage" component={LoginPage} />
+          <Route path="/loginPage" component={LoginPage} exact={true}/>
           <Route path={`/myPage/${id}`} component={MyNotes} exact={true}/>
-          <Route path='/myPage' component={MainPage}/>
-          <Route component ={MainPage}/>
       </Switch>
       </div>     
     </Router>

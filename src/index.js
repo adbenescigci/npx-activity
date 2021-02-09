@@ -19,16 +19,19 @@ const renderApp = ()=>{
 }}
 
 firebase.auth().onAuthStateChanged((user) => {
- if(user){
+ 
+  if(user){
     renderApp()
-    if (history.location.pathname === '/loginPage') {
-      history.push('/');
-  }
-  } else {
+    if (history.location.pathname === `/myPage/${user.uid}`) {
+      history.push(`/myPage/${user.uid}`);
+    } else history.push('/')  
+  } 
+  
+  else {
     renderApp('')
     if (history.location.pathname === '/loginPage') {
       history.push('/loginPage');
-  } else history.push('/');
+    } else history.push('/');
   }
 })
 

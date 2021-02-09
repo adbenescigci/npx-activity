@@ -1,9 +1,8 @@
 import { useEffect, useReducer } from 'react';
 import { reducer, initial } from '../reducers/combineReducer';
 import NotesContext from '../context/notes-context';
-import AppRouter, {history} from '../routers/AppRouter';
+import AppRouter from '../routers/AppRouter';
 import init from '../actions/init';
-import Header from './Header';
 
 import {firebase} from '../firebase/firebase';
 import 'firebase/auth';
@@ -33,7 +32,6 @@ useEffect(()=>{
 
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
-      <Header/>
       <AppRouter/>
     </NotesContext.Provider>
   )
