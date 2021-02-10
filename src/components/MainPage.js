@@ -10,8 +10,10 @@ const MainPage=()=>{
    
     return <div>         
                 <Header/>
-                <NoteList/>
-                {state.filters.uid !== '' && <MySelections/>}
+                <div className='mainPage'>
+                    <NoteList/>
+                    {state.filters.uid !== '' && <MySelections/>}
+                </div>
            </div>
 }
 

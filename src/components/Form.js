@@ -9,6 +9,8 @@ const activity= activityList.reduce((acc,current)=>{return [...acc,current.activ
 
 const Form = ({onSubmitForm,data})=>{
     
+//console.log(activity)
+    
 const [title,setTitle] = useState(data.title);
 const [body,setBody] = useState(data.body);
 const [startDate, setStartDate] = useState(data.sDate);

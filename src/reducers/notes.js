@@ -18,7 +18,7 @@ const notesReducer = (state, action) => {
         ]
       case 'EDIT_NOTE':
         const stateNew = state.map((note)=>{
-          if(note.id===action.id){ 
+          if(note.key===action.key){ 
             note={...note,...action.note}
           }
           return note
@@ -26,7 +26,7 @@ const notesReducer = (state, action) => {
         return stateNew
       case 'REMOVE_NOTE':
         return state.filter((note)=>{ 
-          return note.id !== action.id
+          return note.key !== action.key
         })
       default: 
         return state

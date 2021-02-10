@@ -22,14 +22,13 @@ async function start () {
 } 
 
 useEffect(()=>{
-  console.log('noteApp')
   firebase.auth().onAuthStateChanged((user) => {
     if(user){ dispatch({type: 'SET_ID', uid:user.uid})}
 })
   start()
 },[])
 
-
+console.log(state.private)
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
       <AppRouter/>

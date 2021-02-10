@@ -9,7 +9,7 @@ const MySelections = () =>{
     const item = state.private.items
 
     async function removeMyItem (el) {
-        const note = state.notes.filter(item=> item.id === el.id)[0]
+        const note = state.notes.filter(item=> item.key === el.noteKey)[0]
         note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'unRead', userToken:''}
         
         await database.ref(`private/${id}/mySelections/${el.key}`).remove()
@@ -20,8 +20,8 @@ const MySelections = () =>{
     }
     
     async function editMyItem (el) {
-        const note = state.notes.filter(item=> item.id === el.id)[0]
-        note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'completed', userToken:'123123'}
+        const note = state.notes.filter(item=> item.key === el.noteKey)[0]
+        note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'completed', userToken:id}
     
         const editedItems=state.private.items.map( item =>{ 
             if (item.key === el.key){
@@ -31,7 +31,7 @@ const MySelections = () =>{
         })
     
         await database.ref(`notes/${note.key}`).set(note)
-        dispatch({type: 'EDIT_NOTE', note, id: el.id})
+        dispatch({type: 'EDIT_NOTE', note, key: el.noteKey})
         
         await database.ref(`private/${id}/mySelections/${el.key}`).set({id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
         dispatch({type: 'EDIT_MY_NOTE', editedItems})
@@ -40,8 +40,11 @@ const MySelections = () =>{
     return <div>
                 <h3>My Selected Items</h3>
                 {item[0] !==undefined ? item.map((el)=> 
-                    <div key = {el.key}> 
-                        <p > {el.id} - index: {el.index} - query:{el.queryIndex}- {el.item} </p>
+                    <div key = {el.key}>
+                        <div>
+                            <h5> {el.id}</h5>
+                            <p > index: {el.index} - query:{el.queryIndex}- {el.item} </p>
+                        </div> 
                         <button onClick={()=> removeMyItem(el)}>x</button>
                         <button onClick={()=> editMyItem(el)}>completed</button>
                     </div> ) : 'there is no item'

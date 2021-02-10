@@ -19,12 +19,12 @@ const Note = ({note, place})=> {
 
   const onClickSelectItems =  (item, index, indexSub, queryIndex) => {
 
-    note.selected[index][2][queryIndex][indexSub]={...item, status:'taken', userToken:'12313'}
+    note.selected[index][2][queryIndex][indexSub]={...item, status:'taken', userToken:state.filters.uid}
 
     const selected = note.selected
     updateNote ({...note,selected})
-    database.ref(`private/${id}/mySelections`).push({id:note.id, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
-      dispatch({type: 'ADD_MY_NOTE', item: { key: el.key, id:note.id, item:item.name, status:'taken', index, indexSub, queryIndex}})
+    database.ref(`private/${id}/mySelections`).push({id:note.id, noteKey:note.key, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
+      dispatch({type: 'ADD_MY_NOTE', item: { key: el.key, id:note.id, noteKey:note.key, item:item.name, status:'taken', index, indexSub, queryIndex}})
     })
   }
 
@@ -49,13 +49,13 @@ const Note = ({note, place})=> {
 
   const onRemove = () => {
     database.ref(`notes/${note.key}`).remove()
-      .then(()=>dispatch({type: 'REMOVE_NOTE', id: note.id}))
+      .then(()=>dispatch({type: 'REMOVE_NOTE', key: note.key}))
   }
 
   async function updateNote ({title,body,sDate,eDate,selected}) {
 
-    await database.ref(`notes/${note.key}`).set({...note, title,body,sDate,eDate,selected})
-    dispatch({type: 'EDIT_NOTE', note:{title,body,sDate,eDate,selected}, id: note.id})
+    await database.ref(`notes/${note.key}`).set({id:note.id, title,body,sDate,eDate,selected})
+    dispatch({type: 'EDIT_NOTE', note:{title,body,sDate,eDate,selected}, key: note.key})
 
     setEdit(false)
   }
