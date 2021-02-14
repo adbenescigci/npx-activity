@@ -17,14 +17,16 @@ const Note = ({note, place})=> {
 
   let [selectableList,setSelectableList]=useState([]);
 
-  const onClickSelectItems =  (item, index, indexSub, queryIndex) => {
+  const onClickSelectItems =  (option, item, index, indexSub, queryIndex) => {
+    
+    console.log(option)
 
     note.selected[index][2][queryIndex][indexSub]={...item, status:'taken', userToken:state.filters.uid}
 
     const selected = note.selected
-    updateNote ({...note,selected})
-    database.ref(`private/${id}/mySelections`).push({id:note.id, noteKey:note.key, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
-      dispatch({type: 'ADD_MY_NOTE', item: { key: el.key, id:note.id, noteKey:note.key, item:item.name, status:'taken', index, indexSub, queryIndex}})
+    updateNote ({...note,selected});
+    database.ref(`private/${id}/mySelections`).push({name:option[0],id:note.id, noteKey:note.key, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
+      dispatch({type: 'ADD_MY_NOTE', item: { name: option[0],key: el.key, id:note.id, noteKey:note.key, item:item.name, status:'taken', index, indexSub, queryIndex}})
     })
   }
 
@@ -108,7 +110,7 @@ const Note = ({note, place})=> {
                           return <button
                                     disabled = {item.status!=='unRead' }
                                     key={item.name}
-                                    onClick = {() => onClickSelectItems(item, index, indexSub, query[index]-1)}
+                                    onClick = {() => onClickSelectItems(option,item, index, indexSub, query[index]-1)}
                                   >
                                     {item.name}
                                   </button>

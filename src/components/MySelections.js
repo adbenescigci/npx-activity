@@ -42,8 +42,8 @@ const MySelections = () =>{
                 {item[0] !==undefined ? item.map((el)=> 
                     <div key = {el.key}>
                         <div>
-                            <h5> {el.id}</h5>
-                            <p > index: {el.index} - query:{el.queryIndex}- {el.item} </p>
+                            <h3> {el.name}-{el.item}</h3>
+                            <h6 > {el.id} </h6>
                         </div> 
                         <button onClick={()=> removeMyItem(el)}>x</button>
                         <button onClick={()=> editMyItem(el)}>completed</button>

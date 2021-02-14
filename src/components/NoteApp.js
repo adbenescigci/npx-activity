@@ -2,7 +2,7 @@ import { useEffect, useReducer } from 'react';
 import { reducer, initial } from '../reducers/combineReducer';
 import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
-import init from '../actions/init';
+import init, {myInit} from '../actions/init';
 
 import {firebase} from '../firebase/firebase';
 import 'firebase/auth';
@@ -12,7 +12,14 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const NoteApp = () => {
 
-const [state, dispatch] = useReducer(reducer, initial);
+const [state, dispatch] = useReducer(reducer, initial)
+
+async function ownStart (id) {
+    const myItems = await myInit({id})
+        if(myItems) {
+            dispatch({type: 'POPULATE_MY_NOTES', myItems})
+        }
+}
 
 async function start () {
   const notes = await init()
@@ -23,7 +30,10 @@ async function start () {
 
 useEffect(()=>{
   firebase.auth().onAuthStateChanged((user) => {
-    if(user){ dispatch({type: 'SET_ID', uid:user.uid})}
+    if(user){ 
+      dispatch({type: 'SET_ID', uid:user.uid})
+      ownStart(user.uid)
+    }
 })
   start()
 },[])
@@ -37,6 +47,4 @@ console.log(state.private)
 }
 
 export { NoteApp as default };
-
-
 
