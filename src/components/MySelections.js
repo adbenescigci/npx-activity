@@ -33,7 +33,7 @@ const MySelections = () =>{
         await database.ref(`notes/${note.key}`).set(note)
         dispatch({type: 'EDIT_NOTE', note, key: el.noteKey})
         
-        await database.ref(`private/${id}/mySelections/${el.key}`).set({id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
+        await database.ref(`private/${id}/mySelections/${el.key}`).set({name: el.name, noteKey:el.noteKey, id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
         dispatch({type: 'EDIT_MY_NOTE', editedItems})
     }
 
@@ -43,7 +43,8 @@ const MySelections = () =>{
                     <div key = {el.key}>
                         <div>
                             <h3> {el.name}-{el.item}</h3>
-                            <h6 > {el.id} </h6>
+                            <h6 > {el.id} </h6> 
+                            <h6> {el.noteKey} </h6>
                         </div> 
                         <button onClick={()=> removeMyItem(el)}>x</button>
                         <button onClick={()=> editMyItem(el)}>completed</button>

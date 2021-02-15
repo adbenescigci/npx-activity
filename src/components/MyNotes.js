@@ -5,7 +5,6 @@ import Header from './Header';
 
 const MyNotes = () =>{   
     
-
     return <div>  
                 <Header/>
                 <MySelections/>

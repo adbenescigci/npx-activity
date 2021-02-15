@@ -28,17 +28,17 @@ async function start () {
     }
 } 
 
+console.log(state.private)
 useEffect(()=>{
   firebase.auth().onAuthStateChanged((user) => {
     if(user){ 
       dispatch({type: 'SET_ID', uid:user.uid})
-      ownStart(user.uid)
+      ownStart(user.uid)  
     }
 })
   start()
 },[])
 
-console.log(state.private)
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
       <AppRouter/>

@@ -24,6 +24,14 @@ const privateReducer = ( state , action ) => {
           ...state,
           items
         }
+      case 'REMOVE_MY_NOTE_ALL':
+        const itemsAll = state.items.filter((item)=>{ 
+          return (item.noteKey !== action.key) 
+        })
+        return {
+          ...state,
+          items:itemsAll
+        }
       default: 
         return state
       }

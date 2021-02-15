@@ -52,6 +52,7 @@ const Note = ({note, place})=> {
   const onRemove = () => {
     database.ref(`notes/${note.key}`).remove()
       .then(()=>dispatch({type: 'REMOVE_NOTE', key: note.key}))
+      .then(()=>dispatch({type: 'REMOVE_MY_NOTE_ALL', key: note.key}))
   }
 
   async function updateNote ({title,body,sDate,eDate,selected}) {
