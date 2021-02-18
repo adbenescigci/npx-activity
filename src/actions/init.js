@@ -1,11 +1,14 @@
 import database from '../firebase/firebase';
 
 const initialNotes= () => database.ref('notes').once('value')
-  
 const commonNotes = () => database.ref('ortak').once('value')
-
 const mySelections = ({id}) => database.ref(`private/${id}/mySelections`).once('value');
+const singleNote = (key) => database.ref('notes/' + key ).once('value');
 
+async function singleInit(key) {
+    return await singleNote(key)
+                .then(snapshot => snapshot.val())
+}
 
 async function init() {
    
@@ -44,4 +47,4 @@ async function myInit(id) {
     return myItems
 }
 
-export {myInit, init as default }
+export {myInit, singleInit, init as default }

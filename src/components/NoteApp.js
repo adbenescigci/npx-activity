@@ -28,7 +28,6 @@ async function start () {
     }
 } 
 
-console.log(state.private)
 useEffect(()=>{
   firebase.auth().onAuthStateChanged((user) => {
     if(user){ 

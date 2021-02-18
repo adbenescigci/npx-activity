@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { format,toDate } from 'date-fns'
 import Form from './Form';
 import NoteContext from '../context/notes-context';
+import {singleInit} from '../actions/init';
 
 import database from '../firebase/firebase';
 
@@ -17,17 +18,43 @@ const Note = ({note, place})=> {
 
   let [selectableList,setSelectableList]=useState([]);
 
-  const onClickSelectItems =  (option, item, index, indexSub, queryIndex) => {
-    
-    console.log(option)
-
-    note.selected[index][2][queryIndex][indexSub]={...item, status:'taken', userToken:state.filters.uid}
-
-    const selected = note.selected
-    updateNote ({...note,selected});
-    database.ref(`private/${id}/mySelections`).push({name:option[0],id:note.id, noteKey:note.key, item:item.name, status: 'taken', index, indexSub, queryIndex}).then((el)=>{
-      dispatch({type: 'ADD_MY_NOTE', item: { name: option[0],key: el.key, id:note.id, noteKey:note.key, item:item.name, status:'taken', index, indexSub, queryIndex}})
+  async function resume (key) {
+    singleInit(key).then((note)=>{
+      dispatch({type: 'EDIT_NOTE', note, key})
     })
+  }
+
+  const onClickSelectItems =  (option, item, index, indexSub, queryIndex) => {
+
+    database.ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken').once('value', function (snapshot){
+
+      if( snapshot.val() === ''){
+        
+        const update = {...item, status:'taken', userToken:id};
+        const selectData = {
+          name:option[0],
+          id:note.id, 
+          noteKey:note.key, 
+          item:item.name, 
+          status: 'taken', 
+          index, 
+          indexSub, 
+          queryIndex
+        }
+        
+        const key = database.ref().child('/private/'+ id +'/mySelections').push().key;
+
+        const updates = {};
+        updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
+        updates['/private/' + id + '/mySelections/' + key] = selectData
+
+        database.ref().update(updates).then(()=>{
+          dispatch({type: 'ADD_MY_NOTE', item: { ...selectData, key }})
+        })
+      console.log(option,'alindi')
+      }
+     else console.log('daha once alinmis')})   
+     resume(note.key)
   }
 
   const onChangeQuery = (value,index)=>{
@@ -40,7 +67,6 @@ const Note = ({note, place})=> {
     if(!selectableList.includes(option)){
         return setSelectableList([...selectableList,option])
     } else  onRemoveSelect(option)
-
   }
 
   const onRemoveSelect = (option) =>{
@@ -125,7 +151,7 @@ const Note = ({note, place})=> {
     )
 
     const onJoin = ()=>{
-         if(state.filters.id !==''){
+         if(id !==''){
           setSelectActivity(!selectActivity)
       } else setLogIn(false)
     }

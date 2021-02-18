@@ -1,6 +1,7 @@
 import {useContext} from 'react';
 import NotesContext from '../context/notes-context';
 import database from '../firebase/firebase';
+import init from '../actions/init';
 
 const MySelections = () =>{
 
@@ -8,20 +9,29 @@ const MySelections = () =>{
     const id = state.filters.uid
     const item = state.private.items
 
+    async function start () {
+        const notes = await init()
+          if(notes) {
+            dispatch({type: 'POPULATE_NOTES', notes})
+          }
+      } 
+
     async function removeMyItem (el) {
-        const note = state.notes.filter(item=> item.key === el.noteKey)[0]
-        note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'unRead', userToken:''}
-        
-        await database.ref(`private/${id}/mySelections/${el.key}`).remove()
+        const note = state.notes.filter(item=> item.key === el.noteKey)[0] 
+        const update ={name:el.item, number:el.queryIndex+1, status:'unRead', userToken:''}
+
+        const updates = {};
+        updates['/notes/' + note.key + '/selected/' + el.index + '/2/' + el.queryIndex + '/' + el.indexSub] = update;
+        updates['/private/' + id + '/mySelections/' + el.key] = []
+
+        await database.ref().update(updates);
         dispatch({type: 'REMOVE_MY_NOTE', key:el.key})
-    
-        await database.ref(`notes/${note.key}`).set(note)
-        dispatch({type: 'EDIT_NOTE', note, id: el.id})
+        start()
     }
     
     async function editMyItem (el) {
         const note = state.notes.filter(item=> item.key === el.noteKey)[0]
-        note.selected[el.index][2][el.queryIndex][el.indexSub] = {name:el.item, number:el.queryIndex+1, status:'completed', userToken:id}
+        const update = {name:el.item, number:el.queryIndex+1, status:'completed', userToken:id}
     
         const editedItems=state.private.items.map( item =>{ 
             if (item.key === el.key){
@@ -29,12 +39,14 @@ const MySelections = () =>{
             } 
             return item
         })
-    
-        await database.ref(`notes/${note.key}`).set(note)
-        dispatch({type: 'EDIT_NOTE', note, key: el.noteKey})
-        
-        await database.ref(`private/${id}/mySelections/${el.key}`).set({name: el.name, noteKey:el.noteKey, id:el.id, item:el.item, status: 'completed', index: el.index, indexSub:el.indexSub, queryIndex:el.queryIndex})
+
+        const updates = {};
+        updates['/notes/' + note.key + '/selected/' + el.index + '/2/' + el.queryIndex + '/' + el.indexSub] = update;
+        updates['/private/' + id + '/mySelections/' + el.key + '/status'] = 'completed';
+
+        await database.ref().update(updates);
         dispatch({type: 'EDIT_MY_NOTE', editedItems})
+        start()
     }
 
     return <div>
