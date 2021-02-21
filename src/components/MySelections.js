@@ -8,6 +8,7 @@ const MySelections = () =>{
     const { state, dispatch } = useContext (NotesContext)
     const id = state.filters.uid
     const item = state.private.items
+    const name = state.private.personal.name
 
     async function start () {
         const notes = await init()
@@ -48,8 +49,8 @@ const MySelections = () =>{
         dispatch({type: 'EDIT_MY_NOTE', editedItems})
         start()
     }
-
     return <div>
+                <h2>Hosgeldiniz {name}</h2>
                 <h3>My Selected Items</h3>
                 {item[0] !==undefined ? item.map((el)=> 
                     <div key = {el.key}>
