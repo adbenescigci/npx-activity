@@ -13,7 +13,6 @@ const Note = ({note, place})=> {
   const [selectActivity,setSelectActivity] = useState(false)
   const [isLogged,setLogIn]= useState(true)
   const [query,setQuery]=useState(Array.from(note.selected, () => '1'))
-
   const id= state.filters.uid;
 
   let [selectableList,setSelectableList]=useState([]);
@@ -75,10 +74,12 @@ const Note = ({note, place})=> {
   }
 
 
-  const onRemove = () => {
+ const onRemove = () => {
     database.ref(`notes/${note.key}`).remove()
-      .then(()=>dispatch({type: 'REMOVE_NOTE', key: note.key}))
-      .then(()=>dispatch({type: 'REMOVE_MY_NOTE_ALL', key: note.key}))
+      .then(() => 
+        dispatch({type: 'REMOVE_NOTE', key: note.key}),
+        dispatch({type: 'REMOVE_MY_NOTE_ALL', key: note.key}) 
+      )
   }
 
   async function updateNote ({title,body,sDate,eDate,selected}) {

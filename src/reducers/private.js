@@ -8,6 +8,11 @@ const privateReducer = ( state , action ) => {
            ...state,
             personal:{...state.personal, name: action.name}
           }
+      case 'SHOULD_DELETE' :
+        return {
+          ...state,
+          personal:{...state.personal, delete: true}
+        }
       case 'ADD_MY_NOTE':
         return {
           ...state,

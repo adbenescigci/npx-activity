@@ -4,7 +4,6 @@ import AddNoteForm from './AddNoteForm';
 import Header from './Header';
 
 const MyNotes = () =>{   
-    
     return <div>  
                 <Header/>
                 <MySelections/>
