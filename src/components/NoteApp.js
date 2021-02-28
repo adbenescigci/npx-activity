@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useState, useReducer } from 'react';
+import Modal from 'react-modal';
 import { reducer, initial } from '../reducers/combineReducer';
 import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
@@ -13,24 +14,25 @@ import "react-datepicker/dist/react-datepicker.css";
 const NoteApp = () => {
 console.log(deletedItems)
 const [state, dispatch] = useReducer(reducer, initial)
+const [modalIsOpen,setIsOpen] = useState (false)
+const [userId, setUserId]= useState ('')
+const [name, setName]= useState ('')
 
 async function ownStart (id) {
+    
+     setUserId(id)
+    database.ref().child('private/'+ id +'/personal').once('value', data =>{
 
-      database.ref().child('private/'+ id +'/personal').once('value', data =>{
-
-        if(data.val()===null){
-            database.ref().child('private/'+ id +'/personal').set({name:'merhaba'}).then(()=>{
-                dispatch({type:'PRIVATE_NAME', name:'merhab' }) 
-            })
-        } else  dispatch({type:'PRIVATE_NAME', name:data.val().name })
-
-      })
+      if (data.val() === null) setIsOpen(true)
+       else  dispatch({type:'PRIVATE_NAME', name:data.val().name })
+    })
 
     const myItems = await myInit({id})
     
-      if(myItems) {
-          dispatch({type: 'POPULATE_MY_NOTES', myItems})
-      }
+    if(myItems) {
+        dispatch({type: 'POPULATE_MY_NOTES', myItems})
+    }
+  
 }
 
 async function start () {
@@ -52,8 +54,36 @@ useEffect(()=>{
   start()
 },[])
  
+const closeModal = () => setIsOpen(false);
+
+const onSetUserName = ()=>{
+  console.log(userId)
+  database.ref().child('private/'+ userId +'/personal').set({name}).then(()=>{
+    dispatch({type:'PRIVATE_NAME', name}) 
+})
+  closeModal()
+}
+
   return (
     <NotesContext.Provider value = {{state, dispatch}}>
+      
+      <Modal
+        isOpen={modalIsOpen}
+       // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+        appElement={document.getElementById('root')}
+      >
+        <p> Lutfen Kullanici adi giriniz </p>
+        <input 
+            value={name}  
+            placeholder='Kullanici adi giriniz'
+            onChange={(e)=>setName(e.target.value)} 
+            required
+        />
+        <button onClick={onSetUserName}> Ok</button>
+      </Modal>
+
       <AppRouter/>
     </NotesContext.Provider>
   )
