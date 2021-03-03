@@ -13,7 +13,6 @@ import '../styles/styles.scss';
 import "react-datepicker/dist/react-datepicker.css";
 
 const NoteApp = () => {
-  console.log(deletedItems)
 
   const [state, dispatch] = useReducer(reducer, initial)
   const [modalIsOpen,setIsOpen] = useState (false)
@@ -48,10 +47,12 @@ const NoteApp = () => {
     start()
   },[])
 
+const flag = deletedItems.length !== 0 ;
 
     return (
       <NotesContext.Provider value = {{state, dispatch}}>
         <ModalName open = {modalIsOpen}/>
+        {flag && <ModalDelete/>}
         <AppRouter/>
       </NotesContext.Provider>
     )
