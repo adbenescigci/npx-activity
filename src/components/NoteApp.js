@@ -30,7 +30,7 @@ const NoteApp = () => {
   }
 
   async function start () {
-    console.log(state.notes,state.private)
+    console.log(state.notes,state.private, state.filters)
     const notes = await init()
       if(notes) {
         dispatch({type: 'POPULATE_NOTES', notes})
@@ -59,6 +59,3 @@ const flag = deletedItems.length !== 0 ;
 }
 
 export { NoteApp as default };
-
-
- //<ModalDelete deleted = {deletedItems}/>

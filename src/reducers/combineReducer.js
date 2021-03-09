@@ -4,8 +4,9 @@ import filterReducer from './filter';
 import privateReducer from './private';
 
 const initNotes = [];
-const initFilters = {text:'', date:0 , sortBy:'date', uid:''};
+const initFilters = {text:'', date:0 , sortBy:'date', uid:'', note:''};
 const initPrivate = {personal:{name:'', delete:false}, items:[] };
+
 
 const [reducer, initial] = combineReducers({
   notes: [notesReducer, initNotes],

@@ -11,6 +11,8 @@ const filterReducer= (state,action)=>{
             return {...state, sortBy:action.sortBy}
         case 'SET_ID':
             return {...state, uid:action.uid }
+        case 'SET_NOTE':
+            return {...state, note:action.note}
         default:
             return state
     }
