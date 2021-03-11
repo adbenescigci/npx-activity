@@ -18,8 +18,7 @@ const ModalDelete = () => {
             <button onClick = { ()=> setIsOpen(false)}> Tamam</button>
 
         </Modal>
-        )
-        
+        )      
 }
 
 export { ModalDelete as default}

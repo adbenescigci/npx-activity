@@ -1,7 +1,6 @@
 import database from '../firebase/firebase';
 
 const initialNotes= () => database.ref('notes').once('value')
-const commonNotes = () => database.ref('ortak').once('value')
 const mySelections = (id) => database.ref(`private/${id}/mySelections`).once('value');
 const singleNote = (key) => database.ref('notes/' + key ).once('value');
 
@@ -16,16 +15,8 @@ async function singleInit(key) {
 
 async function init() {
     noteKeys = []
-    const notesOrtak= [];
     const notesPersonal= [];
- 
-    const ortak = commonNotes().then((snapshot)=>{
-        snapshot.forEach((child)=>{
-        notesOrtak.push({...child.val(), key: child.key})
-        })
-        return notesOrtak
-        }) ;
-        
+    
     const personal = initialNotes().then((snapshot)=>{
         snapshot.forEach((child)=>{    
         noteKeys.push(child.key)
@@ -34,14 +25,13 @@ async function init() {
         return notesPersonal
     });
 
-    const notes = [...await personal, ...await ortak] 
+    const notes = [...await personal] 
     return notes
 } 
 
 async function myInit({id}) {
     
     const selectedItems = [];
-
     const mySelectedItems = mySelections(id).then((snapshot)=>{
 
         snapshot.forEach((child)=>{
@@ -60,4 +50,4 @@ async function myInit({id}) {
     return myItems
 }
 
-export {myInit, singleInit, deletedItems, init as default }
+export { myInit, singleInit, deletedItems, init as default }

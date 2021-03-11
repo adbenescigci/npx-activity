@@ -7,6 +7,7 @@ import database from '../firebase/firebase';
 
 
 const NoteSelection = ({note})=>{
+  
     const {state,dispatch} = useContext(NoteContext);
     const [query,setQuery]=useState(Array.from(note.selected, () => '1'))
     const id= state.filters.uid;
