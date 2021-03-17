@@ -17,10 +17,8 @@ const NoteList = () =>{
               <Search/>
               <h1>Notes</h1> 
               {searchSelector(state.notes,{text,startDate,endDate,sortBy})
-                .map((note)=>(
-                    <Note key={note.key} note={note} />
-                   )
-              )}
+                        .map((note)=> <Note key={note.key} note={note} />)
+              }
            </div>
 }
 

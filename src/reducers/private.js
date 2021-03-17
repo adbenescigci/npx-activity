@@ -2,7 +2,7 @@ const privateReducer = ( state , action ) => {
 
     switch(action.type) {
       case 'POPULATE_MY_NOTES':
-        return {...state, items:action.myItems.items}
+        return {...state, items:action.myItems.items, archive:action.myItems.archive}
       case 'PRIVATE_NAME':
         return {
            ...state,

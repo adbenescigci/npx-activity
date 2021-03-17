@@ -4,7 +4,7 @@ import ModalName from './ModalName';
 import ModalDelete from './ModalDelete';
 import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
-import init, {myInit, deletedItems } from '../actions/init';
+import init, { myInit } from '../actions/init';
 
 import database,{firebase} from '../firebase/firebase';
 import 'firebase/auth';
@@ -47,15 +47,14 @@ const NoteApp = () => {
     start()
   },[])
 
-const flag = deletedItems.length !== 0 ;
 
-    return (
-      <NotesContext.Provider value = {{state, dispatch}}>
-        <ModalName open = {modalIsOpen}/>
-        {flag && <ModalDelete/>}
-        <AppRouter/>
-      </NotesContext.Provider>
-    )
+  return (
+    <NotesContext.Provider value = {{state, dispatch}}>
+      <ModalName open = {modalIsOpen}/>
+      <ModalDelete/>
+      <AppRouter/>
+    </NotesContext.Provider>
+  )
 }
 
 export { NoteApp as default };

@@ -1,15 +1,12 @@
-import MyActivities from './MyActivities';
-import MySelections from './MySelections';
-import AddNoteForm from './AddNoteForm';
 import Header from './Header';
+import MyRouter from '../routers/MyRouter';
 
 const MyNotes = () =>{   
+
     return <div>  
                 <Header/>
-                <MySelections/>
-                <MyActivities/>
-                <AddNoteForm />
+                <MyRouter/>
             </div>
 }
 
-export {MyNotes as default}
+export { MyNotes as default }

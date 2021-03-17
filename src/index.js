@@ -22,10 +22,11 @@ firebase.auth().onAuthStateChanged((user) => {
  
   if(user){
     renderApp()
-    if (history.location.pathname === `/myPage/${user.uid}`) {
-      history.push(`/myPage/${user.uid}`);
+    if (history.location.pathname.includes(`/myPage/${user.uid}`)) {
+      history.push(history.location.pathname);
     } else history.push('/')  
   } 
+  ////// pathname
   
   else {
     renderApp('')

@@ -18,7 +18,7 @@ const AppRouter = () => {
         <Switch>
           <Route path="/" component={MainPage} exact={true}/>
           <Route path="/loginPage" component={LoginPage} exact={true}/>
-          <Route path={`/myPage/${id}`} component={MyNotes} exact={true}/>
+          <Route path={`/myPage/${id}`} component={MyNotes} />
       </Switch>
       </div>     
     </Router>
@@ -26,4 +26,3 @@ const AppRouter = () => {
 
 export {AppRouter as default};
 
-// history= {history}

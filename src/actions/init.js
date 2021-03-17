@@ -1,12 +1,16 @@
 import database from '../firebase/firebase';
 
 const initialNotes= () => database.ref('notes').once('value')
-const mySelections = (id) => database.ref(`private/${id}/mySelections`).once('value');
+const mySelections = (id) => database.ref('private/'+ id + '/mySelections').once('value');
+const myArchive = (id) => database.ref('private/' + id + '/myArchive').once('value');
 const singleNote = (key) => database.ref('notes/' + key ).once('value');
+const getKey = (id) => database.ref('private/'+ id).child('MyArchive').push().key;
+
 
 let noteKeys = [];
 const updates = {};
-const deletedItems = [] ;
+const deletedItems = [];
+const archivedItems =[];
 
 async function singleInit(key) {
     return await singleNote(key)
@@ -39,6 +43,7 @@ async function myInit({id}) {
                 selectedItems.push({...child.val(), key: child.key}
             )}  else {
                     updates['private/'+ id + '/mySelections/' + child.key] = []; 
+                    updates['private/'+ id + '/myArchive/' + getKey(id)] = child.val();
                     deletedItems.push(child.val()) 
                 }   
          })
@@ -46,8 +51,18 @@ async function myInit({id}) {
         return selectedItems
     });
 
-    const myItems={items: [...await mySelectedItems]}
+    const myArchiveItems = myArchive(id).then((snapshot)=>{
+
+        snapshot.forEach((child)=>{
+            archivedItems.push({...child.val(), key: child.key})
+        })
+        console.log(archivedItems)
+        return archivedItems
+    })
+
+    const myItems={items: [...await mySelectedItems], archive: [...await myArchiveItems]}
+    console.log(myItems)
     return myItems
 }
 
-export { myInit, singleInit, deletedItems, init as default }
+export { myInit, singleInit, deletedItems, archivedItems, init as default }

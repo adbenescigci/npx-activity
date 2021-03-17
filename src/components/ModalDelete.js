@@ -1,9 +1,20 @@
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import { deletedItems } from '../actions/init';
 
 const ModalDelete = () => {
   
-    const [isOpen,setIsOpen] = useState (true)
+    const [isOpen,setIsOpen] = useState (false)
+   
+    useEffect(()=>{ 
+        if(deletedItems.length !== 0) { setIsOpen(true) }
+    },[deletedItems[0]])
+    
+    const message = <div>
+                        <p> Almis oldugunuz asagidaki okumalariniz organizatorun ilgili aktiviteyi kaldirmasi nedeniyle  iptal ediilmistir</p>
+                        <p> Listenizden dusurulmustur.</p>
+                        {deletedItems.map((item)=><p key ={item.noteKey+item.name+item.item}>{item.name} - {item.item} / {item.noteKey}</p>)}
+                    </div>
     
     return (
         <Modal
@@ -12,11 +23,8 @@ const ModalDelete = () => {
             contentLabel="Deleted Modal"
             appElement={document.getElementById('root')}
             >
-            <p> Almis oldugunuz asagidaki okumalariniz organizatorun ilgili aktiviteyi kaldirmasi nedeniyle  iptal ediilmistir</p>
-            <p> Listenizden dusurulmustur.</p>
-
-            <button onClick = { ()=> setIsOpen(false)}> Tamam</button>
-
+            {message}
+            <button onClick = { () => setIsOpen(false)}> Tamam </button>
         </Modal>
         )      
 }
