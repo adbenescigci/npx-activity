@@ -26,7 +26,6 @@ firebase.auth().onAuthStateChanged((user) => {
       history.push(history.location.pathname);
     } else history.push('/')  
   } 
-  ////// pathname
   
   else {
     renderApp('')

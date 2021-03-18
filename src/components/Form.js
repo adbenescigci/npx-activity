@@ -9,8 +9,6 @@ const activity= activityList.reduce((acc,current)=>{return [...acc,current.activ
 
 const Form = ({onSubmitForm,data})=>{
     
-//console.log(activity)
-    
 const [title,setTitle] = useState(data.title);
 const [body,setBody] = useState(data.body);
 const [startDate, setStartDate] = useState(data.sDate);
@@ -23,7 +21,6 @@ const selectPreap = (a)=> {
     
     const activitySelects = activityList.filter(el=>el.activity === a[0])[0].select
 
-    //Number of Times we need activity status
     let numb=1
     let wholeArray=[]
     

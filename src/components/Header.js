@@ -16,7 +16,7 @@ const Header = () => {
             { uid !== '' ? 
                 <div>
                     <button onClick={logOut}>LogOut </button> 
-                    {history.location.pathname === `/myPage/${uid}`? 
+                    {history.location.pathname.includes(`/myPage/${uid}`)? 
                         <button onClick={()=>history.push('/')}> Ana Sayfa</button> :
                         <button onClick={()=>history.push(`/myPage/${uid}`)}> Go to MyPage </button> 
                     }
