@@ -2,11 +2,15 @@ const privateReducer = ( state , action ) => {
 
     switch(action.type) {
       case 'POPULATE_MY_NOTES':
-        return {...state, items:action.myItems.items, archive:action.myItems.archive}
+        return {
+          ...state, 
+          items:action.myItems.items, 
+          archive:action.myItems.archive
+        }
       case 'PRIVATE_NAME':
         return {
-           ...state,
-            personal:{...state.personal, name: action.name}
+          ...state,
+          personal:{...state.personal, name: action.name}
           }
       case 'SHOULD_DELETE' :
         return {
@@ -42,6 +46,20 @@ const privateReducer = ( state , action ) => {
           ...state,
           items:itemsAll
         }
+      case 'REMOVE_ARCHIVE_ITEM':
+        const archive = state.archive.filter((item)=>{ 
+          return (item.key !== action.key) 
+        })
+        return {
+          ...state,
+          archive
+        }
+      case 'REMOVE_ARCHIVE': 
+        return {
+          ...state,
+          archive: []
+        }
+
       default: 
         return state
       }

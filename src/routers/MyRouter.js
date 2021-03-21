@@ -1,18 +1,26 @@
-import {useEffect} from 'react';
-import { Route, Switch, Link, useRouteMatch, Redirect, useLocation} from 'react-router-dom';
+import { Route, Switch, NavLink, useRouteMatch, Redirect, useLocation} from 'react-router-dom';
 import MyActivities from '../components/MyActivities';
 import MySelections from '../components/MySelections';
 import MyArchive from '../components/MyArchive';
 import AddNoteForm from '../components/AddNoteForm';
 
-import {history} from './AppRouter';
-
-
 const MyRouter = () => {
   let match = useRouteMatch();
+  
+  const style = {
+    fontWeight: "bold",
+    color: "red"
+  }
 
   return ( <div>
 
+        <ul>  
+          <li> <NavLink to={`${match.url}/MySelections`} activeStyle={style}> Selections </NavLink></li>
+          <li> <NavLink to={`${match.url}/MyActivities`} activeStyle={style}>Activities</NavLink></li>
+          <li> <NavLink to={`${match.url}/MyArchive`} activeStyle={style}>Archive </NavLink></li>
+          <li> <NavLink to={`${match.url}/AddNoteForm`} activeStyle={style}>Add Note </NavLink></li>
+        </ul>
+        
         <Switch>
           <Route path={match.path}  exact={true}> <Redirect to={`${match.path}/MySelections`} /> </Route> 
           <Route path={`${match.path}/MyArchive`} component={MyArchive} exact={true}/>
@@ -21,13 +29,6 @@ const MyRouter = () => {
           <Route path={`${match.path}/MySelections`} component={MySelections} exact={true}/>
           <Route path='*' component={NoMatch}/>
         </Switch>
-      
-        <ul>  
-          <li> <Link to={`${match.url}/MySelections`}> Selections </Link></li>
-          <li> <Link to={`${match.url}/MyActivities`}>Activities</Link></li>
-          <li> <Link to={`${match.url}/MyArchive`}>Archive </Link></li>
-          <li> <Link to={`${match.url}/AddNoteForm`}>Add Note </Link></li>
-        </ul>
 
     </div>
 )}

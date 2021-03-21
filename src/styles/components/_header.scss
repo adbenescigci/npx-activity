@@ -1,0 +1,11 @@
+.header {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+        border:none;
+        margin:auto
+    }
+}
+

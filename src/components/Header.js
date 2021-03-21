@@ -7,6 +7,7 @@ const Header = () => {
     
     const {state, dispatch} = useContext (NoteContext);
     const uid = state.filters.uid;
+    const name = state.private.personal.name
 
     const logOut = () => { startLogOut().then(()=>{
         dispatch({type: 'SET_ID', uid:''})
@@ -14,13 +15,15 @@ const Header = () => {
 
     return <div>
             { uid !== '' ? 
-                <div>
-                    <button onClick={logOut}>LogOut </button> 
+                <div className='header'>
                     {history.location.pathname.includes(`/myPage/${uid}`)? 
                         <button onClick={()=>history.push('/')}> Ana Sayfa</button> :
                         <button onClick={()=>history.push(`/myPage/${uid}`)}> Go to MyPage </button> 
                     }
-                </div> : <button onClick={()=> history.push('/loginPage')}> Login </button> 
+                    <h2>Hosgeldiniz {name}</h2> 
+                    <button onClick={logOut}>LogOut </button>
+                </div> : 
+                <button onClick={()=> history.push('/loginPage')}> Login </button> 
             } 
            </div>
         }
