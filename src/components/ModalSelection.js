@@ -2,9 +2,9 @@ import Modal from 'react-modal';
 import NoteSelection from './NoteSelection';
 import NoteEdit from './NoteEdit';
 
-const ModalSelection =({note, flag, edit, setEdit, updateNote}) =>
+const ModalSelection =({note, edit, setEdit, updateNote}) =>
     <Modal 
-        isOpen={!flag}
+        isOpen={true}
         contentLabel="Select Modal"
         appElement={document.getElementById('root')}
     >
@@ -15,7 +15,7 @@ const ModalSelection =({note, flag, edit, setEdit, updateNote}) =>
         :
         <NoteEdit 
         note={note} 
-        setEdit={()=>setEdit(false)}
+        setEdit={setEdit}
         updateNote = {(e)=>updateNote(e)}
         />  
         }

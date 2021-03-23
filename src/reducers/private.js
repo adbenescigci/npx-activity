@@ -30,6 +30,7 @@ const privateReducer = ( state , action ) => {
       case 'ADD_MY_ACT':
         console.log(action)
         return state
+        
       case 'REMOVE_MY_NOTE':
         const items = state.items.filter((item)=>{ 
           return (item.key !== action.key) 

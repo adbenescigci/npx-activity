@@ -1,22 +1,15 @@
-
 import { useContext, useState } from 'react';
 import NoteContext from '../context/notes-context';
 import {singleInit} from '../actions/init';
-
 import database from '../firebase/firebase';
-
 
 const NoteSelection = ({note})=>{
   
     const {state,dispatch} = useContext(NoteContext);
-    const [query,setQuery]=useState(Array.from(note.selected, () => '1'))
+    const [query,setQuery] = useState(Array.from(note.selected, () => '1'))
     const id= state.filters.uid;
-    
+    const [backList,setBackList] = useState([])
     let [selectableList,setSelectableList]=useState([]);
-
-    
-    console.log(state.filters)
-
 
     async function resume (key) {
         singleInit(key).then((note)=>{
@@ -24,38 +17,54 @@ const NoteSelection = ({note})=>{
         })
       }
     
+    const onBack = ()=>{
+      const updates = {};
+
+      backList.map((e)=>{
+     
+        updates['/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub ] = {...e.item, status:'unRead', userToken:''};
+        updates['/private/' + id + '/mySelections/' + e.key] = [];
+        
+        dispatch({type: 'REMOVE_MY_NOTE', key: e.key})
+      })
+      
+      setBackList([]);
+      database.ref().update(updates).then(()=>{ resume(note.key)})
+        
+    }
 
     const onClickSelectItems =  (option, item, index, indexSub, queryIndex) => {
 
-        database.ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken').once('value', function (snapshot){
-    
-          if( snapshot.val() === ''){
-            
-            const update = {...item, status:'taken', userToken:id};
-            const selectData = {
-              name:option[0],
-              id:note.id, 
-              noteKey:note.key, 
-              item:item.name, 
-              status: 'taken', 
-              index, 
-              indexSub, 
-              queryIndex
-            }
-            
-            const key = database.ref().child('/private/'+ id +'/mySelections').push().key;
-    
-            const updates = {};
-            updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
-            updates['/private/' + id + '/mySelections/' + key] = selectData
-    
-            database.ref().update(updates).then(()=>{
-              dispatch({type: 'ADD_MY_NOTE', item: { ...selectData, key }})
-            })
-          console.log(option,'alindi')
+      database.ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken').once('value', function (snapshot){
+  
+        if( snapshot.val() === ''){
+          
+          const update = {...item, status:'taken', userToken:id};
+          const selectData = {
+            name:option[0],
+            id:note.id, 
+            noteKey:note.key, 
+            item:item.name, 
+            status: 'taken', 
+            index, 
+            indexSub, 
+            queryIndex
           }
-         else console.log('daha once alinmis')})   
-         resume(note.key)
+          
+          const key = database.ref().child('/private/'+ id +'/mySelections').push().key;
+  
+          const updates = {};
+          updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
+          updates['/private/' + id + '/mySelections/' + key] = selectData
+    
+          setBackList([...backList,{item, index, indexSub, queryIndex, selectData, key}]);
+  
+          database.ref().update(updates).then(()=>{
+            dispatch({type: 'ADD_MY_NOTE', item: { ...selectData, key }})
+          })
+        }
+        else console.log('daha once alinmis')})   
+        resume(note.key)
       }
     
       const onChangeQuery = (value,index)=>{
@@ -74,17 +83,11 @@ const NoteSelection = ({note})=>{
         selectableList = selectableList.filter(el => el !== option )
         setSelectableList(selectableList)
       }
-    
-    
+
 
     return (
         <div>
-          <button 
-             onClick= {() => dispatch({type:'SET_NOTE', note:''})}
-          >
-            Not Join 
-          </button>
-    
+
           {note.selected.map((option) => {
             const index= note.selected.indexOf(option)
             return <div key={option}>
@@ -126,7 +129,14 @@ const NoteSelection = ({note})=>{
                       }
                   </div> })
           }
-          <button onClick= {() => dispatch({type:'SET_NOTE', note:''})}> Tamam</button>
+          
+          {backList.map((e)=>{
+            return <p key= {e.key}>{e.selectData.name}, {e.selectData.item}</p>
+          })}
+          
+          <button onClick= {() => dispatch({type:'SET_NOTE', note:''})}> {backList.length> 0 ? 'OK': 'Back'}</button>
+          {backList.length >0 && <button onClick= {() => {onBack()}} > Vazgec</button>}
+    
         </div>
         )
 }

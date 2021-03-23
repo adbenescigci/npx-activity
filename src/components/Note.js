@@ -12,7 +12,6 @@ const Note = ({note, place})=> {
   const [edit,setEdit] = useState(false)
   const [isLogged,setLogIn]= useState(false)
   const id = state.filters.uid;
-  const flag = state.filters.note === '' 
 
   const onRemove = () => {
       database.ref(`notes/${note.key}`).remove()
@@ -32,14 +31,14 @@ const Note = ({note, place})=> {
 
 
   const onJoin = ()=>{
-    if(id !== '') { 
-        dispatch({type:'SET_NOTE', note})
+    if(id !== '') {
+        dispatch({type:'SET_NOTE', note: note.key})
       } else setLogIn(true)
   }
 
   const onClickEdit = () => {
     setEdit(true); 
-    dispatch({type:'SET_NOTE', note})
+    dispatch({type:'SET_NOTE', note:note.key})
   }
   
     return (
@@ -50,13 +49,14 @@ const Note = ({note, place})=> {
             
             <Info note={note}/>
             <ModalLogin isLogged={isLogged} setLogIn = {()=> setLogIn(false)}/>
-            <ModalSelection 
-              flag={flag}  
+            { state.filters.note === note.key && 
+              <ModalSelection   
               note={note} 
               edit={edit}
               setEdit={()=>setEdit(false)}
               updateNote = {(e)=>updateNote(e)}
-            /> 
+             /> 
+            }
       </div>
       )
     }
