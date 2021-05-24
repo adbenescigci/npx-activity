@@ -3,6 +3,9 @@ import NoteContext from '../context/notes-context';
 import {singleInit} from '../actions/init';
 import database from '../firebase/firebase';
 
+import SelectQuery from './SelectQuery';
+import SelectionButtons from './SelectionButtons';
+
 const NoteSelection = ({note})=>{
   
     const {state,dispatch} = useContext(NoteContext);
@@ -69,20 +72,18 @@ const NoteSelection = ({note})=>{
       }
     
       const onChangeQuery = (value,index,option) => {
-        console.log(value,index,option)
         setBlind(false)
         query[index]=parseInt(value)
         setQuery(query)
       }
     
       useEffect(()=>{
-        console.log('test')
        setBlind(true)
       })
     
 
       const onClickListItem = (option) => {
-    
+        
         if(!selectableList.includes(option)){
             return setSelectableList([...selectableList,option])
         } else  onRemoveSelect(option)
@@ -111,30 +112,27 @@ const NoteSelection = ({note})=>{
     
                       {selectableList.includes(option[0]) && 
                         <div>
-                          <select
-                          name='query'
-                          onChange={(e)=> onChangeQuery(e.target.value,index,option) }
-                          >
-                            {option[2].map((item)=>(
-                              <option key={option[2].indexOf(item)} value = {option[2].indexOf(item)+1}> {option[2].indexOf(item)+1} </option>
-                            ))
-                            }
-                          </select>
                           
-                          {blind && option[2][query[index]-1].map(item => {
-                              const indexSub = note.selected[index][2][query[index]-1].indexOf(item)
-                              return <button
-                                        disabled = {item.status!=='unRead' }
-                                        key={item.name}
-                                        onClick = {() => onClickSelectItems(option,item, index, indexSub, query[index]-1)}
-                                      >
-                                        {item.name}
-                                      </button>
-                            })
+                          <SelectQuery
+                            option = {option}
+                            index = {index}
+                            onChangeQuery = {(e)=>onChangeQuery(e, index, option)}
+                          />
+                          
+                          { blind &&
+                            <SelectionButtons
+                              option = {option}  
+                              query = {query}  
+                              index = {index} 
+                              note= {note}
+                              onClickSelectItems = {(item, indexSub) => onClickSelectItems (option,item,index, indexSub, query[index]-1)}
+                            />
                           }
+
                         </div>
                       }
-                  </div> })
+                  </div> 
+                })
           }
           
           {backList.map((e)=>{
@@ -142,10 +140,11 @@ const NoteSelection = ({note})=>{
           })}
           
           <button onClick= {() => dispatch({type:'SET_NOTE', note:''})}> {backList.length> 0 ? 'OK': 'Back'}</button>
-          {backList.length >0 && <button onClick= {() => {onBack()}} > Vazgec</button>}
+          {backList.length >0 && <button onClick= {() => onBack()} > Vazgec</button>}
     
         </div>
         )
 }
 
 export {NoteSelection as default}
+

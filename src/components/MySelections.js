@@ -7,13 +7,14 @@ const MySelections = () =>{
 
     const { state, dispatch } = useContext (NotesContext)
     const id = state.filters.uid
-    const item = state.private.items
+    const item = state.private.items.filter( e => e.status!=="completed")
 
     async function start () {
         const notes = await init()
           if(notes) {
             dispatch({type: 'POPULATE_NOTES', notes})
           }
+          console.log(item)
       } 
 
     async function removeMyItem (el) {

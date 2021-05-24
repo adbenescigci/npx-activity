@@ -7,6 +7,8 @@ const MyArchive = () => {
     const { state, dispatch } = useContext (NotesContext)
     const [ items,setItems ]= useState([])
     const id = state.filters.uid
+    
+    const completed = state.private.items.filter( e => e.status === "completed" )
 
     useEffect( () => {
         setItems(state.private.archive)
@@ -21,7 +23,8 @@ const MyArchive = () => {
                 .then(() =>  dispatch({type: 'REMOVE_ARCHIVE'}))
     }
     return  <div>
-                <h3>MyArchive</h3>
+               
+                <h3> My Archive </h3>
                 {items !== undefined && 
                     (items.length !== 0 ? 
                         <button onClick = { onRemoveArchive }> DeleteAll </button> : 'Arsivinizde bir kayit bulunmamaktadir')
@@ -34,6 +37,15 @@ const MyArchive = () => {
                             <button onClick={ () => onRemoveArchiveItems(item.key)}> x </button>
                         </div>)
                 }
+
+                <h3> My Completed Items</h3>
+                {completed.map( e => 
+                    <div key = {e.key}>
+                        <p> {e.name} - {e.item}</p> 
+                    </div> 
+                    )
+                }
+
                 
             </div>
 }
