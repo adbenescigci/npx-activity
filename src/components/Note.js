@@ -25,7 +25,7 @@ const Note = ({note, place})=> {
 
     await database.ref(`notes/${note.key}`).set({id:note.id, title,body,sDate,eDate,selected})
     dispatch({type: 'EDIT_NOTE', note:{title,body,sDate,eDate,selected}, key: note.key})
-
+    
     setEdit(false)
   }
 

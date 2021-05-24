@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import NoteContext from '../context/notes-context';
 import {singleInit} from '../actions/init';
 import database from '../firebase/firebase';
@@ -6,7 +6,8 @@ import database from '../firebase/firebase';
 const NoteSelection = ({note})=>{
   
     const {state,dispatch} = useContext(NoteContext);
-    const [query,setQuery] = useState(Array.from(note.selected, () => '1'))
+    const [query,setQuery] = useState(Array.from(note.selected, () => 1 )) 
+    const [blind, setBlind] = useState(true)
     const id= state.filters.uid;
     const [backList,setBackList] = useState([])
     let [selectableList,setSelectableList]=useState([]);
@@ -67,12 +68,20 @@ const NoteSelection = ({note})=>{
         resume(note.key)
       }
     
-      const onChangeQuery = (value,index)=>{
-        query[index]=value
+      const onChangeQuery = (value,index,option) => {
+        console.log(value,index,option)
+        setBlind(false)
+        query[index]=parseInt(value)
         setQuery(query)
       }
     
-      const onClickListItem = (option)=>{
+      useEffect(()=>{
+        console.log('test')
+       setBlind(true)
+      })
+    
+
+      const onClickListItem = (option) => {
     
         if(!selectableList.includes(option)){
             return setSelectableList([...selectableList,option])
@@ -84,12 +93,10 @@ const NoteSelection = ({note})=>{
         setSelectableList(selectableList)
       }
 
-
     return (
         <div>
-
           {note.selected.map((option) => {
-            const index= note.selected.indexOf(option)
+            const index = note.selected.indexOf(option)
             return <div key={option}>
                       <input
                           onChange={() => onClickListItem(option[0])}
@@ -102,19 +109,19 @@ const NoteSelection = ({note})=>{
     
                       <label>{option[0]}</label> <br/>
     
-                      {selectableList.includes(option[0]) &&
+                      {selectableList.includes(option[0]) && 
                         <div>
                           <select
                           name='query'
-                          onChange={(e)=> onChangeQuery(e.target.value,index) }
+                          onChange={(e)=> onChangeQuery(e.target.value,index,option) }
                           >
                             {option[2].map((item)=>(
                               <option key={option[2].indexOf(item)} value = {option[2].indexOf(item)+1}> {option[2].indexOf(item)+1} </option>
                             ))
                             }
                           </select>
-    
-                          {option[2][query[index]-1].map(item => {
+                          
+                          {blind && option[2][query[index]-1].map(item => {
                               const indexSub = note.selected[index][2][query[index]-1].indexOf(item)
                               return <button
                                         disabled = {item.status!=='unRead' }

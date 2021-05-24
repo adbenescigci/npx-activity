@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import {getTime} from 'date-fns';
 import activityList from '../JSON/activity.json'
@@ -8,39 +8,41 @@ import "react-datepicker/dist/react-datepicker.css";
 const activity= activityList.reduce((acc,current)=>{return [...acc,current.activity]},[])
 
 const Form = ({onSubmitForm,data})=>{
-    
+
 const [title,setTitle] = useState(data.title);
 const [body,setBody] = useState(data.body);
 const [startDate, setStartDate] = useState(data.sDate);
 const [endDate, setEndDate] = useState(data.eDate ? data.eDate : startDate);
-
 let [select,setSelect]=useState([]);
+
+useEffect(()=>{
+   if(data.selected!==undefined) {setSelect(Array.from(data.selected, x => [x[0],x[1]]))}
+},[])
+
+const findValue= (option)=>{
+    return select.filter( e => e[0]=== option)[0][1]
+}
+
 const selectedList= Array.from(select, x=> x[0])
 
 const selectPreap = (a)=> { 
-    
+    console.log(select,data.selected)
     const activitySelects = activityList.filter(el=>el.activity === a[0])[0].select
 
-    let numb=1
-    let wholeArray=[]
-    
-    do{
+    let numb=   1
+    let wholeArray=  []
+
+    while(numb<=a[1]){
         const selectable=Array.from(activitySelects, x=> ({name:x, status:'unRead', userToken:'', number:numb}))
         wholeArray= wholeArray.concat([selectable])
         numb = numb+1
-    } while(numb<=a[1])
-
+    } 
     return [...a,wholeArray]
 }
 
-const selected = select.reduce((acc,current)=>{
-    
-    return [...acc, selectPreap(current)]
-
-},[])
-
 const submitForm = (e)=>{
     e.preventDefault();
+    const selected = select.reduce((acc,current)=> [...acc, selectPreap(current)] ,[])
     const sDate=getTime(startDate);
     const eDate=getTime(endDate);
     onSubmitForm({title,body,sDate,eDate,selected});
@@ -100,9 +102,8 @@ const onRemove = (option) =>{
         />
 
         { activity.map((option)=>
-            <p 
-                key={option} 
-            >
+
+            <div key={option} >
                 <input 
                     onChange={()=>onClickListItem(option)}
                     type="checkbox" 
@@ -115,20 +116,20 @@ const onRemove = (option) =>{
                 <label > {option} </label><br/> 
 
                 { selectedList.includes(option) &&
-                <> 
+                <div> 
                     <input 
                         onChange= {(e) => onChangeNumber(e,option)}  
                         type ='number' 
-                        defaultValue= '1' 
+                        defaultValue= {findValue(option)}
                         min ='1' 
                         max = '100'
                     /> 
                     <span 
                         onClick = {()=> onRemove(option)}> x 
                     </span>
-                </>
+                </div>
                 }   
-            </p>  
+            </div>  
            )
         }
 
