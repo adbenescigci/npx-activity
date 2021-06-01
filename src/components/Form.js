@@ -16,11 +16,28 @@ const [endDate, setEndDate] = useState(data.eDate ? data.eDate : startDate);
 let [select,setSelect]=useState([]);
 
 useEffect(()=>{
-   if(data.selected!==undefined) {setSelect(Array.from(data.selected, x => [x[0],x[1]]))}
+   if(data.selected!==undefined) {
+       setSelect(Array.from(data.selected, x => [x[0],x[1]]))
+    }
 },[])
 
-const findValue= (option)=>{
-    return select.filter( e => e[0]=== option)[0][1]
+const findValue = option => select.filter( e => e[0] === option )[0][1]
+
+const findMin = option => {  
+
+    if(data.selected !== undefined){
+        
+        const index = data.selected.findIndex (e => e[0]=== option)
+
+        if (index !== -1) {
+            return data.selected[index][2].reduce(function (acc, cur) {
+                if(!(cur.filter( e => e.status === 'unRead').length >1)) {
+                    acc++
+                    }
+                    return acc
+                }, 0) 
+        }
+    }  
 }
 
 const selectedList= Array.from(select, x=> x[0])
@@ -38,17 +55,11 @@ const selectPreap = (a)=> {
             numb = parseInt(data.selected[index][1]) + 1
             wholeArray= [...data.selected[index][2]]
 
-            
-               
-        console.log(data.selected[index][1], wholeArray.slice(0,a[1]))
-
             if(data.selected[index][1] >= a[1]) {
                 wholeArray = wholeArray.slice(0,a[1])
             }
         }
     }
-
-    
 
     while(numb<=a[1]){
         const selectable=Array.from(activitySelects, x=> ({name:x, status:'unRead', userToken:'', number:numb}))
@@ -141,7 +152,7 @@ const onRemove = (option) =>{
                         onChange= {(e) => onChangeNumber(e,option)}  
                         type ='number' 
                         defaultValue= {findValue(option)}
-                        min ='1' 
+                        min = {findMin(option) === 0 ? 1 : findMin(option)} 
                         max = '100'
                     /> 
                     <span 
