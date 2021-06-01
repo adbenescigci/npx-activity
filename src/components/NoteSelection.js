@@ -2,19 +2,19 @@ import { useContext, useState, useEffect } from 'react';
 import NoteContext from '../context/notes-context';
 import {singleInit} from '../actions/init';
 import database from '../firebase/firebase';
-
 import SelectQuery from './SelectQuery';
 import SelectionButtons from './SelectionButtons';
 
 const NoteSelection = ({note})=>{
-  
+ 
     const {state,dispatch} = useContext(NoteContext);
     const [query,setQuery] = useState(Array.from(note.selected, () => 1 )) 
     const [blind, setBlind] = useState(true)
+    const [counter,setCounter] = useState(1)
     const id= state.filters.uid;
     const [backList,setBackList] = useState([])
     let [selectableList,setSelectableList]=useState([]);
-
+    
     async function resume (key) {
         singleInit(key).then((note)=>{
           dispatch({type: 'EDIT_NOTE', note, key})
@@ -71,15 +71,16 @@ const NoteSelection = ({note})=>{
         resume(note.key)
       }
     
-      const onChangeQuery = (value,index,option) => {
+      const onChangeQuery = (value,index) => {
         setBlind(false)
+        setCounter(counter+1)
         query[index]=parseInt(value)
         setQuery(query)
       }
     
       useEffect(()=>{
        setBlind(true)
-      })
+      },[counter])
     
 
       const onClickListItem = (option) => {

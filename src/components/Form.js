@@ -26,11 +26,29 @@ const findValue= (option)=>{
 const selectedList= Array.from(select, x=> x[0])
 
 const selectPreap = (a)=> { 
-    console.log(select,data.selected)
     const activitySelects = activityList.filter(el=>el.activity === a[0])[0].select
-
+ 
     let numb=   1
     let wholeArray=  []
+
+    if(data.selected !== undefined) {
+        const index = data.selected.findIndex(b=>b[0]===a[0]);
+
+        if( index !== -1){
+            numb = parseInt(data.selected[index][1]) + 1
+            wholeArray= [...data.selected[index][2]]
+
+            
+               
+        console.log(data.selected[index][1], wholeArray.slice(0,a[1]))
+
+            if(data.selected[index][1] >= a[1]) {
+                wholeArray = wholeArray.slice(0,a[1])
+            }
+        }
+    }
+
+    
 
     while(numb<=a[1]){
         const selectable=Array.from(activitySelects, x=> ({name:x, status:'unRead', userToken:'', number:numb}))
@@ -42,7 +60,9 @@ const selectPreap = (a)=> {
 
 const submitForm = (e)=>{
     e.preventDefault();
+    
     const selected = select.reduce((acc,current)=> [...acc, selectPreap(current)] ,[])
+    console.log(selected)
     const sDate=getTime(startDate);
     const eDate=getTime(endDate);
     onSubmitForm({title,body,sDate,eDate,selected});
