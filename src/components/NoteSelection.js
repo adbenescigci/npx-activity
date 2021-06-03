@@ -71,17 +71,18 @@ const NoteSelection = ({note})=>{
         resume(note.key)
       }
     
-      const onChangeQuery = (value,index) => {
+      const onChangeQuery = (value, flag,length, index, option) => {
+        console.log(value,flag,length, index, option)
         setBlind(false)
         setCounter(counter+1)
-        query[index]=parseInt(value)
+
+        if (value <= length) {query[index]=parseInt(value)}
         setQuery(query)
       }
     
       useEffect(()=>{
        setBlind(true)
       },[counter])
-    
 
       const onClickListItem = (option) => {
         
@@ -94,6 +95,7 @@ const NoteSelection = ({note})=>{
         selectableList = selectableList.filter(el => el !== option )
         setSelectableList(selectableList)
       }
+
 
     return (
         <div>
@@ -117,7 +119,7 @@ const NoteSelection = ({note})=>{
                           <SelectQuery
                             option = {option}
                             index = {index}
-                            onChangeQuery = {(e)=>onChangeQuery(e, index, option)}
+                            onChangeQuery = {(e,flag,length)=>onChangeQuery(e, flag, length, index , option[0])}
                           />
                           
                           { blind &&

@@ -31,7 +31,7 @@ const findMin = option => {
 
         if (index !== -1) {
             return data.selected[index][2].reduce(function (acc, cur) {
-                if(!(cur.filter( e => e.status === 'unRead').length >1)) {
+                if(cur.filter( e => e.status !== 'unRead').length >0) {
                     acc++
                     }
                     return acc
