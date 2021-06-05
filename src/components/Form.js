@@ -19,9 +19,13 @@ useEffect(()=>{
    if(data.selected!==undefined) {
        setSelect(Array.from(data.selected, x => [x[0],x[1]]))
     }
+    console.log(select)
 },[])
 
-const findValue = option => select.filter( e => e[0] === option )[0][1]
+const findValue = option =>{
+ return select.filter( e => e[0] === option )[0][1]
+}
+
 
 const findMin = option => {  
 
@@ -30,13 +34,16 @@ const findMin = option => {
         const index = data.selected.findIndex (e => e[0]=== option)
 
         if (index !== -1) {
-            return data.selected[index][2].reduce(function (acc, cur) {
+            const rtdata = data.selected[index][2].reduce(function (acc, cur) {
                 if(cur.filter( e => e.status !== 'unRead').length >0) {
                     acc++
                     }
                     return acc
                 }, 0) 
-        }
+            if (rtdata === 0) {return 1}
+                else return rtdata
+               
+        } else return 1
     }  
 }
 
@@ -85,15 +92,15 @@ const submitForm = (e)=>{
 }
 
 const onClickListItem = (option)=>{
-
+    
     if(!selectedList.includes(option)){
-       return setSelect([...select,[option,'1']])
+       return setSelect([...select,[option,findMin(option)]])
     } else  {return onRemove(option)} 
 }
 
 const onChangeNumber= (e, option) => {   
         const index= selectedList.findIndex(el => el === option )
-        select[index]= [option,e.target.value]; 
+        select[index]= [option, (e.target.value === undefined ? 1 : e.target.value)]; 
         setSelect(select)
 }
 
@@ -152,12 +159,10 @@ const onRemove = (option) =>{
                         onChange= {(e) => onChangeNumber(e,option)}  
                         type ='number' 
                         defaultValue= {findValue(option)}
-                        min = {findMin(option) === 0 ? 1 : findMin(option)} 
+                        min = {findMin(option) === undefined ? 1 : findMin(option)} 
                         max = '100'
                     /> 
-                    <span 
-                        onClick = {()=> onRemove(option)}> x 
-                    </span>
+                    
                 </div>
                 }   
             </div>  

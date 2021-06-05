@@ -7,16 +7,18 @@ const SelectQuery = ({option, onChangeQuery})=> {
 
   useEffect(()=>{
 
-    const query = option[2].filter( el => el.filter( item => item.status !== 'unRead' ).length === option[2].length ).length
-
-    if (option[2].length > query) {
-        setHatimOrd (query+1)
-      } else { 
-          setFlag(true); 
-          setHatimOrd (query+1); 
-        }
+    const query = option[2].map( el => el.filter( item => item.status === 'unRead' ).length > 0 ).findIndex( el => el === true)
+      
+    if(query !== -1) { 
+      setHatimOrd (query+1) 
+    } 
+        else {  setFlag(true); 
+                setHatimOrd (option[2].length+1) 
+              }
 
     onChangeQuery(hatimOrd, finishFlag ,option[2].length)
+
+    console.log(hatimOrd, 'unfinished', option[2].length, query)
     
   },[hatimOrd, finishFlag])
 

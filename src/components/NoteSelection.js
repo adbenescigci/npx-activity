@@ -71,12 +71,12 @@ const NoteSelection = ({note})=>{
         resume(note.key)
       }
     
-      const onChangeQuery = (value, flag,length, index, option) => {
-        console.log(value,flag,length, index, option)
+      const onChangeQuery = (order, flag,length, index, option) => {
+        console.log(order,flag,length, index, option)
         setBlind(false)
         setCounter(counter+1)
 
-        if (value <= length) {query[index]=parseInt(value)}
+        if (order <= length) {query[index]=parseInt(order)}
         setQuery(query)
       }
     
@@ -119,7 +119,7 @@ const NoteSelection = ({note})=>{
                           <SelectQuery
                             option = {option}
                             index = {index}
-                            onChangeQuery = {(e,flag,length)=>onChangeQuery(e, flag, length, index , option[0])}
+                            onChangeQuery = {(order,flag,length)=>onChangeQuery(order, flag, length, index , option[0])}
                           />
                           
                           { blind &&
