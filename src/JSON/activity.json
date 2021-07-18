@@ -5,18 +5,18 @@
             "type": "cüz"
         },
         {
-            "activity": "Cevşen",
+            "activity": "Cev",
             "select": ["1","2","100"],
             "type": "bab"
         },
         {
-            "activity": "Büyük Cevşen",
-            "select": ["Tahmidiye","Celcelutiye","Sekine","Delailü'n-Nur"],
+            "activity": "Büyük Cev",
+            "select": ["T","Cel","Sek","Nur"],
             "type":"hizb"
         },
         {
-            "activity": "El-Kulubu'd-Darıa",
-            "select": ["hizb1","hizb2","hizb40"],
+            "activity": "Darıa",
+            "select": ["1","2","40"],
             "type": "hizb"
         }
 ]
