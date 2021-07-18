@@ -5,56 +5,54 @@ import ModalDelete from './ModalDelete';
 import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
 import init, { myInit } from '../actions/init';
-
-import database,{firebase} from '../firebase/firebase';
+import database, { firebase } from '../firebase/firebase';
 import 'firebase/auth';
-
 import '../styles/styles.scss';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 const NoteApp = () => {
+  const [state, dispatch] = useReducer(reducer, initial);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  const [state, dispatch] = useReducer(reducer, initial)
-  const [modalIsOpen,setIsOpen] = useState (false)
+  async function ownStart(id) {
+    database
+      .ref()
+      .child('private/' + id + '/personal')
+      .once('value', (data) => {
+        if (data.val() === null) setIsOpen(true);
+        else dispatch({ type: 'PRIVATE_NAME', name: data.val().name });
+      });
 
-  async function ownStart (id) {
-    database.ref().child('private/'+ id +'/personal').once('value', data =>{
-      if (data.val() === null) setIsOpen(true)
-        else  dispatch({type:'PRIVATE_NAME', name:data.val().name })
-    })
-
-    const myItems = await myInit({id})
-    if(myItems) {
-        dispatch({type: 'POPULATE_MY_NOTES', myItems})
+    const myItems = await myInit({ id });
+    if (myItems) {
+      dispatch({ type: 'POPULATE_MY_NOTES', myItems });
     }
   }
 
-  async function start () {
-    console.log(state.notes,state.private, state.filters)
-    const notes = await init()
-      if(notes) {
-        dispatch({type: 'POPULATE_NOTES', notes})
-      }
-  } 
+  async function start() {
+    const notes = await init();
+    if (notes) {
+      dispatch({ type: 'POPULATE_NOTES', notes });
+    }
+  }
 
-  useEffect(()=>{
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      if(user){ 
-        dispatch({type: 'SET_ID', uid:user.uid})
-        ownStart(user.uid)  
+      if (user) {
+        dispatch({ type: 'SET_ID', uid: user.uid });
+        ownStart(user.uid);
       }
-    })
-    start()
-  },[])
-
+    });
+    start();
+  }, []);
 
   return (
-    <NotesContext.Provider value = {{state, dispatch}}>
-      <ModalName open = {modalIsOpen}/>
-      <ModalDelete/>
-      <AppRouter/>
+    <NotesContext.Provider value={{ state, dispatch }}>
+      <ModalName open={modalIsOpen} />
+      <ModalDelete />
+      <AppRouter />
     </NotesContext.Provider>
-  )
-}
+  );
+};
 
 export { NoteApp as default };
