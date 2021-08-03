@@ -1,9 +1,9 @@
-import { Route, Switch, NavLink, useRouteMatch, Redirect, useLocation, useParams } from 'react-router-dom';
+import { Route, Switch, NavLink, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
 import MyActivities from '../components/MyActivities';
 import MySelections from '../components/MySelections';
 import MyArchive from '../components/MyArchive';
 import AddNoteForm from '../components/AddNoteForm';
-import { history } from './AppRouter';
+import Manage from '../components/Manage';
 
 const MyRouter = () => {
   let match = useRouteMatch();
@@ -46,8 +46,9 @@ const MyRouter = () => {
         <Route path={`${match.path}/AddNoteForm`} component={AddNoteForm} exact={true} />
         <Route path={`${match.path}/MySelections`} component={MySelections} exact={true} />
         <Route path={`${match.path}/MyActivities`} component={MyActivities} exact={true} />
-        <Route path={`${match.path}/MyActivities/Manage/:id`} component={Manage} exact={true} />
+        <Route path={`${match.path}/MyActivities/:id/Manage`} component={Manage} exact={true} />
         <Route path="*" component={NoMatch} />
+        {<Redirect to={'/'} />}
       </Switch>
     </div>
   );
@@ -66,13 +67,3 @@ function NoMatch() {
     </div>
   );
 }
-
-const Manage = () => {
-  let id = useParams();
-  return (
-    <div>
-      <button onClick={() => history.goBack()}>Back</button>
-      {id.id}
-    </div>
-  );
-};

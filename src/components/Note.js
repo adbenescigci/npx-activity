@@ -47,7 +47,7 @@ const Note = ({ note, place }) => {
 
   const onManageNote = () => {
     console.log('manage', note);
-    history.push(`${history.location.pathname}/Manage/${note.key}`);
+    history.push(`${history.location.pathname}/${note.key}/Manage`);
   };
 
   return (

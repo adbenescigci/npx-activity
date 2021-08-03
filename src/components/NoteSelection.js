@@ -20,6 +20,10 @@ const NoteSelection = ({ note }) => {
     });
   }
 
+  useEffect(() => {
+    setBlind(true);
+  }, [counter]);
+
   const onBack = () => {
     const updates = {};
 
@@ -91,16 +95,14 @@ const NoteSelection = ({ note }) => {
       query[index] = parseInt(order);
     }
     setQuery(query);
+    resume(note.key);
   };
-
-  useEffect(() => {
-    setBlind(true);
-  }, [counter]);
 
   const onClickListItem = (option) => {
     if (!selectableList.includes(option)) {
       return setSelectableList([...selectableList, option]);
     } else onRemoveSelect(option);
+    resume(note.key);
   };
 
   const onRemoveSelect = (option) => {

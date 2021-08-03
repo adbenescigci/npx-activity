@@ -18,7 +18,7 @@ const AppRouter = () => {
         <Switch>
           <Route path="/" component={MainPage} exact={true} />
           <Route path="/loginPage" component={LoginPage} exact={true} />
-          {id !== '' ? <Route path={`/myPage/${id}`} component={MyNotes} /> : history.push('/')}
+          <Route path={`/myPage/${id}`} component={MyNotes} />
         </Switch>
       </div>
     </Router>
