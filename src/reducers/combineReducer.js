@@ -4,15 +4,21 @@ import filterReducer from './filter';
 import privateReducer from './private';
 
 const initNotes = [];
-const initFilters = {text:'', date:0 , sortBy:'date', uid:'', note:''};
-const initPrivate = {personal:{name:'', delete:false}, items:[] };
-
+const initFilters = { text: '', date: 0, sortBy: 'date', uid: '', note: '' };
+const initPrivate = {
+  personal: { name: '', delete: false },
+  items: [],
+  view: {
+    list: [],
+    name: '',
+    order: '',
+  },
+};
 
 const [reducer, initial] = combineReducers({
   notes: [notesReducer, initNotes],
   filters: [filterReducer, initFilters],
-  private: [privateReducer, initPrivate]
+  private: [privateReducer, initPrivate],
 });
 
-export { reducer, initial }
-
+export { reducer, initial };
