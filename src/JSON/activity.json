@@ -1,23 +1,22 @@
 [
-        {
-            "activity": "Kuran",
-            "select": ["1","2","30"],
-            "type": "cüz"
-        },
-        {
-            "activity": "Cev",
-            "select": ["1","2","100"],
-            "type": "bab"
-        },
-        {
-            "activity": "Büyük Cev",
-            "select": ["T","Cel","Sek","Nur"],
-            "type":"hizb"
-        },
-        {
-            "activity": "Darıa",
-            "select": ["1","2","40"],
-            "type": "hizb"
-        }
+  {
+    "activity": "Read Book X",
+    "select": ["Chapter 1", "Chapter 2", "Chapter 3"],
+    "type": "cüz"
+  },
+  {
+    "activity": "Bus Reservation",
+    "select": ["Seat 1", "Seat 2", "Seat 3"],
+    "type": "bab"
+  },
+  {
+    "activity": "Lecture X",
+    "select": ["1", "2", "3", "4"],
+    "type": "hizb"
+  },
+  {
+    "activity": "Aid Service",
+    "select": ["Area 1", "Area 2", "Area 3"],
+    "type": "hizb"
+  }
 ]
-

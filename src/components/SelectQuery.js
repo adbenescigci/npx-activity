@@ -24,7 +24,7 @@ const SelectQuery = ({ option, onChangeQuery }) => {
     onChangeQuery(hatimOrd, length);
   }, [hatimOrd, length, finishFlag]);
 
-  return <div>{hatimOrd <= option[2].length ? `${hatimOrd}.hatim / ${option[2].length}` : 'tamamlandi'}</div>;
+  return <div>{hatimOrd <= option[2].length ? `${hatimOrd}.grup / ${option[2].length}` : 'tamamlandi'}</div>;
 };
 
 export { SelectQuery as default };

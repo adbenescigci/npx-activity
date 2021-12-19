@@ -85,9 +85,7 @@ const ViewNote = () => {
       {view.list.map((el) => (
         <div key={el.name}>
           <h4>
-            <button disabled={el.status === 'unRead'}>
-              {el.name} - {el.status}
-            </button>
+            {el.name} - {el.status}
             {el.userToken}
           </h4>
         </div>
