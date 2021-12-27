@@ -4,12 +4,12 @@ import { createBrowserHistory } from 'history';
 import MainPage from '../components/MainPage';
 import LoginPage from '../components/LoginPage';
 import MyNotes from '../components/MyNotes';
-import NoteContext from '../context/notes-context';
+import ActivityContext from '../context/notes-context';
 
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
-  const { state } = useContext(NoteContext);
+  const { state } = useContext(ActivityContext);
   const id = state.filters.uid;
 
   return (

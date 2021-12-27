@@ -32,8 +32,8 @@ const MyRouter = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${match.url}/AddNoteForm`} activeStyle={style}>
-            Add Note
+          <NavLink to={`${match.url}/AddActivityForm`} activeStyle={style}>
+            Add Activity
           </NavLink>
         </li>
       </ul>
@@ -43,7 +43,7 @@ const MyRouter = () => {
           <Redirect to={`${match.path}/MySelections`} />
         </Route>
         <Route path={`${match.path}/MyArchive`} component={MyArchive} exact={true} />
-        <Route path={`${match.path}/AddNoteForm`} component={AddNoteForm} exact={true} />
+        <Route path={`${match.path}/AddActivityForm`} component={AddNoteForm} exact={true} />
         <Route path={`${match.path}/MySelections`} component={MySelections} exact={true} />
         <Route path={`${match.path}/MyActivities`} component={MyActivities} exact={true} />
         <Route path={`${match.path}/MyActivities/:id/Manage`} component={Manage} exact={true} />

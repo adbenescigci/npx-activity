@@ -7,7 +7,7 @@ import { history } from '../routers/AppRouter';
 
 import database from '../firebase/firebase';
 
-const Note = ({ note, place }) => {
+const Note = ({ note, place = '' }) => {
   const { state, dispatch } = useContext(NoteContext);
   const [edit, setEdit] = useState(false);
   const [isLogged, setLogIn] = useState(false);
@@ -67,10 +67,6 @@ const Note = ({ note, place }) => {
       )}
     </div>
   );
-};
-
-Note.defaultProps = {
-  place: '',
 };
 
 export { Note as default };
