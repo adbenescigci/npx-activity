@@ -14,10 +14,8 @@ const ModalDelete = () => {
 
   const message = (
     <div>
-      <p>
-        Almis oldugunuz asagidaki okumalariniz organizatorun ilgili aktiviteyi kaldirmasi nedeniyle iptal ediilmistir
-      </p>
-      <p> Listenizden dusurulmustur.</p>
+      <p>Katildiginiz aktivite/ler kaldirilmistir</p>
+      <p> Listenizden dusurulmus olup arsivinize not edilmistir</p>
       {deletedItems.map((item) => (
         <p key={item.noteKey + item.name + item.item}>
           {item.name} - {item.item} / {item.noteKey}

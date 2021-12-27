@@ -19,15 +19,23 @@ const Header = () => {
       {uid !== '' ? (
         <div className="header">
           {history.location.pathname.includes(`/myPage/${uid}`) ? (
-            <button onClick={() => history.push('/')}> Ana Sayfa</button>
+            <button className="btn btn--nav" onClick={() => history.push('/')}>
+              Ana Sayfa
+            </button>
           ) : (
-            <button onClick={() => history.push(`/myPage/${uid}`)}> Go to MyPage </button>
+            <button className="btn btn--nav" onClick={() => history.push(`/myPage/${uid}`)}>
+              Go to MyPage
+            </button>
           )}
           <h2>Hosgeldiniz {name}</h2>
-          <button onClick={logOut}>LogOut </button>
+          <button className="btn btn--logout" onClick={logOut}>
+            LogOut
+          </button>
         </div>
       ) : (
-        <button onClick={() => history.push('/loginPage')}> Login </button>
+        <button className="btn btn--login" onClick={() => history.push('/loginPage')}>
+          Login
+        </button>
       )}
     </div>
   );

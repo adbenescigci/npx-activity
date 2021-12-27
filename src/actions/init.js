@@ -30,8 +30,8 @@ async function init() {
 
   const personal = initialNotes().then((snapshot) => {
     snapshot.forEach((child) => {
-      noteKeys.push(child.key);
       if (child.val().eDate >= getTime(new Date())) {
+        noteKeys.push(child.key);
         notesPersonal.push({ ...child.val(), key: child.key });
       }
     });

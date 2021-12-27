@@ -58,6 +58,7 @@ const NoteSelection = ({ note }) => {
             name: option[0],
             id: note.id,
             noteKey: note.key,
+            eDate: note.eDate,
             item: item.name,
             status: 'taken',
             index,
