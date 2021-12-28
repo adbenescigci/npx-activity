@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import NotesContext from '../context/notes-context';
-import database from '../firebase/firebase';
-import init from '../actions/init';
+import NotesContext from '../../context/notes-context';
+import database from '../../firebase/firebase';
+import init from '../../actions/init';
 
 const MySelections = () => {
   const { state, dispatch } = useContext(NotesContext);

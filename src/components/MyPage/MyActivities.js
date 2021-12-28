@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import Note from './Note';
-import NotesContext from '../context/notes-context';
-import myActionsSelector from '../selectors/myActionsSelector';
+import Note from '../Note/Note';
+import NotesContext from '../../context/notes-context';
+import myActionsSelector from '../../selectors/myActionsSelector';
 
 const MyActivities = () => {
   const { state } = useContext(NotesContext);

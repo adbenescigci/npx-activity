@@ -1,9 +1,9 @@
 import { Route, Switch, NavLink, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
-import MyActivities from '../components/MyActivities';
-import MySelections from '../components/MySelections';
-import MyArchive from '../components/MyArchive';
-import AddNoteForm from '../components/AddNoteForm';
-import Manage from '../components/Manage';
+import MyActivities from '../components/MyPage/MyActivities';
+import MySelections from '../components/MyPage/MySelections';
+import MyArchive from '../components/MyPage/MyArchive';
+import AddNoteForm from '../components/MyPage/AddNoteForm';
+import Manage from '../components/MyPage/Manage';
 
 const MyRouter = () => {
   let match = useRouteMatch();

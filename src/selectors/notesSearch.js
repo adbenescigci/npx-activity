@@ -2,7 +2,9 @@ const notesSearch = (notes, { text, startDate, endDate, sortBy }) => {
   return notes
     .filter((note) => {
       return (
-        note.title.includes(text) && (!endDate || endDate >= note.eDate) && (!startDate || note.sDate >= startDate)
+        note.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) &&
+        (!endDate || endDate >= note.eDate) &&
+        (!startDate || note.sDate >= startDate)
       );
     })
     .sort((a, b) => {

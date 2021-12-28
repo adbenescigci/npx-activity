@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 import Info from './NoteInfo';
-import NoteContext from '../context/notes-context';
-import ModalLogin from './ModalLogin';
-import ModalSelection from './ModalSelection';
-import { history } from '../routers/AppRouter';
+import NoteContext from '../../context/notes-context';
+import ModalLogin from '../Modals/ModalLogin';
+import ModalSelection from '../Modals/ModalSelection';
+import { history } from '../../routers/AppRouter';
 
-import database from '../firebase/firebase';
+import database from '../../firebase/firebase';
 
 const Note = ({ note, place = '' }) => {
   const { state, dispatch } = useContext(NoteContext);

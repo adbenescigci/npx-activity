@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
-import NoteContext from '../context/notes-context';
-import { singleInit } from '../actions/init';
-import database from '../firebase/firebase';
-import SelectQuery from './SelectQuery';
-import SelectionButtons from './SelectionButtons';
+import NoteContext from '../../context/notes-context';
+import { singleInit } from '../../actions/init';
+import database from '../../firebase/firebase';
+import SelectQuery from '../SelectQuery';
+import SelectionButtons from '../SelectionButtons';
 
 const NoteSelection = ({ note }) => {
   const { state, dispatch } = useContext(NoteContext);

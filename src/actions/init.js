@@ -27,14 +27,16 @@ async function singleInit(key) {
 async function init() {
   noteKeys = [];
   const notesPersonal = [];
+  const updates = {};
 
   const personal = initialNotes().then((snapshot) => {
     snapshot.forEach((child) => {
       if (child.val().eDate >= getTime(new Date())) {
         noteKeys.push(child.key);
         notesPersonal.push({ ...child.val(), key: child.key });
-      }
+      } else updates[`notes/${child.key}`] = [];
     });
+    database.ref().update(updates);
     return notesPersonal;
   });
 

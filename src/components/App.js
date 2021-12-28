@@ -1,7 +1,7 @@
 import { useEffect, useState, useReducer } from 'react';
 import { reducer, initial } from '../reducers/combineReducer';
-import ModalName from './ModalName';
-import ModalDelete from './ModalDelete';
+import ModalName from './Modals/ModalName';
+import ModalDelete from './Modals/ModalDelete';
 import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
 import init, { myInit } from '../actions/init';

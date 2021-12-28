@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import MainPage from '../components/MainPage';
+import DashBoard from '../components/DashBoard';
 import LoginPage from '../components/LoginPage';
-import MyNotes from '../components/MyNotes';
+import MyNotes from '../components/MyPage/MyNotes';
 import ActivityContext from '../context/notes-context';
 
 export const history = createBrowserHistory();
@@ -16,7 +16,7 @@ const AppRouter = () => {
     <Router history={history}>
       <div>
         <Switch>
-          <Route path="/" component={MainPage} exact={true} />
+          <Route path="/" component={DashBoard} exact={true} />
           <Route path="/loginPage" component={LoginPage} exact={true} />
           <Route path={`/myPage/${id}`} component={MyNotes} />
         </Switch>

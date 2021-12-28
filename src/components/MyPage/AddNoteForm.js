@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import Form from './Form';
-import NotesContext from '../context/notes-context';
+import Form from '../Form';
+import NotesContext from '../../context/notes-context';
 
-import database from '../firebase/firebase';
+import database from '../../firebase/firebase';
 
 const AddNoteForm = () => {
   const { state, dispatch } = useContext(NotesContext);

@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import NotesContext from '../context/notes-context';
 import Header from './Header';
-import NoteList from './NoteList';
-import MySelections from './MySelections';
+import NoteList from './Note/NoteList';
+import MySelections from './MyPage/MySelections';
 
-const MainPage = () => {
+const DashBoard = () => {
   const { state } = useContext(NotesContext);
 
   return (
@@ -18,4 +18,4 @@ const MainPage = () => {
   );
 };
 
-export { MainPage as default };
+export { DashBoard as default };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { deletedItems } from '../actions/init';
+import { deletedItems } from '../../actions/init';
 
 const ModalDelete = () => {
   const [isOpen, setIsOpen] = useState(false);

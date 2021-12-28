@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { history } from '../routers/AppRouter';
-import NoteContext from '../context/notes-context';
+import { history } from '../../routers/AppRouter';
+import NoteContext from '../../context/notes-context';
 
 const Manage = () => {
   let id = useParams();

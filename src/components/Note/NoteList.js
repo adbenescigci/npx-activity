@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import Note from './Note';
-import NotesContext from '../context/notes-context';
-import searchSelector from '../selectors/notesSearch';
-import Search from './Search';
+import NotesContext from '../../context/notes-context';
+import searchSelector from '../../selectors/notesSearch';
+import Search from '../Search';
 
 const NoteList = () => {
   const { state } = useContext(NotesContext);
@@ -14,7 +14,6 @@ const NoteList = () => {
   return (
     <div>
       <Search />
-      <h1>Notes</h1>
       {searchSelector(state.notes, { text, startDate, endDate, sortBy }).map((note) => (
         <Note key={note.key} note={note} />
       ))}
