@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-import { getTime } from 'date-fns';
+import { getTime, addDays } from 'date-fns';
 import activityList from '../JSON/activity.json';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -66,6 +66,7 @@ const Form = ({ onSubmitForm, data }) => {
     }
 
     while (numb <= a[1]) {
+      // eslint-disable-next-line no-loop-func
       const selectable = Array.from(activitySelects, (x) => ({
         name: x,
         status: 'unRead',
@@ -131,6 +132,7 @@ const Form = ({ onSubmitForm, data }) => {
           return setStartDate(date);
         }}
         minDate={new Date()}
+        maxDate={addDays(new Date(), 30)}
         placeholderText="Start Date"
         isClearable
         required
@@ -141,6 +143,7 @@ const Form = ({ onSubmitForm, data }) => {
           setEndDate(date);
         }}
         minDate={startDate}
+        maxDate={addDays(startDate, 60)}
         placeholderText="End Date"
         isClearable
         required

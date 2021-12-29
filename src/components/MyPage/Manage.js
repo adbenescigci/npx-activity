@@ -72,7 +72,7 @@ const ViewNote = () => {
 
   useEffect(() => {
     dispatch({ type: 'VIEW_NOTE', view: { list: [], name: '', order: '' } });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
