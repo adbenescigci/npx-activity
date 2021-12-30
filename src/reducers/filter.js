@@ -6,6 +6,8 @@ const filterReducer = (state, action) => {
       return { ...state, startDate: action.startDate };
     case 'SET_END_DATE':
       return { ...state, endDate: action.endDate };
+    case 'SET_ACTIVITY_TYPE':
+      return { ...state, activityType: action.activityType };
     case 'SORT_BY':
       return { ...state, sortBy: action.sortBy };
     case 'SET_ID':

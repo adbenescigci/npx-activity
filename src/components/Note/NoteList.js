@@ -10,11 +10,12 @@ const NoteList = () => {
   const startDate = state.filters.startDate;
   const text = state.filters.text;
   const sortBy = state.filters.sortBy;
+  const activityType = state.filters.activityType;
 
   return (
     <div>
       <Search />
-      {searchSelector(state.notes, { text, startDate, endDate, sortBy }).map((note) => (
+      {searchSelector(state.notes, { text, startDate, endDate, sortBy, activityType }).map((note) => (
         <Note key={note.key} note={note} />
       ))}
     </div>

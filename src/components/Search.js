@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import { getTime } from 'date-fns';
 import NotesContext from '../context/notes-context';
+import activityList from '../JSON/activity.json';
 
 const Search = () => {
   const { state, dispatch } = useContext(NotesContext);
@@ -24,9 +25,15 @@ const Search = () => {
     dispatch({ type: 'SET_END_DATE', endDate: getTime(endDate) });
   }, [endDate, dispatch]);
 
+  const handleAcivityFilter = (el) => {
+    dispatch({ type: 'SET_ACTIVITY_TYPE', activityType: el.activity });
+    console.log(`clicked ${el.activity}`, el);
+  };
+
   return (
     <>
       <h3>Search</h3>
+
       <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
 
       <DatePicker
@@ -44,9 +51,18 @@ const Search = () => {
         isClearable
       />
       <select onChange={onSortChange}>
-        <option value="date"> Date </option>
-        <option value="type"> Type </option>
+        <option value="sDate"> Start Date </option>
+        <option value="eDate"> End Date </option>
       </select>
+      <div>
+        {activityList.map((el) => {
+          return (
+            <button onClick={() => handleAcivityFilter(el)} key={el.activity} value={el.activity}>
+              {el.activity}
+            </button>
+          );
+        })}
+      </div>
     </>
   );
 };

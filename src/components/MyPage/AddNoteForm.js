@@ -1,5 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 import { history } from '../../routers/AppRouter';
 import Form from '../Form';
 import NotesContext from '../../context/notes-context';
@@ -8,14 +7,7 @@ import database from '../../firebase/firebase';
 
 const AddNoteForm = () => {
   const { state, dispatch } = useContext(NotesContext);
-  const [path, setPath] = useState('');
   const id = state.filters.uid;
-  let location = useLocation().pathname.split('/');
-
-  useEffect(() => {
-    location.pop();
-    setPath(location.join('/'));
-  }, []);
 
   async function addNote({ title, body, sDate, eDate, selected }) {
     await database
@@ -42,7 +34,7 @@ const AddNoteForm = () => {
       ) : (
         <>
           <h4> You have 3 activities, to add new activity you should drop one of your activities </h4>
-          <button onClick={() => history.push(`${path}/MyActivities`)}> Go to My Activities</button>
+          <button onClick={() => history.push(`/myPage/${id}/MyActivities`)}> Go to My Activities</button>
         </>
       )}
     </>
