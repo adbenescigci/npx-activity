@@ -19,12 +19,12 @@ const Header = () => {
       {uid !== '' ? (
         <div className="header">
           {history.location.pathname.includes(`/myPage/${uid}`) ? (
-            <button className="btn btn--nav" onClick={() => history.push('/')}>
+            <button className="btn" onClick={() => history.push('/')}>
               Ana Sayfa
             </button>
           ) : (
-            <button className="btn btn--nav" onClick={() => history.push(`/myPage/${uid}`)}>
-              Go to MyPage
+            <button className="btn" onClick={() => history.push(`/myPage/${uid}`)}>
+              MyPage
             </button>
           )}
           <h2>Hosgeldiniz {name}</h2>

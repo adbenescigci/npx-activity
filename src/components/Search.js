@@ -26,9 +26,20 @@ const Search = () => {
   }, [endDate, dispatch]);
 
   const handleAcivityFilter = (el) => {
-    dispatch({ type: 'SET_ACTIVITY_TYPE', activityType: el.activity });
-    console.log(`clicked ${el.activity}`, el);
+    let activityType = state.filters.activityType;
+
+    if (activityType.length !== 0) {
+      if (!activityType.includes(el.activity)) {
+        activityType.push(el.activity);
+      } else {
+        activityType = activityType.filter((e) => e !== el.activity);
+      }
+    } else activityType.push(el.activity);
+
+    dispatch({ type: 'SET_ACTIVITY_TYPE', activityType });
   };
+
+  const className = 'btn btn--filtered';
 
   return (
     <>
@@ -56,8 +67,9 @@ const Search = () => {
       </select>
       <div>
         {activityList.map((el) => {
+          //console.log(el.activity);
           return (
-            <button onClick={() => handleAcivityFilter(el)} key={el.activity} value={el.activity}>
+            <button className={className} onClick={() => handleAcivityFilter(el)} key={el.activity} value={el.activity}>
               {el.activity}
             </button>
           );

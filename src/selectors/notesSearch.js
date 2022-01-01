@@ -1,12 +1,12 @@
 const notesSearch = (notes, { text, startDate, endDate, sortBy, activityType }) => {
   return notes
     .filter((note) => {
-      const length = note.selected.filter((el) => el[0] === activityType).length;
+      const flag = note.selected.filter((el) => activityType.includes(el[0])).length !== 0;
       return (
         note.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) &&
         (!endDate || endDate >= note.eDate) &&
         (!startDate || note.sDate >= startDate) &&
-        (!activityType ? 1 : length > 0)
+        (activityType.length === 0 ? 1 : flag)
       );
     })
     .sort((a, b) => {
@@ -20,9 +20,3 @@ const notesSearch = (notes, { text, startDate, endDate, sortBy, activityType }) 
 };
 
 export default notesSearch;
-
-// else if (sortBy === 'type') {
-//   a = a.title.toLowerCase();
-//   b = b.title.toLowerCase();
-//   return a.localeCompare(b);
-// } else return console.log('sortby has no valid data');
