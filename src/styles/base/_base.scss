@@ -33,11 +33,18 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
 }
-
-h1 {
-  color: blue;
+input {
+  border-radius: 0.3em;
+  border-inline: 0.9em;
+  border-color: rgb(255, 115, 0);
+  line-height: 1.6;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
 }
 
+h4 {
+  margin: 0;
+}
 ul {
   display: flex;
   flex-direction: row;

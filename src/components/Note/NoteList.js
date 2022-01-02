@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import Note from './Note';
 import NotesContext from '../../context/notes-context';
 import searchSelector from '../../selectors/notesSearch';
-import Search from '../Search';
+import Search from '../Search/Search';
 
 const NoteList = () => {
   const { state } = useContext(NotesContext);

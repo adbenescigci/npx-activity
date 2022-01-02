@@ -1,13 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import { getTime } from 'date-fns';
-import NotesContext from '../context/notes-context';
-import activityList from '../JSON/activity.json';
+import NotesContext from '../../context/notes-context';
+import activityList from '../../JSON/activity.json';
+import Button from './Button';
 
 const Search = () => {
   const { state, dispatch } = useContext(NotesContext);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+
+  let activityType = state.filters.activityType;
 
   const onSetText = (e) => {
     dispatch({ type: 'SET_TEXT', text: e.target.value });
@@ -25,9 +28,7 @@ const Search = () => {
     dispatch({ type: 'SET_END_DATE', endDate: getTime(endDate) });
   }, [endDate, dispatch]);
 
-  const handleAcivityFilter = (el) => {
-    let activityType = state.filters.activityType;
-
+  const handleActivityFilter = (el) => {
     if (activityType.length !== 0) {
       if (!activityType.includes(el.activity)) {
         activityType.push(el.activity);
@@ -39,12 +40,13 @@ const Search = () => {
     dispatch({ type: 'SET_ACTIVITY_TYPE', activityType });
   };
 
-  const className = 'btn btn--filtered';
-
   return (
     <>
       <h3>Search</h3>
-
+      <div>
+        <h4>Filter By </h4>
+        <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
+      </div>
       <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
 
       <DatePicker
@@ -65,16 +67,6 @@ const Search = () => {
         <option value="sDate"> Start Date </option>
         <option value="eDate"> End Date </option>
       </select>
-      <div>
-        {activityList.map((el) => {
-          //console.log(el.activity);
-          return (
-            <button className={className} onClick={() => handleAcivityFilter(el)} key={el.activity} value={el.activity}>
-              {el.activity}
-            </button>
-          );
-        })}
-      </div>
     </>
   );
 };

@@ -4,7 +4,7 @@ import filterReducer from './filter';
 import privateReducer from './private';
 
 const initNotes = [];
-const initFilters = { text: '', activityType: [], date: 0, sortBy: 'date', uid: '', note: '' };
+const initFilters = { text: '', activityType: [], date: 0, sortBy: 'sDate', uid: '', note: '' };
 const initPrivate = {
   personal: { name: '', delete: false },
   items: [],
