@@ -1,8 +1,13 @@
-.mainPage {
+.dashboard {
   display: flex;
   flex-direction: row;
   margin-top: $m-size;
   border: 1px solid #55c57a;
   border-radius: 30px;
   padding: 1.7rem;
+}
+.dashboard__selections {
+  padding: 0.7rem;
+  background-color: gray;
+  color: honeydew;
 }

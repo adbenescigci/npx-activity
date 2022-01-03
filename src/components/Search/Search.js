@@ -42,31 +42,34 @@ const Search = () => {
 
   return (
     <>
-      <h3>Search</h3>
+      <div>
+        <h3>Search</h3>
+        <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
+
+        <DatePicker
+          placeholderText="Search by start date"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          minDate={new Date()}
+          isClearable
+        />
+        <DatePicker
+          placeholderText="Search by end date"
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          minDate={new Date()}
+          isClearable
+        />
+        <select onChange={onSortChange}>
+          <option value="sDate"> Start Date </option>
+          <option value="eDate"> End Date </option>
+        </select>
+      </div>
+
       <div>
         <h4>Filter By </h4>
         <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
       </div>
-      <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
-
-      <DatePicker
-        placeholderText="Search by start date"
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        minDate={new Date()}
-        isClearable
-      />
-      <DatePicker
-        placeholderText="Search by end date"
-        selected={endDate}
-        onChange={(date) => setEndDate(date)}
-        minDate={new Date()}
-        isClearable
-      />
-      <select onChange={onSortChange}>
-        <option value="sDate"> Start Date </option>
-        <option value="eDate"> End Date </option>
-      </select>
     </>
   );
 };

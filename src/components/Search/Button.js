@@ -2,7 +2,6 @@ const Button = ({ activityList, activityType, handleActivityFilter }) => {
   return (
     <div>
       {activityList.map((el) => {
-        console.log(activityType.includes(el.activity));
         return (
           <button
             className={activityType.includes(el.activity) ? 'btn btn--filtered' : 'btn btn--notFiltered'}

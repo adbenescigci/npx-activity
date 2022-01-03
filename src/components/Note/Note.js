@@ -50,21 +50,24 @@ const Note = ({ note, place = '' }) => {
   };
 
   return (
-    <div>
-      <button onClick={() => onJoin()}> Join </button>
-      {place === 'private' && (
-        <div>
-          <button onClick={onRemove}> x </button>
-          <button onClick={onClickEdit}> edit </button>
-          <button onClick={onManageNote}> Manage </button>
-        </div>
-      )}
-
-      <Info note={note} />
-      <ModalLogin isLogged={isLogged} setLogIn={() => setLogIn(false)} />
-      {state.filters.note === note.key && (
-        <ModalSelection note={note} edit={edit} setEdit={() => setEdit(false)} updateNote={(e) => updateNote(e)} />
-      )}
+    <div className="card">
+      <div className="card__header">
+        <button onClick={() => onJoin()}> Join </button>
+        {place === 'private' && (
+          <div>
+            <button onClick={onRemove}> x </button>
+            <button onClick={onClickEdit}> edit </button>
+            <button onClick={onManageNote}> Manage </button>
+          </div>
+        )}
+      </div>
+      <div className="card__details">
+        <Info note={note} />
+        <ModalLogin isLogged={isLogged} setLogIn={() => setLogIn(false)} />
+        {state.filters.note === note.key && (
+          <ModalSelection note={note} edit={edit} setEdit={() => setEdit(false)} updateNote={(e) => updateNote(e)} />
+        )}
+      </div>
     </div>
   );
 };

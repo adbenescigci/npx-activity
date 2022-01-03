@@ -10,9 +10,9 @@ const DashBoard = () => {
   return (
     <div>
       <Header />
-      <div className="mainPage">
+      <div className="dashboard">
         <NoteList />
-        {state.filters.uid !== '' && <MySelections />}
+        <div className="dashboard__selections">{state.filters.uid !== '' && <MySelections />}</div>
       </div>
     </div>
   );

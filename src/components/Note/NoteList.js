@@ -15,9 +15,11 @@ const NoteList = () => {
   return (
     <div>
       <Search />
-      {searchSelector(state.notes, { text, startDate, endDate, sortBy, activityType }).map((note) => (
-        <Note key={note.key} note={note} />
-      ))}
+      <div className="card-container">
+        {searchSelector(state.notes, { text, startDate, endDate, sortBy, activityType }).map((note) => (
+          <Note key={note.key} note={note} />
+        ))}
+      </div>
     </div>
   );
 };
