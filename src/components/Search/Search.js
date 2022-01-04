@@ -41,7 +41,7 @@ const Search = () => {
   };
 
   return (
-    <>
+    <div className="search">
       <div>
         <h3>Search</h3>
         <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
@@ -70,7 +70,7 @@ const Search = () => {
         <h4>Filter By </h4>
         <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -12,7 +12,7 @@ const DashBoard = () => {
       <Header />
       <div className="dashboard">
         <NoteList />
-        <div className="dashboard__selections">{state.filters.uid !== '' && <MySelections />}</div>
+        {state.filters.uid !== '' && <MySelections />}
       </div>
     </div>
   );

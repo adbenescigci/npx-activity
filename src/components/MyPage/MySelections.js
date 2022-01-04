@@ -58,7 +58,7 @@ const MySelections = () => {
     start();
   }
   return (
-    <div>
+    <div className="dashboard__selections">
       <h3>My Selected Items</h3>
       {item[0] !== undefined
         ? item.map((el) => (
