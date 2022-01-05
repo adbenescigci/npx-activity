@@ -14,7 +14,7 @@ const AppRouter = () => {
 
   return (
     <Router history={history}>
-      <div>
+      <div className="appRouter">
         <Switch>
           <Route path="/" component={DashBoard} exact={true} />
           <Route path="/loginPage" component={LoginPage} exact={true} />

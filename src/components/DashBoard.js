@@ -6,15 +6,16 @@ import MySelections from './MyPage/MySelections';
 
 const DashBoard = () => {
   const { state } = useContext(NotesContext);
+  const className = `dashboard${state.filters.uid !== '' ? '' : ' dashboard--withMySelections'}`;
 
   return (
-    <div>
+    <>
       <Header />
-      <div className="dashboard">
+      <div className={className}>
         <NoteList />
         {state.filters.uid !== '' && <MySelections />}
       </div>
-    </div>
+    </>
   );
 };
 

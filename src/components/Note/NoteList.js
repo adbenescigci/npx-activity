@@ -15,7 +15,7 @@ const NoteList = () => {
   return (
     <div>
       <Search />
-      <div className="card-container">
+      <div className="activity-container">
         {searchSelector(state.notes, { text, startDate, endDate, sortBy, activityType }).map((note) => (
           <Note key={note.key} note={note} />
         ))}

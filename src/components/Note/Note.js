@@ -50,8 +50,8 @@ const Note = ({ note, place = '' }) => {
   };
 
   return (
-    <div className="card">
-      <div className="card__header">
+    <div className="activity">
+      <div className="activity__header">
         <button onClick={() => onJoin()}> Join </button>
         {place === 'private' && (
           <div>
@@ -61,7 +61,7 @@ const Note = ({ note, place = '' }) => {
           </div>
         )}
       </div>
-      <div className="card__details">
+      <div className="activity__details">
         <Info note={note} />
         <ModalLogin isLogged={isLogged} setLogIn={() => setLogIn(false)} />
         {state.filters.note === note.key && (

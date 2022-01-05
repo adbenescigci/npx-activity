@@ -1,11 +1,19 @@
 .header {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    button {
-        border:none;
-        margin:auto
-    }
+  padding: $s-size;
+  margin-bottom: $m-size;
+  @media (max-width: $desktop-breakpoint) {
+    margin-bottom: 0;
+  }
 }
 
+.header__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button {
+    border: none;
+    margin: auto;
+    font-size: $s-size;
+  }
+}

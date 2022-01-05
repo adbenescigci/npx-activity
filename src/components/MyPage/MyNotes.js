@@ -3,10 +3,10 @@ import MyRouter from '../../routers/MyRouter';
 
 const MyNotes = () => {
   return (
-    <div>
+    <>
       <Header />
       <MyRouter />
-    </div>
+    </>
   );
 };
 

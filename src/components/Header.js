@@ -15,12 +15,12 @@ const Header = () => {
   };
 
   return (
-    <div>
+    <div className="header">
       {uid !== '' ? (
-        <div className="header">
+        <div className="header__container">
           {history.location.pathname.includes(`/myPage/${uid}`) ? (
             <button className="btn" onClick={() => history.push('/')}>
-              Ana Sayfa
+              🏠
             </button>
           ) : (
             <button className="btn" onClick={() => history.push(`/myPage/${uid}`)}>

@@ -14,7 +14,7 @@ const MyRouter = () => {
   };
 
   return (
-    <div>
+    <div className="myRouter">
       <ul>
         <li>
           <NavLink to={`${match.url}/MySelections`} activeStyle={style}>

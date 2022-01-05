@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import NotesContext from '../../context/notes-context';
 import database from '../../firebase/firebase';
 import init from '../../actions/init';
@@ -7,6 +8,8 @@ const MySelections = () => {
   const { state, dispatch } = useContext(NotesContext);
   const id = state.filters.uid;
   const item = state.private.items.filter((e) => e.status !== 'completed');
+  const location = useLocation();
+  console.log(location.pathname !== '/');
 
   async function start() {
     const notes = await init();
@@ -57,10 +60,11 @@ const MySelections = () => {
     dispatch({ type: 'EDIT_MY_NOTE', editedItems });
     start();
   }
+  const className = `mySelections${location.pathname !== '/' ? '' : ' mySelections--withDashboard'}`;
+
   return (
-    <div className="dashboard__selections">
-      <h3>My Selected Items</h3>
-      {item[0] !== undefined
+    <div className={className}>
+      {!!item[0]
         ? item.map((el) => (
             <div key={el.key}>
               <div>
