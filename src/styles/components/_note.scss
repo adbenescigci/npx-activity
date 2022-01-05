@@ -15,8 +15,9 @@
 
 .activity {
   border-radius: 3px;
-  overflow: hidden;
-  -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
+  padding: $s-size;
+  // overflow: hidden;
+  -webkit-box-shadow: 0 1.5rem 4rem rgba(122, 106, 106, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   background-color: #fff;
   -webkit-transition: 0.3s all;

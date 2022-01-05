@@ -41,8 +41,8 @@ const Search = () => {
   };
 
   return (
-    <div className="search">
-      <div>
+    <div>
+      <div className="search">
         <h3>Search</h3>
         <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
 
