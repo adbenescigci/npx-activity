@@ -67,7 +67,6 @@ const ItemSelect = ({ select }) => {
 
 const ViewNote = () => {
   const { state, dispatch } = useContext(NoteContext);
-  console.log(state.private.view);
   const view = state.private.view;
 
   useEffect(() => {

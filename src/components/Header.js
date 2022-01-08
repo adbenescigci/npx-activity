@@ -20,7 +20,7 @@ const Header = () => {
         <div className="header__container">
           {history.location.pathname.includes(`/myPage/${uid}`) ? (
             <button className="btn" onClick={() => history.push('/')}>
-              🏠
+              &#127968;
             </button>
           ) : (
             <button className="btn" onClick={() => history.push(`/myPage/${uid}`)}>
