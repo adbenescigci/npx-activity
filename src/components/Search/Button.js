@@ -1,6 +1,7 @@
 const Button = ({ activityList, activityType, handleActivityFilter }) => {
   return (
-    <div>
+    <>
+      <label>Filter</label>
       {activityList.map((el) => {
         return (
           <button
@@ -13,7 +14,7 @@ const Button = ({ activityList, activityType, handleActivityFilter }) => {
           </button>
         );
       })}
-    </div>
+    </>
   );
 };
 
