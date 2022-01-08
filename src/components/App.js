@@ -13,7 +13,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 const NoteApp = () => {
   const [state, dispatch] = useReducer(reducer, initial);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [id, setId] = useState('');
 
   async function ownStart(id) {
     database
@@ -40,7 +39,6 @@ const NoteApp = () => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setId(user.id);
         dispatch({ type: 'SET_ID', uid: user.uid });
         ownStart(user.uid);
       }
