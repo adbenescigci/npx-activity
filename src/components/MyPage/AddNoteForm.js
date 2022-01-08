@@ -8,7 +8,6 @@ import database from '../../firebase/firebase';
 const AddNoteForm = () => {
   const { state, dispatch } = useContext(NotesContext);
   const id = state.filters.uid;
-
   async function addNote({ title, body, sDate, eDate, selected }) {
     await database
       .ref('notes')
@@ -27,17 +26,17 @@ const AddNoteForm = () => {
       });
   }
   return (
-    <>
+    <div>
       <h2>Add Activity</h2>
       {state.notes.filter((el) => el.id === id).length < 3 ? (
         <Form onSubmitForm={(e) => addNote(e)} />
       ) : (
-        <>
+        <div>
           <h4> You have 3 activities, to add new activity you should drop one of your activities </h4>
           <button onClick={() => history.push(`/myPage/${id}/MyActivities`)}> Go to My Activities</button>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

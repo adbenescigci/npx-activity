@@ -12,6 +12,7 @@ button {
   text-decoration: none;
   font-weight: 400;
   border: none;
+  max-width: fit-content;
 }
 
 button:disabled {
@@ -47,7 +48,6 @@ button:active {
   font-weight: 400;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /*Add later when we use this for the button in form*/
   border: none;
   cursor: pointer;
 }
@@ -59,12 +59,12 @@ button:active {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
 
-.btn:active {
-  -webkit-transform: translateY(-1px);
-  transform: translateY(-1px);
-  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
+// .btn:active {
+//   -webkit-transform: translateY(-1px);
+//   transform: translateY(-1px);
+//   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+//   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+// }
 
 // .btn:focus {
 //   outline: none;
@@ -79,7 +79,7 @@ button:active {
   background-color: #fff;
 }
 .btn--logout {
-  background-color: #777;
+  background-color: $dark-blue;
   color: white;
 }
 .btn--logout::after {
@@ -89,11 +89,11 @@ button:active {
 .btn--filtered {
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
-  background-color: rgb(228, 29, 29);
+  background-color: rgb(213, 40, 40);
   color: white;
 }
 .btn--notFiltered {
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
-  background-color: rgb(31, 140, 242);
+  background-color: $dark-blue;
 }

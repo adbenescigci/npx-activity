@@ -1,8 +1,8 @@
 .mySelections {
   margin: 0;
   padding: 0.7rem;
-  background-color: gray;
-  color: honeydew;
+  background-color: white;
+  color: #777;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.5rem;
@@ -16,7 +16,7 @@
   margin: 0;
   padding: 0.7rem;
   line-height: 1.2em;
-  background-color: gray;
+  background-color: $dark-blue;
   color: honeydew;
   display: table-cell;
   overflow: hidden;
