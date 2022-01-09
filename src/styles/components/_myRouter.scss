@@ -6,6 +6,28 @@
   display: flex;
   opacity: 0.9;
 
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: $m-size;
+    text-decoration: double;
+    list-style-type: disc;
+    padding: 0;
+    li {
+      a {
+        color: #777;
+        text-decoration: none;
+        text-align: end;
+      }
+
+      a.active {
+        width: fit-content;
+        padding: 3px;
+      }
+    }
+  }
+
   @media (min-width: $desktop-breakpoint) {
     display: grid;
     grid-template-columns: 1fr 4fr;

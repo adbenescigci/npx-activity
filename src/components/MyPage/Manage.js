@@ -16,15 +16,15 @@ const Manage = () => {
   return (
     <div>
       <button onClick={onGoBack}>Back</button>
+      {!!note && <label>{note.body} </label>}
       {note !== undefined && (
         <div className="manage">
-          <div>
-            <h2>{note.body} </h2>
+          <div className="manage-activities">
             {note.selected.map((el) => (
               <Item name={el[0]} select={el} key={note.key + el[0]} />
             ))}
           </div>
-          <div>
+          <div className="manage-view">
             <ViewNote />
           </div>
         </div>
@@ -38,7 +38,7 @@ const Item = ({ select, name }) => {
 
   return (
     <div>
-      <p onClick={() => setReverse(!reverse)}>{name}</p>
+      <label onClick={() => setReverse(!reverse)}>{name}</label>
       {reverse && <ItemSelect select={select} />}
     </div>
   );
@@ -54,13 +54,11 @@ const ItemSelect = ({ select }) => {
 
   return (
     <div>
-      <div>
-        {select[2].map((el) => (
-          <p key={order(el)} onClick={() => onDisView(select[2][order(el)], order(el) + 1)}>
-            {`${order(el) + 1}. hatim`}
-          </p>
-        ))}
-      </div>
+      {select[2].map((el) => (
+        <li key={order(el)} onClick={() => onDisView(select[2][order(el)], order(el) + 1)}>
+          {`${order(el) + 1}. hatim`}
+        </li>
+      ))}
     </div>
   );
 };
@@ -75,7 +73,6 @@ const ViewNote = () => {
 
   return (
     <div>
-      <p>ViewNote</p>
       {view.list.length > 0 && (
         <h3>
           {view.name} - {view.order} . Hatim

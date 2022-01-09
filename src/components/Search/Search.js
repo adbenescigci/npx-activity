@@ -43,29 +43,25 @@ const Search = () => {
   return (
     <div className="searchBar">
       <div className="search">
-        <div>
-          <input placeholder="Search by text" value={state.filters.text} onChange={(e) => onSetText(e)} />
-          <select onChange={onSortChange}>
-            <option value="sDate"> Start Date </option>
-            <option value="eDate"> End Date </option>
-          </select>
-        </div>
-        <div>
-          <DatePicker
-            placeholderText="Search by start date"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            minDate={new Date()}
-            isClearable
-          />
-          <DatePicker
-            placeholderText="Search by end date"
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={new Date()}
-            isClearable
-          />
-        </div>
+        <input placeholder="Search" value={state.filters.text} onChange={(e) => onSetText(e)} />
+        <DatePicker
+          placeholderText="Start Date"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          minDate={new Date()}
+          isClearable
+        />
+        <DatePicker
+          placeholderText="End Date"
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          minDate={new Date()}
+          isClearable
+        />
+        <select onChange={onSortChange}>
+          <option value="sDate"> Start </option>
+          <option value="eDate"> End </option>
+        </select>
       </div>
 
       <div className="filter">

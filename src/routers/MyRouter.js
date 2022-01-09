@@ -8,31 +8,31 @@ import Manage from '../components/MyPage/Manage';
 const MyRouter = () => {
   let match = useRouteMatch();
 
-  const style = {
-    fontWeight: 'bold',
-    color: 'red',
+  const activeStyle = {
+    background: '#777',
+    color: 'white',
   };
 
   return (
     <div className="myRouter">
       <ul>
         <li>
-          <NavLink to={`${match.url}/MySelections`} activeStyle={style}>
+          <NavLink to={`${match.url}/MySelections`} activeStyle={activeStyle}>
             Selections
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${match.url}/MyActivities`} activeStyle={style}>
+          <NavLink to={`${match.url}/MyActivities`} activeStyle={activeStyle}>
             Activities
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${match.url}/MyArchive`} activeStyle={style}>
+          <NavLink to={`${match.url}/MyArchive`} activeStyle={activeStyle}>
             Archive
           </NavLink>
         </li>
         <li>
-          <NavLink to={`${match.url}/AddActivityForm`} activeStyle={style}>
+          <NavLink to={`${match.url}/AddActivityForm`} activeStyle={activeStyle}>
             Add Activity
           </NavLink>
         </li>

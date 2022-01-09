@@ -1,0 +1,17 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 30vh;
+  padding-top: auto;
+  margin: 15rem 13rem;
+  border-radius: 5px;
+  box-sizing: border-box;
+  button {
+    padding: $m-size;
+    margin: $s-size;
+    min-width: 25rem;
+    font-size: 1.25rem;
+    border-radius: 5px;
+  }
+}
