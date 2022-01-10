@@ -7,22 +7,22 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.5rem;
 
-  @media (max-width: 45rem) {
+  @media (max-width: $desktop-breakpoint) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .mySelections--withDashboard {
   margin: 0;
-  padding: 0.7rem;
+  padding: 0;
   border-radius: 5px;
   line-height: 1.2em;
   background-color: #777;
   color: honeydew;
   display: table-cell;
   overflow: hidden;
-  @media (max-width: 45rem) {
-    margin-top: $s-size;
+  @media (max-width: $desktop-breakpoint) {
+    margin-top: 7.7rem;
   }
 }
 
@@ -43,4 +43,8 @@
   -ms-flex-direction: column;
   flex-direction: column;
   line-height: 1em;
+  padding: $s-size;
+  @media (max-width: $desktop-breakpoint) {
+    padding: 0.7rem;
+  }
 }

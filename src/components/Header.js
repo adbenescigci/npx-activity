@@ -27,7 +27,9 @@ const Header = () => {
               MyPage
             </button>
           )}
-          <h2>Hosgeldiniz {name}</h2>
+          <h2>
+            Hosgeldiniz <span S>{name}</span>
+          </h2>
           <button className="btn btn--logout" onClick={logOut}>
             LogOut
           </button>
