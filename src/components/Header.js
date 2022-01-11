@@ -28,7 +28,7 @@ const Header = () => {
             </button>
           )}
           <h2>
-            Hosgeldiniz <span S>{name}</span>
+            Hosgeldiniz <span>{name}</span>
           </h2>
           <button className="btn btn--logout" onClick={logOut}>
             LogOut

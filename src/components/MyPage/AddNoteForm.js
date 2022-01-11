@@ -1,18 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { history } from '../../routers/AppRouter';
 import Form from '../Form';
 import NotesContext from '../../context/notes-context';
+import { alert } from '../../utils/alert';
 
 import database from '../../firebase/firebase';
 
 const AddNoteForm = () => {
   const { state, dispatch } = useContext(NotesContext);
+  const [flag, setFlag] = useState(false);
+  const [data, setData] = useState('');
   const id = state.filters.uid;
+
+  const message = 'Succesfully added';
+  const className = `alert alert--${data === message ? 'success' : 'error'}`;
+
   async function addNote({ title, body, sDate, eDate, selected }) {
     await database
       .ref('notes')
       .push({ title, body, id, sDate, eDate, selected })
       .then((ref) => {
+        setData(message);
         dispatch({
           type: 'ADD_NOTE',
           title,
@@ -23,11 +31,16 @@ const AddNoteForm = () => {
           eDate,
           selected,
         });
+      })
+      .catch((err) => {
+        setData(err.message);
       });
+    alert(setFlag, 5);
   }
   return (
     <div>
       <h2>Add Activity</h2>
+      {flag && <div className={className}> {data} </div>}
       {state.notes.filter((el) => el.id === id).length < 3 ? (
         <Form onSubmitForm={(e) => addNote(e)} />
       ) : (

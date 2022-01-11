@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SelectQuery = ({ option, onChangeQuery }) => {
   const [hatimOrd, setHatimOrd] = useState(1);
@@ -16,15 +16,15 @@ const SelectQuery = ({ option, onChangeQuery }) => {
     } else {
       setFlag(true);
       setHatimOrd(length + 1);
-      console.log('test');
     }
   }, [length, query]);
 
   useEffect(() => {
     onChangeQuery(hatimOrd, length);
+    // eslint-disable-next-line
   }, [hatimOrd, length, finishFlag]);
 
   return <div>{hatimOrd <= option[2].length ? `${hatimOrd}.grup / ${option[2].length}` : 'tamamlandi'}</div>;
 };
 
-export { SelectQuery as default };
+export default React.memo(SelectQuery);

@@ -5,6 +5,8 @@ import database from '../../firebase/firebase';
 import SelectQuery from '../SelectQuery';
 import SelectionButtons from '../SelectionButtons';
 
+import { alert } from '../../utils/alert';
+
 const NoteSelection = ({ note }) => {
   const { state, dispatch } = useContext(NoteContext);
   const [query, setQuery] = useState(Array.from(note.selected, () => 1));
@@ -13,6 +15,12 @@ const NoteSelection = ({ note }) => {
   const id = state.filters.uid;
   const [backList, setBackList] = useState([]);
   let [selectableList, setSelectableList] = useState([]);
+
+  const [flag, setFlag] = useState(false);
+  const [data, setData] = useState('');
+
+  const message = 'Succesfully selected';
+  const className = `alert alert--${data === message ? 'success' : 'error'}`;
 
   async function resume(key) {
     singleInit(key).then((note) => {
@@ -81,10 +89,12 @@ const NoteSelection = ({ note }) => {
             .ref()
             .update(updates)
             .then(() => {
+              setData(message);
               dispatch({ type: 'ADD_MY_NOTE', item: { ...selectData, key } });
             });
-        } else console.log('daha once alinmis');
+        } else setData('daha once alinmis');
       });
+
     resume(note.key);
   };
 
@@ -134,6 +144,7 @@ const NoteSelection = ({ note }) => {
                   onChangeQuery={(order, length) => onChangeQuery(order, length, index)}
                 />
 
+                {flag && <div className={className}> {data} </div>}
                 {blind && (
                   <SelectionButtons
                     option={option}
@@ -159,7 +170,15 @@ const NoteSelection = ({ note }) => {
         );
       })}
 
-      <button onClick={() => dispatch({ type: 'SET_NOTE', note: '' })}> {backList.length > 0 ? 'OK' : 'Back'}</button>
+      <button
+        onClick={() => {
+          backList.length > 0
+            ? alert(setFlag, 3, () => dispatch({ type: 'SET_NOTE', note: '' }))
+            : dispatch({ type: 'SET_NOTE', note: '' });
+        }}
+      >
+        {backList.length > 0 ? 'OK' : 'Back'}
+      </button>
       {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
     </div>
   );

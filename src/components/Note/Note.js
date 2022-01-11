@@ -13,15 +13,15 @@ const Note = ({ note, place = '' }) => {
   const [isLogged, setLogIn] = useState(false);
   const id = state.filters.uid;
 
-  const onRemove = () => {
-    database
+  async function onRemove() {
+    await database
       .ref(`notes/${note.key}`)
       .remove()
-      .then(
-        () => dispatch({ type: 'REMOVE_NOTE', key: note.key }),
-        dispatch({ type: 'REMOVE_MY_NOTE_ALL', key: note.key })
-      );
-  };
+      .then(() => {
+        dispatch({ type: 'REMOVE_NOTE', key: note.key });
+        dispatch({ type: 'REMOVE_MY_NOTE_ALL', key: note.key });
+      });
+  }
 
   async function updateNote({ title, body, sDate, eDate, selected }) {
     await database.ref(`notes/${note.key}`).set({ id: note.id, title, body, sDate, eDate, selected });
@@ -55,9 +55,9 @@ const Note = ({ note, place = '' }) => {
         <button onClick={() => onJoin()}> Join </button>
         {place === 'private' && (
           <div>
-            <button onClick={onRemove}> x </button>
-            <button onClick={onClickEdit}> edit </button>
-            <button onClick={onManageNote}> Manage </button>
+            <button onClick={() => onRemove()}> x </button>
+            <button onClick={() => onClickEdit()}> edit </button>
+            <button onClick={() => onManageNote()}> Manage </button>
           </div>
         )}
       </div>
