@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 30vh;
-  padding-top: auto;
-  margin: 15rem 13rem;
+  min-height: 25vh;
+  margin: 13rem;
   border-radius: 5px;
   box-sizing: border-box;
+  justify-content: center;
   button {
     padding: $m-size;
     margin: $s-size;

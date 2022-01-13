@@ -27,17 +27,20 @@ const Header = () => {
               MyPage
             </button>
           )}
-          <h2>
+          <h1>
             Hosgeldiniz <span>{name}</span>
-          </h2>
+          </h1>
           <button className="btn btn--logout" onClick={logOut}>
             LogOut
           </button>
         </div>
       ) : (
-        <button className="btn btn--login" onClick={() => history.push('/loginPage')}>
-          Login
-        </button>
+        <div className="header__container header__container--noUser">
+          <h1>Activity Select Web App</h1>
+          <button className="btn btn--login" onClick={() => history.push('/loginPage')}>
+            Login
+          </button>
+        </div>
       )}
     </div>
   );
