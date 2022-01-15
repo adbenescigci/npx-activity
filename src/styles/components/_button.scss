@@ -90,11 +90,14 @@ button:active {
 .btn--filtered {
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
-  background-color: rgb(213, 40, 40);
+  background-color: #55c57a;
   color: white;
+  border: none;
 }
 .btn--notFiltered {
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
-  background-color: $dark-blue;
+  background-color: white;
+  color: #777;
+  border: 1px solid #777;
 }

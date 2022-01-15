@@ -40,6 +40,9 @@
 
   @media (max-width: $desktop-breakpoint) {
     height: 7rem;
+    h1 {
+      font-size: $m-size;
+    }
   }
 }
 

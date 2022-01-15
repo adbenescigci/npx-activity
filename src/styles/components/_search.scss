@@ -1,14 +1,24 @@
 .searchBar {
   display: flex;
   flex-direction: column;
+  margin-bottom: $s-size;
+
+  label {
+    background-color: #55c57a;
+    color: white;
+    padding: 0.2rem;
+    border-radius: 3px;
+    text-align: center;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+  }
 }
 
 .search {
   background-color: white;
-  margin-bottom: $s-size;
   display: flex;
   flex-direction: row;
-
+  margin-bottom: 0.3rem;
   input,
   select {
     display: block;
@@ -18,7 +28,7 @@
     color: #777;
     padding: 1rem 1.25rem;
     border: none;
-    max-width: fit-content;
+    min-width: fit-content;
     background-color: #f2f2f2;
     border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
@@ -29,13 +39,20 @@
     box-sizing: border-box;
     @media (max-width: $desktop-breakpoint) {
       padding: 0.3rem 0.25rem;
-      max-width: 7rem;
+      min-width: 0;
+      width: 7.5rem;
+      height: 2.5rem;
     }
   }
 
   select {
     background-color: #55c57a;
     color: #f2f2f2;
+    width: 5.5rem;
+  }
+
+  @media (min-width: $desktop-breakpoint) {
+    margin-bottom: $s-size;
   }
 }
 
@@ -44,57 +61,19 @@
   flex-direction: row;
   align-items: center;
 
+  button,
   label {
-    background-color: #55c57a;
-    color: white;
-    padding: 0.2rem;
-    border-radius: 3px;
-    width: 7rem;
-    text-align: center;
-    margin: 0.3rem 0;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
+    width: 6rem;
+    height: 2.5rem;
+    justify-content: center;
   }
 
-  .filter-button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  label {
+    background-color: #777;
+  }
+  @media (min-width: $desktop-breakpoint) {
     button {
       min-width: fit-content;
-    }
-  }
-
-  @media (max-width: $desktop-breakpoint) {
-    label {
-      width: 4.5rem;
-      position: fixed;
-      top: 13%;
-      margin: 0;
-      left: 0%;
-      z-index: 9999;
-      opacity: 0.7;
-    }
-    .filter-button {
-      display: none;
-    }
-  }
-}
-
-.filter:hover {
-  @media (max-width: $desktop-breakpoint) {
-    label {
-      width: 5rem;
-      opacity: 0.9;
-    }
-    .filter-button {
-      width: 25rem;
-      position: fixed;
-      top: 13%;
-      left: 11%;
-      z-index: 9999;
-      display: flex;
-      opacity: 0.9;
     }
   }
 }

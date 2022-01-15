@@ -21,9 +21,6 @@
   color: honeydew;
   display: table-cell;
   overflow: hidden;
-  @media (max-width: $desktop-breakpoint) {
-    margin-top: 7.7rem;
-  }
 }
 
 .selection-card {

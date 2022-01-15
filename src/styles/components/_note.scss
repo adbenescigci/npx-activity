@@ -3,7 +3,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.5rem;
-  margin-top: $s-size;
   @media (max-width: 65rem) {
     grid-template-columns: repeat(3, 1fr);
   }
