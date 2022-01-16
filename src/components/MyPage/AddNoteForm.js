@@ -38,7 +38,7 @@ const AddNoteForm = () => {
     alert(setFlag, 5);
   }
   return (
-    <div>
+    <div className="addActivity-container">
       <h2>Add Activity</h2>
       {flag && <div className={className}> {data} </div>}
       {state.notes.filter((el) => el.id === id).length < 3 ? (
