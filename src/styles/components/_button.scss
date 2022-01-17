@@ -88,3 +88,15 @@ button:active {
   background-color: white;
   color: #55c57a;
 }
+
+.btn--small {
+  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn:disabled {
+  -webkit-transform: none;
+  transform: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

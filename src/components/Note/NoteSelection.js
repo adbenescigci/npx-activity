@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import NoteContext from '../../context/notes-context';
 import { singleInit } from '../../actions/init';
 import database from '../../firebase/firebase';
@@ -10,12 +10,10 @@ import { alert } from '../../utils/alert';
 const NoteSelection = ({ note }) => {
   const { state, dispatch } = useContext(NoteContext);
   const [query, setQuery] = useState(Array.from(note.selected, () => 1));
-  const [blind, setBlind] = useState(true);
   const [counter, setCounter] = useState(1);
   const id = state.filters.uid;
   const [backList, setBackList] = useState([]);
   let [selectableList, setSelectableList] = useState([]);
-
   const [flag, setFlag] = useState(false);
   const [data, setData] = useState('');
 
@@ -27,10 +25,6 @@ const NoteSelection = ({ note }) => {
       dispatch({ type: 'EDIT_NOTE', note, key });
     });
   }
-
-  useEffect(() => {
-    setBlind(true);
-  }, [counter]);
 
   const onBack = () => {
     const updates = {};
@@ -99,7 +93,6 @@ const NoteSelection = ({ note }) => {
   };
 
   const onChangeQuery = (order, length, index) => {
-    setBlind(false);
     setCounter(counter + 1);
 
     if (order <= length) {
@@ -119,6 +112,12 @@ const NoteSelection = ({ note }) => {
   const onRemoveSelect = (option) => {
     selectableList = selectableList.filter((el) => el !== option);
     setSelectableList(selectableList);
+  };
+
+  const onHandleSubmit = (el) => {
+    el.length > 0
+      ? alert(setFlag, 3, () => dispatch({ type: 'SET_NOTE', note: '' }))
+      : dispatch({ type: 'SET_NOTE', note: '' });
   };
 
   return (
@@ -145,17 +144,17 @@ const NoteSelection = ({ note }) => {
                 />
 
                 {flag && <div className={className}> {data} </div>}
-                {blind && (
-                  <SelectionButtons
-                    option={option}
-                    query={query}
-                    index={index}
-                    note={note}
-                    onClickSelectItems={(item, indexSub) =>
-                      onClickSelectItems(option, item, index, indexSub, query[index] - 1)
-                    }
-                  />
-                )}
+
+                <SelectionButtons
+                  flag={flag}
+                  option={option}
+                  query={query}
+                  index={index}
+                  note={note}
+                  onClickSelectItems={(item, indexSub) =>
+                    onClickSelectItems(option, item, index, indexSub, query[index] - 1)
+                  }
+                />
               </div>
             )}
           </div>
@@ -170,16 +169,12 @@ const NoteSelection = ({ note }) => {
         );
       })}
 
-      <button
-        onClick={() => {
-          backList.length > 0
-            ? alert(setFlag, 3, () => dispatch({ type: 'SET_NOTE', note: '' }))
-            : dispatch({ type: 'SET_NOTE', note: '' });
-        }}
-      >
-        {backList.length > 0 ? 'OK' : 'Back'}
-      </button>
-      {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
+      {!flag && (
+        <div>
+          <button onClick={() => onHandleSubmit(backList)}>{backList.length > 0 ? 'OK' : 'Back'}</button>
+          {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
+        </div>
+      )}
     </div>
   );
 };
