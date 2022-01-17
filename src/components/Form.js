@@ -122,32 +122,34 @@ const Form = ({ onSubmitForm, data }) => {
   };
 
   return (
-    <form onSubmit={submitForm}>
+    <form className="form" onSubmit={submitForm}>
       <input value={title} placeholder={data.title} onChange={(e) => setTitle(e.target.value)} required />
       <textarea value={body} placeholder={data.body} onChange={(e) => setBody(e.target.value)} required />
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => {
-          setEndDate();
-          return setStartDate(date);
-        }}
-        minDate={new Date()}
-        maxDate={addDays(new Date(), 30)}
-        placeholderText="Start Date"
-        isClearable
-        required
-      />
-      <DatePicker
-        selected={endDate}
-        onChange={(date) => {
-          setEndDate(date);
-        }}
-        minDate={startDate}
-        maxDate={addDays(startDate, 60)}
-        placeholderText="End Date"
-        isClearable
-        required
-      />
+      <div className="form__date">
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => {
+            setEndDate();
+            return setStartDate(date);
+          }}
+          minDate={new Date()}
+          maxDate={addDays(new Date(), 30)}
+          placeholderText="Start Date"
+          isClearable
+          required
+        />
+        <DatePicker
+          selected={endDate}
+          onChange={(date) => {
+            setEndDate(date);
+          }}
+          minDate={startDate}
+          maxDate={addDays(startDate, 60)}
+          placeholderText="End Date"
+          isClearable
+          required
+        />
+      </div>
 
       {activity.map((option) => (
         <div key={option}>

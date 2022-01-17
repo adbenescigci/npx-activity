@@ -3,7 +3,7 @@
   margin: 0 $m-size;
   margin-bottom: $m-size;
   @media (max-width: $desktop-breakpoint) {
-    margin: 0 $s-size;
+    margin: 0;
     margin-bottom: $s-size;
   }
 }

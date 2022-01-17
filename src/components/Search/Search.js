@@ -65,7 +65,6 @@ const Search = () => {
       </div>
 
       <div className="filter">
-        <label>Filter ({activityType.length})</label>
         <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
       </div>
     </div>

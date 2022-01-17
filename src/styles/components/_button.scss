@@ -60,18 +60,6 @@ button:active {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
 
-// .btn:active {
-//   -webkit-transform: translateY(-1px);
-//   transform: translateY(-1px);
-//   -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-//   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-// }
-
-// .btn:focus {
-//   outline: none;
-//   background-color: #2e864b;
-// }
-
 .btn--login {
   background-color: $dark-blue;
   color: white;
@@ -80,7 +68,7 @@ button:active {
   background-color: #fff;
 }
 .btn--logout {
-  background-color: $dark-blue;
+  background-color: #434443;
   color: white;
 }
 .btn--logout::after {
@@ -98,6 +86,5 @@ button:active {
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
   background-color: white;
-  color: #777;
-  border: 1px solid #777;
+  color: #55c57a;
 }

@@ -1,10 +1,9 @@
 .appRouter {
-  border: 1px solid #7dd56f;
   min-height: 70rem;
   border-radius: 5px;
-  margin: 0 $s-size;
-  padding: $s-size;
+  border: none;
   @media (min-width: $desktop-breakpoint) {
     padding: $m-size;
+    margin: 0 $s-size;
   }
 }
