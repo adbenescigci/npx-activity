@@ -1,29 +1,15 @@
-// .form {
-//   display: flex;
-//   flex-direction: column;
-//   > * {
-//     margin-bottom: $m-size;
-//     display: block;
-//     font-family: inherit;
-//     overflow: hidden;
-//     font-size: 1rem;
-//     color: #777;
-//     padding: 1rem 1.25rem;
-//     border: none;
-//   }
-// }
-
 .form {
   background-color: white;
   display: flex;
   flex-direction: column;
   margin-bottom: 0.3rem;
-  > * {
+  input,
+  textArea {
     display: block;
     font-family: inherit;
     overflow: hidden;
-    font-size: 1rem;
-    color: #777;
+    font-size: 1.5rem;
+    color: black;
     border: none;
     background-color: #f2f2f2;
     border-top: 3px solid transparent;
@@ -34,19 +20,28 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin-bottom: $m-size;
-    height: $l-size;
+    height: fit-content;
   }
 
-  .form__date {
-    display: flex;
-    flex-direction: row;
-    .react-datepicker__input-container {
-      border: 1px solid black;
-    }
-    input {
-      max-width: 10rem;
-      border: none;
-      background-color: #f2f2f2;
-    }
+  *::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #777;
+    opacity: 0.7; /* Firefox */
+  }
+}
+
+.form__date {
+  display: flex;
+  flex-direction: row;
+  // .react-datepicker__input-container {
+  //   border: 1px solid black;
+  // }
+}
+
+.form__click {
+  display: flex;
+  flex-direction: row;
+  > * {
+    margin-right: $s-size;
   }
 }

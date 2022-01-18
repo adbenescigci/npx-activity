@@ -124,8 +124,8 @@ const Form = ({ onSubmitForm, data }) => {
 
   return (
     <form className="form" onSubmit={submitForm}>
-      <input value={title} placeholder={data.title} onChange={(e) => setTitle(e.target.value)} required />
-      <textarea value={body} placeholder={data.body} onChange={(e) => setBody(e.target.value)} required />
+      <input value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} required />
+      <textarea value={body} placeholder="Description" onChange={(e) => setBody(e.target.value)} required />
       <div className="form__date">
         <DatePicker
           selected={startDate}
@@ -153,7 +153,8 @@ const Form = ({ onSubmitForm, data }) => {
       </div>
 
       {activity.map((option) => (
-        <div key={option}>
+        <div className="form__click" key={option}>
+          <label> {option} </label>
           <input
             onChange={() => onClickListItem(option)}
             type="checkbox"
@@ -162,8 +163,6 @@ const Form = ({ onSubmitForm, data }) => {
             value="activity"
             checked={selectedList.includes(option)}
           />
-
-          <label> {option} </label>
           <br />
 
           {selectedList.includes(option) && (
@@ -180,15 +179,17 @@ const Form = ({ onSubmitForm, data }) => {
         </div>
       ))}
 
-      <button disabled={select.length === 0}>submit</button>
+      <button className="btn btn--big" disabled={select.length === 0}>
+        submit
+      </button>
     </form>
   );
 };
 
 Form.defaultProps = {
   data: {
-    title: 'Title',
-    body: 'Description',
+    title: '',
+    body: '',
   },
 };
 
