@@ -58,14 +58,14 @@ const Search = () => {
           minDate={new Date()}
           isClearable
         />
-        <select onChange={onSortChange}>
-          <option value="sDate"> Start </option>
-          <option value="eDate"> End </option>
-        </select>
       </div>
 
       <div className="filter">
         <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
+        <select onChange={onSortChange}>
+          <option value="sDate"> Start </option>
+          <option value="eDate"> End</option>
+        </select>
       </div>
     </div>
   );

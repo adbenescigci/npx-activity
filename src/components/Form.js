@@ -85,6 +85,7 @@ const Form = ({ onSubmitForm, data }) => {
     const selected = select.reduce((acc, current) => [...acc, selectPreap(current)], []);
     const sDate = getTime(startDate);
     const eDate = getTime(endDate);
+
     onSubmitForm({ title, body, sDate, eDate, selected });
     setTitle('');
     setBody('');
@@ -186,8 +187,8 @@ const Form = ({ onSubmitForm, data }) => {
 
 Form.defaultProps = {
   data: {
-    title: '',
-    body: '',
+    title: 'Title',
+    body: 'Description',
   },
 };
 
