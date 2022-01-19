@@ -9,8 +9,8 @@ const MyActivities = () => {
   const notes = state.notes;
 
   return (
-    <div>
-      <h3>My Activities</h3>
+    <div className="myRouter-container">
+      <h2>My Activities</h2>
       {myActionsSelector(notes, { id }).map((note) => (
         <Note key={note.key} note={note} place={'private'} />
       ))}

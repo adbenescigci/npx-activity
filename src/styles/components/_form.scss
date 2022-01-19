@@ -33,15 +33,24 @@
 .form__date {
   display: flex;
   flex-direction: row;
-  // .react-datepicker__input-container {
-  //   border: 1px solid black;
-  // }
 }
 
 .form__click {
   display: flex;
   flex-direction: row;
+  align-items: center;
   > * {
     margin-right: $s-size;
+    justify-content: center;
   }
+}
+.form__selections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: none;
+  border-radius: 3px;
+  padding: $s-size;
+  margin-bottom: $s-size;
+  -webkit-box-shadow: 0 1.5rem 4rem rgba(122, 106, 106, 0.1);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
 }

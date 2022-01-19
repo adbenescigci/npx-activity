@@ -152,34 +152,39 @@ const Form = ({ onSubmitForm, data }) => {
         />
       </div>
 
-      {activity.map((option) => (
-        <div className="form__click" key={option}>
-          <label> {option} </label>
-          <input
-            onChange={() => onClickListItem(option)}
-            type="checkbox"
-            id={option}
-            name="select"
-            value="activity"
-            checked={selectedList.includes(option)}
-          />
-          <br />
+      <div className="form__selections">
+        {activity.map((option) => (
+          <div className="form__click" key={option}>
+            <label> {option} </label>
+            <input
+              onChange={() => onClickListItem(option)}
+              type="checkbox"
+              id={option}
+              name="select"
+              value="activity"
+              checked={selectedList.includes(option)}
+            />
+            <br />
 
-          {selectedList.includes(option) && (
-            <div>
-              <input
-                onChange={(e) => onChangeNumber(e, option)}
-                type="number"
-                defaultValue={findValue(option)}
-                min={findMin(option) === undefined ? 1 : findMin(option)}
-                max="100"
-              />
-            </div>
-          )}
-        </div>
-      ))}
+            {selectedList.includes(option) && (
+              <div>
+                <input
+                  onChange={(e) => onChangeNumber(e, option)}
+                  type="number"
+                  defaultValue={findValue(option)}
+                  min={findMin(option) === undefined ? 1 : findMin(option)}
+                  max="100"
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-      <button className="btn btn--big" disabled={select.length === 0}>
+      <button
+        className="btn btn--big"
+        disabled={select.length === 0 || !endDate || !startDate || title === '' || body === ''}
+      >
         submit
       </button>
     </form>

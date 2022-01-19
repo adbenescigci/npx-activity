@@ -26,8 +26,8 @@ const MyArchive = () => {
       .then(() => dispatch({ type: 'REMOVE_ARCHIVE' }));
   };
   return (
-    <div>
-      <h3> My Archive </h3>
+    <div className="myRouter-container">
+      <h2> My Archive </h2>
       {items !== undefined &&
         (items.length !== 0 ? (
           <button onClick={onRemoveArchive}> DeleteAll </button>
@@ -35,16 +35,18 @@ const MyArchive = () => {
           'Arsivinizde bir kayit bulunmamaktadir'
         ))}
       <br></br>
-      {items !== undefined &&
-        items.map((item) => (
-          <div key={item.key}>
-            <p>
-              {' '}
-              {item.name} - {item.item}
-            </p>
-            <button onClick={() => onRemoveArchiveItems(item.key)}> x </button>
-          </div>
-        ))}
+      <div className="myArchive">
+        {items !== undefined &&
+          items.map((item) => (
+            <div className="myArchive__items" key={item.key}>
+              <p>
+                {' '}
+                {item.name} - {item.item}
+              </p>
+              <button onClick={() => onRemoveArchiveItems(item.key)}> x </button>
+            </div>
+          ))}
+      </div>
 
       <h3> My Completed Items</h3>
       {completed.map((e) => (
