@@ -46,12 +46,32 @@
 }
 
 .myRouter-container {
-  max-width: 80%;
+  max-width: 85%;
+  > * {
+    margin-bottom: $s-size;
+  }
   @media (max-width: $desktop-breakpoint) {
     margin: $m-size;
     max-width: 45rem;
   }
 }
+.mySelection-container {
+  display: grid;
+  h2 {
+    margin-left: $s-size;
+  }
+  > * {
+    margin-bottom: $s-size;
+    font-family: 'Lato', sans-serif;
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .myArchive {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -66,4 +86,5 @@
   padding: 0.7rem;
   border: 1px solid #55c57a;
   border-radius: 3px;
+  min-width: fit-content;
 }

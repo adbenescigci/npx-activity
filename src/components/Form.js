@@ -124,8 +124,20 @@ const Form = ({ onSubmitForm, data }) => {
 
   return (
     <form className="form" onSubmit={submitForm}>
-      <input value={title} placeholder="Title" onChange={(e) => setTitle(e.target.value)} required />
-      <textarea value={body} placeholder="Description" onChange={(e) => setBody(e.target.value)} required />
+      <input
+        className="form__input"
+        value={title}
+        placeholder="Title"
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
+      <textarea
+        className="form__input"
+        value={body}
+        placeholder="Description"
+        onChange={(e) => setBody(e.target.value)}
+        required
+      />
       <div className="form__date">
         <DatePicker
           selected={startDate}
@@ -164,18 +176,15 @@ const Form = ({ onSubmitForm, data }) => {
               value="activity"
               checked={selectedList.includes(option)}
             />
-            <br />
-
             {selectedList.includes(option) && (
-              <div>
-                <input
-                  onChange={(e) => onChangeNumber(e, option)}
-                  type="number"
-                  defaultValue={findValue(option)}
-                  min={findMin(option) === undefined ? 1 : findMin(option)}
-                  max="100"
-                />
-              </div>
+              <input
+                className="form__selections__input"
+                onChange={(e) => onChangeNumber(e, option)}
+                type="number"
+                defaultValue={findValue(option)}
+                min={findMin(option) === undefined ? 1 : findMin(option)}
+                max="100"
+              />
             )}
           </div>
         ))}

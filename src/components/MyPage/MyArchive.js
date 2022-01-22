@@ -43,7 +43,7 @@ const MyArchive = () => {
                 {' '}
                 {item.name} - {item.item}
               </p>
-              <button onClick={() => onRemoveArchiveItems(item.key)}> x </button>
+              <button onClick={() => onRemoveArchiveItems(item.key)}> remove </button>
             </div>
           ))}
       </div>

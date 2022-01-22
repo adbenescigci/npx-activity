@@ -60,23 +60,27 @@ const MySelections = ({ className = '' }) => {
   const style = `mySelections${className}`;
 
   return (
-    <div className={style}>
-      {!!item[0]
-        ? item.map((el) => (
-            <div className="selection-card" key={el.key}>
-              <div>
-                <h3>
-                  {' '}
-                  {el.name}-{el.item}
-                </h3>
-                <h6> {el.id} </h6>
-                <h6> {el.noteKey} </h6>
+    <div className="mySelection-container">
+      {className === '' && <h2> My Selections </h2>}
+      <div className={style}>
+        {className !== '' && <h2> My Selections </h2>}
+        {!!item[0]
+          ? item.map((el) => (
+              <div className="selection-card" key={el.key}>
+                <div>
+                  <h3>
+                    {' '}
+                    {el.name}-{el.item}
+                  </h3>
+                  <h6> {el.id} </h6>
+                  <h6> {el.noteKey} </h6>
+                </div>
+                <button onClick={() => removeMyItem(el)}>x</button>
+                <button onClick={() => editMyItem(el)}>completed</button>
               </div>
-              <button onClick={() => removeMyItem(el)}>x</button>
-              <button onClick={() => editMyItem(el)}>completed</button>
-            </div>
-          ))
-        : 'there is no item'}
+            ))
+          : 'there is no item'}
+      </div>
     </div>
   );
 };
