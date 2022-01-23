@@ -33,7 +33,15 @@
 
 .activity__header {
   position: relative;
+  > .activity__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 .activity__details {
+  display: flex;
   padding: 0.2rem 0.1rem;
+  flex-direction: column;
+  justify-content: space-between;
 }

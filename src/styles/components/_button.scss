@@ -97,7 +97,18 @@ button:active {
   font-size: 1.2rem;
   padding: 1rem 2rem;
 }
-
+.btn--red {
+  color: rgba(255, 190, 105, 0.871);
+  background: white;
+}
+.btn--orange {
+  background: $orange;
+  color: white;
+}
+.btn--redR {
+  background: rgba(255, 0, 0, 0.652);
+  color: white;
+}
 .btn:disabled {
   -webkit-transform: none;
   transform: none;

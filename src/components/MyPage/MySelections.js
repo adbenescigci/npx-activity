@@ -75,11 +75,15 @@ const MySelections = ({ className = '' }) => {
                   <h6> {el.id} </h6>
                   <h6> {el.noteKey} </h6>
                 </div>
-                <button onClick={() => removeMyItem(el)}>x</button>
-                <button onClick={() => editMyItem(el)}>completed</button>
+                <div className="mySelections__buttons">
+                  <button onClick={() => editMyItem(el)}>completed</button>
+                  <button className="btn btn--red btn--small" onClick={() => removeMyItem(el)}>
+                    delete
+                  </button>
+                </div>
               </div>
             ))
-          : 'there is no item'}
+          : ''}
       </div>
     </div>
   );

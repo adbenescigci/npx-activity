@@ -52,12 +52,15 @@ const Note = ({ note, place = '' }) => {
   return (
     <div className="activity">
       <div className="activity__header">
-        <button onClick={() => onJoin()}> Join </button>
         {place === 'private' && (
-          <div>
-            <button onClick={() => onRemove()}> x </button>
-            <button onClick={() => onClickEdit()}> edit </button>
-            <button onClick={() => onManageNote()}> Manage </button>
+          <div className="activity__buttons">
+            <div>
+              <button onClick={() => onClickEdit()}>edit</button>
+              <button onClick={() => onManageNote()}> Manage </button>
+            </div>
+            <button className="btn btn--redR btn--small" onClick={() => onRemove()}>
+              remove
+            </button>
           </div>
         )}
       </div>
@@ -67,6 +70,7 @@ const Note = ({ note, place = '' }) => {
         {state.filters.note === note.key && (
           <ModalSelection note={note} edit={edit} setEdit={() => setEdit(false)} updateNote={(e) => updateNote(e)} />
         )}
+        <button onClick={() => onJoin()}> Join </button>
       </div>
     </div>
   );

@@ -1,14 +1,37 @@
+.mySelection-container {
+  display: grid;
+  > * {
+    margin-bottom: $s-size;
+    font-family: 'Lato', sans-serif;
+  }
+
+  @media (max-width: $desktop-breakpoint) {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+
+    h2 {
+      margin: 2.5rem 0 0 $s-size;
+    }
+  }
+}
+
 .mySelections {
   margin: 0;
-  padding: 0.7rem;
   background-color: white;
   color: #777;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.5rem;
 
+  .mySelections__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
   @media (max-width: $desktop-breakpoint) {
     grid-template-columns: repeat(2, 1fr);
+    padding: 0.7rem;
   }
 }
 
@@ -21,6 +44,16 @@
   color: honeydew;
   display: table-cell;
   overflow: hidden;
+  h2 {
+    font-weight: 500;
+    font-family: Brush Script MT, cursive;
+    font-style: italic;
+    text-align: center;
+    color: white;
+    background: $green;
+    padding: $s-size;
+    margin: 0;
+  }
 }
 
 .selection-card {
