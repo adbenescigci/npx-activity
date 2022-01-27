@@ -33,9 +33,9 @@
     grid-template-columns: 1fr 4fr;
     grid-column-gap: 1rem;
     margin-top: 0;
-    ul {
+    #on-my-router {
       display: table-cell;
-      max-width: 15%;
+      width: fit-content;
       list-style-type: disc;
       li {
         margin: 0;

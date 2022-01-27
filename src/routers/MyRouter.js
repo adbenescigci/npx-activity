@@ -3,7 +3,7 @@ import MyActivities from '../components/MyPage/MyActivities';
 import MySelections from '../components/MyPage/MySelections';
 import MyArchive from '../components/MyPage/MyArchive';
 import AddNoteForm from '../components/MyPage/AddNoteForm';
-import Manage from '../components/MyPage/Manage';
+import Manage from '../components/MyPage/Manage/Manage';
 
 const MyRouter = () => {
   let match = useRouteMatch();
@@ -15,7 +15,7 @@ const MyRouter = () => {
 
   return (
     <div className="myRouter">
-      <ul>
+      <ul id="on-my-router">
         <li>
           <NavLink to={`${match.url}/MySelections`} activeStyle={activeStyle}>
             Selections

@@ -30,7 +30,9 @@ const NoteSelection = ({ note }) => {
     const updates = {};
 
     backList.map((e) => {
-      updates['/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub] = {
+      updates[
+        '/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub
+      ] = {
         ...e.item,
         status: 'unRead',
         userToken: '',
@@ -52,7 +54,17 @@ const NoteSelection = ({ note }) => {
 
   const onClickSelectItems = (option, item, index, indexSub, queryIndex) => {
     database
-      .ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken')
+      .ref(
+        '/notes/' +
+          note.key +
+          '/selected/' +
+          index +
+          '/2/' +
+          queryIndex +
+          '/' +
+          indexSub +
+          '/userToken'
+      )
       .once('value', function (snapshot) {
         if (snapshot.val() === '') {
           const update = { ...item, status: 'taken', userToken: id };
@@ -74,7 +86,9 @@ const NoteSelection = ({ note }) => {
             .push().key;
 
           const updates = {};
-          updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
+          updates[
+            '/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub
+          ] = update;
           updates['/private/' + id + '/mySelections/' + key] = selectData;
 
           setBackList([...backList, { item, index, indexSub, queryIndex, selectData, key }]);
@@ -133,6 +147,7 @@ const NoteSelection = ({ note }) => {
               name="select"
               value="activity"
               checked={selectableList.includes(option[0])}
+              disabled={flag}
             />
             <label>{option[0]}</label> <br />
             {selectableList.includes(option[0]) && (
@@ -171,7 +186,9 @@ const NoteSelection = ({ note }) => {
 
       {!flag && (
         <div>
-          <button onClick={() => onHandleSubmit(backList)}>{backList.length > 0 ? 'OK' : 'Back'}</button>
+          <button onClick={() => onHandleSubmit(backList)}>
+            {backList.length > 0 ? 'OK' : 'Back'}
+          </button>
           {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
         </div>
       )}

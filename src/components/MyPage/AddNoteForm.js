@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { history } from '../../routers/AppRouter';
 import Form from '../Form';
 import NotesContext from '../../context/notes-context';
@@ -35,8 +35,24 @@ const AddNoteForm = () => {
       .catch((err) => {
         setData(err.message);
       });
-    alert(setFlag, 5);
+    setFlag(true);
   }
+
+  useEffect(() => {
+    let mounted = true;
+
+    setTimeout(() => {
+      if (mounted) {
+        setFlag(false);
+      }
+    }, 5 * 1000);
+
+    //cleanup
+    return () => {
+      mounted = false;
+    };
+  }, [flag]);
+
   return (
     <div className="myRouter-container">
       <h2>Add Activity</h2>
@@ -45,8 +61,14 @@ const AddNoteForm = () => {
         <Form onSubmitForm={(e) => addNote(e)} />
       ) : (
         <div>
-          <h4> You have 3 activities, to add new activity you should drop one of your activities </h4>
-          <button onClick={() => history.push(`/myPage/${id}/MyActivities`)}> Go to My Activities</button>
+          <h4>
+            {' '}
+            You have 3 activities, to add new activity you should drop one of your activities{' '}
+          </h4>
+          <button onClick={() => history.push(`/myPage/${id}/MyActivities`)}>
+            {' '}
+            Go to My Activities
+          </button>
         </div>
       )}
     </div>
