@@ -2,7 +2,6 @@ import { useContext, useState, useEffect } from 'react';
 import { history } from '../../routers/AppRouter';
 import Form from '../Form';
 import NotesContext from '../../context/notes-context';
-import { alert } from '../../utils/alert';
 
 import database from '../../firebase/firebase';
 
