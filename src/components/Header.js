@@ -1,16 +1,17 @@
-import { useContext } from 'react';
-import NoteContext from '../context/notes-context';
+import { useContext, memo } from 'react';
+import { StateContext, DispatchContext } from '../context/notes-context';
 import { history } from '../routers/AppRouter';
 import { startLogOut } from '../actions/auth';
 
 const Header = () => {
-  const { state, dispatch } = useContext(NoteContext);
-  const uid = state.filters.uid;
-  const name = state.private.personal.name;
+  const { state_filters, state_private } = useContext(StateContext);
+  const { dispatch_filters } = useContext(DispatchContext);
+  const uid = state_filters.uid;
+  const name = state_private.personal.name;
 
   const logOut = () => {
     startLogOut().then(() => {
-      dispatch({ type: 'SET_ID', uid: '' });
+      dispatch_filters({ type: 'SET_ID', uid: '' });
     });
   };
 
@@ -46,4 +47,4 @@ const Header = () => {
   );
 };
 
-export { Header as default };
+export default memo(Header);

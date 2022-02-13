@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import Note from '../Note/Note';
-import NotesContext from '../../context/notes-context';
+import { StateContext } from '../../context/notes-context';
 import myActionsSelector from '../../selectors/myActionsSelector';
 
 const MyActivities = () => {
-  const { state } = useContext(NotesContext);
-  const id = state.filters.uid;
-  const notes = state.notes;
+  const { state_filters, state_notes } = useContext(StateContext);
+  const id = state_filters.uid;
+  const notes = state_notes;
 
   return (
     <div className="myRouter-container">

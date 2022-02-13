@@ -1,15 +1,15 @@
 import { useState, useContext, useEffect } from 'react';
 import ItemOption from './ItemOption';
-import NoteContext from '../../../context/notes-context';
+import { DispatchContext } from '../../../context/notes-context';
 
 const Item = ({ select, name, length }) => {
-  const { dispatch } = useContext(NoteContext);
+  const { dispatch_private } = useContext(DispatchContext);
   const [reverse, setReverse] = useState(length === 1 ? true : false);
 
   useEffect(() => {
     //clean Up
     return () => {
-      dispatch({
+      dispatch_private({
         type: 'VIEW_NOTE',
         view: { list: [], name: '', order: '' },
       });

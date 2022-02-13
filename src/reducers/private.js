@@ -32,7 +32,6 @@ const privateReducer = (state, action) => {
         items: action.editedItems,
       };
     case 'ADD_MY_ACT':
-      console.log(action);
       return state;
 
     case 'REMOVE_MY_NOTE':

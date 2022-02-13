@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import NoteContext from '../../../context/notes-context';
+import { StateContext } from '../../../context/notes-context';
 
 const ViewNote = () => {
-  const { state } = useContext(NoteContext);
-  const view = state.private.view;
+  const { state_private } = useContext(StateContext);
+  const view = state_private.view;
 
   return (
     <div className="manage-view">

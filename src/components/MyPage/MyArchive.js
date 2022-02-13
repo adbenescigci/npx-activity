@@ -1,29 +1,30 @@
 import { useEffect, useState, useContext } from 'react';
-import NotesContext from '../../context/notes-context';
+import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
 
 const MyArchive = () => {
-  const { state, dispatch } = useContext(NotesContext);
+  const { state_private, state_filters } = useContext(StateContext);
+  const { dispatch_private } = useContext(DispatchContext);
   const [items, setItems] = useState([]);
-  const id = state.filters.uid;
+  const id = state_filters.uid;
 
-  const completed = state.private.items.filter((e) => e.status === 'completed');
+  const completed = state_private.items.filter((e) => e.status === 'completed');
 
   useEffect(() => {
-    setItems(state.private.archive);
-  }, [state.private.archive]);
+    setItems(state_private.archive);
+  }, [state_private.archive]);
 
   const onRemoveArchiveItems = (key) =>
     database
       .ref('private/' + id + '/myArchive/' + key)
       .remove()
-      .then(() => dispatch({ type: 'REMOVE_ARCHIVE_ITEM', key }));
+      .then(() => dispatch_private({ type: 'REMOVE_ARCHIVE_ITEM', key }));
 
   const onRemoveArchive = () => {
     database
       .ref('private/' + id + '/myArchive')
       .remove()
-      .then(() => dispatch({ type: 'REMOVE_ARCHIVE' }));
+      .then(() => dispatch_private({ type: 'REMOVE_ARCHIVE' }));
   };
   return (
     <div className="myRouter-container">

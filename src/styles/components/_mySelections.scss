@@ -44,6 +44,13 @@
   color: honeydew;
   display: table-cell;
   overflow: hidden;
+
+  .mySelections__buttons {
+    flex-direction: column;
+    * {
+      margin-bottom: 0.3rem;
+    }
+  }
   h2 {
     font-weight: 500;
     font-family: Brush Script MT, cursive;

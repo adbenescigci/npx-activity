@@ -1,58 +1,70 @@
-import { useEffect, useState, useReducer } from 'react';
-import { reducer, initial } from '../reducers/combineReducer';
+import { useState, useContext, useEffect, memo } from 'react';
+
+//Children
 import ModalName from './Modals/ModalName';
 import ModalDelete from './Modals/ModalDelete';
-import NotesContext from '../context/notes-context';
 import AppRouter from '../routers/AppRouter';
+
+//StartUp
 import init, { myInit } from '../actions/init';
+
+//Context
+import { DispatchContext } from '../context/notes-context';
+
+//DataBase
 import database, { firebase } from '../firebase/firebase';
 import 'firebase/auth';
 import '../styles/styles.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const NoteApp = () => {
-  const [state, dispatch] = useReducer(reducer, initial);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const { dispatch_filters, dispatch_notes, dispatch_private } =
+    useContext(DispatchContext);
 
   async function ownStart(id) {
+    const myItems = await myInit({ id });
     database
       .ref()
       .child('private/' + id + '/personal')
       .once('value', (data) => {
         if (data.val() === null) setIsOpen(true);
-        else dispatch({ type: 'PRIVATE_NAME', name: data.val().name });
-      });
+        else {
+          setIsOpen(false);
+          dispatch_private({ type: 'PRIVATE_NAME', name: data.val().name });
 
-    const myItems = await myInit({ id });
-    if (myItems) {
-      dispatch({ type: 'POPULATE_MY_NOTES', myItems });
-    }
+          if (myItems) {
+            dispatch_private({ type: 'POPULATE_MY_NOTES', myItems });
+          }
+        }
+      });
   }
 
   async function start() {
     const notes = await init();
     if (notes) {
-      dispatch({ type: 'POPULATE_NOTES', notes });
+      dispatch_notes({ type: 'POPULATE_NOTES', notes });
     }
   }
 
   useEffect(() => {
+    start();
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch({ type: 'SET_ID', uid: user.uid });
+        dispatch_filters({ type: 'SET_ID', uid: user.uid });
         ownStart(user.uid);
       }
     });
-    start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <NotesContext.Provider value={{ state, dispatch }}>
-      <ModalName open={modalIsOpen} />
+    <div>
       <ModalDelete />
+      {modalIsOpen && <ModalName onCloseModal={() => setIsOpen(false)} />}
       <AppRouter />
-    </NotesContext.Provider>
+    </div>
   );
 };
 
-export { NoteApp as default };
+export default memo(NoteApp);

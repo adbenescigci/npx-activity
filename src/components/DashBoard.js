@@ -1,22 +1,20 @@
-import { useContext } from 'react';
-import NotesContext from '../context/notes-context';
+import { memo } from 'react';
 import Header from './Header';
 import NoteList from './Note/NoteList';
 import MySelections from './MyPage/MySelections';
 
-const DashBoard = () => {
-  const { state } = useContext(NotesContext);
-  const className = `dashboard${state.filters.uid !== '' ? '' : ' dashboard--withMySelections'}`;
+const DashBoard = ({ id }) => {
+  const className = `dashboard${id !== '' ? '' : ' dashboard--withMySelections'}`;
 
   return (
     <>
       <Header />
       <div className={className}>
         <NoteList />
-        {state.filters.uid !== '' && <MySelections className=" mySelections--withDashboard" />}
+        {id !== '' && <MySelections id={id} className=" mySelections--withDashboard" />}
       </div>
     </>
   );
 };
 
-export { DashBoard as default };
+export default memo(DashBoard);

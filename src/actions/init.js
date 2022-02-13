@@ -1,8 +1,16 @@
 import database from '../firebase/firebase';
 import { getTime } from 'date-fns';
 
+const updates = {};
+const deletedItems = [];
+let noteKeys = [];
+let archivedItems = [];
+
+//Database
+
 const initialNotes = () => database.ref('notes').once('value');
-const mySelections = (id) => database.ref('private/' + id + '/mySelections').once('value');
+const mySelections = (id) =>
+  database.ref('private/' + id + '/mySelections').once('value');
 const myArchive = (id) => {
   archivedItems = [];
   return database.ref('private/' + id + '/myArchive').once('value');
@@ -13,12 +21,6 @@ const getKey = (id) =>
     .ref('private/' + id)
     .child('MyArchive')
     .push().key;
-
-const updates = {};
-const deletedItems = [];
-
-let noteKeys = [];
-let archivedItems = [];
 
 async function singleInit(key) {
   return await singleNote(key).then((snapshot) => snapshot.val());
@@ -67,7 +69,10 @@ async function myInit({ id }) {
     return archivedItems;
   });
 
-  const myItems = { items: [...(await mySelectedItems)], archive: [...(await myArchiveItems)] };
+  const myItems = {
+    items: [...(await mySelectedItems)],
+    archive: [...(await myArchiveItems)],
+  };
   return myItems;
 }
 

@@ -1,32 +1,33 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, memo } from 'react';
 import DatePicker from 'react-datepicker';
 import { getTime } from 'date-fns';
-import NotesContext from '../../context/notes-context';
+import { StateContext, DispatchContext } from '../../context/notes-context';
 import activityList from '../../JSON/activity.json';
 import Button from './Button';
 
 const Search = () => {
-  const { state, dispatch } = useContext(NotesContext);
+  const { state_filters } = useContext(StateContext);
+  const { dispatch_filters } = useContext(DispatchContext);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
-  let activityType = state.filters.activityType;
+  let { text, activityType } = state_filters;
 
   const onSetText = (e) => {
-    dispatch({ type: 'SET_TEXT', text: e.target.value });
+    dispatch_filters({ type: 'SET_TEXT', text: e.target.value });
   };
 
   const onSortChange = (e) => {
-    dispatch({ type: 'SORT_BY', sortBy: e.target.value });
+    dispatch_filters({ type: 'SORT_BY', sortBy: e.target.value });
   };
 
   useEffect(() => {
-    dispatch({ type: 'SET_START_DATE', startDate: getTime(startDate) });
-  }, [startDate, dispatch]);
+    dispatch_filters({ type: 'SET_START_DATE', startDate: getTime(startDate) });
+  }, [startDate, dispatch_filters]);
 
   useEffect(() => {
-    dispatch({ type: 'SET_END_DATE', endDate: getTime(endDate) });
-  }, [endDate, dispatch]);
+    dispatch_filters({ type: 'SET_END_DATE', endDate: getTime(endDate) });
+  }, [endDate, dispatch_filters]);
 
   const handleActivityFilter = (el) => {
     if (activityType.length !== 0) {
@@ -37,13 +38,13 @@ const Search = () => {
       }
     } else activityType.push(el.activity);
 
-    dispatch({ type: 'SET_ACTIVITY_TYPE', activityType });
+    dispatch_filters({ type: 'SET_ACTIVITY_TYPE', activityType });
   };
 
   return (
     <div className="searchBar">
       <div className="search">
-        <input placeholder="Search" value={state.filters.text} onChange={(e) => onSetText(e)} />
+        <input placeholder="Search" value={text} onChange={onSetText} />
         <DatePicker
           placeholderText="Start Date"
           selected={startDate}
@@ -61,7 +62,11 @@ const Search = () => {
       </div>
 
       <div className="filter">
-        <Button activityList={activityList} activityType={activityType} handleActivityFilter={handleActivityFilter} />
+        <Button
+          activityList={activityList}
+          activityType={activityType}
+          handleActivityFilter={handleActivityFilter}
+        />
         <select onChange={onSortChange}>
           <option value="sDate"> Start </option>
           <option value="eDate"> End</option>
@@ -71,4 +76,4 @@ const Search = () => {
   );
 };
 
-export { Search as default };
+export default memo(Search);

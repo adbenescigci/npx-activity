@@ -1,48 +1,41 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext, useRef, memo } from 'react';
 import Modal from 'react-modal';
-import NotesContext from '../../context/notes-context';
+import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
 
-const ModalName = ({ open }) => {
-  const [isOpen, setIsOpen] = useState(open);
-  const [name, setName] = useState('');
-  const { state, dispatch } = useContext(NotesContext);
+const ModalName = ({ onCloseModal }) => {
+  const nameRef = useRef('');
+  const { dispatch_private } = useContext(DispatchContext);
+  const { state_filters } = useContext(StateContext);
 
-  const id = state.filters.uid;
+  const id = state_filters.uid;
 
-  useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const onSetUserName = () => {
-    console.log(id, ' test 2');
-    database
+    await database
       .ref()
       .child('private/' + id + '/personal')
-      .set({ name })
-      .then(() => {
-        dispatch({ type: 'PRIVATE_NAME', name });
-      });
-    closeModal();
-  };
+      .set({ name: nameRef.current.value });
 
-  const closeModal = () => {
-    setIsOpen(false);
+    dispatch_private({ type: 'PRIVATE_NAME', name: nameRef.current.value });
+    onCloseModal();
   };
 
   return (
     <Modal
-      isOpen={isOpen}
-      // onAfterOpen={afterOpenModal}
-      onRequestClose={closeModal}
+      isOpen={true}
       contentLabel="Private Name Modal"
       appElement={document.getElementById('root')}
     >
       <p> Lutfen Kullanici adi giriniz </p>
-      <input value={name} placeholder="Kullanici adi giriniz" onChange={(e) => setName(e.target.value)} required />
-      <button onClick={onSetUserName}> Ok</button>
+      <form onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input placeholder="Kullanici adi giriniz" id="name" ref={nameRef} required />
+        <button> Submit </button>
+      </form>
     </Modal>
   );
 };
 
-export { ModalName as default };
+export default memo(ModalName);

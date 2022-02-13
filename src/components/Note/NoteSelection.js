@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import NoteContext from '../../context/notes-context';
+import { StateContext, DispatchContext } from '../../context/notes-context';
 import { singleInit } from '../../actions/init';
 import database from '../../firebase/firebase';
 import SelectQuery from '../SelectQuery';
@@ -8,10 +8,12 @@ import SelectionButtons from '../SelectionButtons';
 import { alert } from '../../utils/alert';
 
 const NoteSelection = ({ note }) => {
-  const { state, dispatch } = useContext(NoteContext);
+  const { state_filters } = useContext(StateContext);
+  const { dispatch_notes, dispatch_filters, dispatch_private } = useContext(DispatchContext);
+
   const [query, setQuery] = useState(Array.from(note.selected, () => 1));
   const [counter, setCounter] = useState(1);
-  const id = state.filters.uid;
+  const id = state_filters.uid;
   const [backList, setBackList] = useState([]);
   let [selectableList, setSelectableList] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -22,7 +24,7 @@ const NoteSelection = ({ note }) => {
 
   async function resume(key) {
     singleInit(key).then((note) => {
-      dispatch({ type: 'EDIT_NOTE', note, key });
+      dispatch_notes({ type: 'EDIT_NOTE', note, key });
     });
   }
 
@@ -30,16 +32,14 @@ const NoteSelection = ({ note }) => {
     const updates = {};
 
     backList.map((e) => {
-      updates[
-        '/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub
-      ] = {
+      updates['/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub] = {
         ...e.item,
         status: 'unRead',
         userToken: '',
       };
       updates['/private/' + id + '/mySelections/' + e.key] = [];
 
-      dispatch({ type: 'REMOVE_MY_NOTE', key: e.key });
+      dispatch_private({ type: 'REMOVE_MY_NOTE', key: e.key });
       return null;
     });
 
@@ -54,17 +54,7 @@ const NoteSelection = ({ note }) => {
 
   const onClickSelectItems = (option, item, index, indexSub, queryIndex) => {
     database
-      .ref(
-        '/notes/' +
-          note.key +
-          '/selected/' +
-          index +
-          '/2/' +
-          queryIndex +
-          '/' +
-          indexSub +
-          '/userToken'
-      )
+      .ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken')
       .once('value', function (snapshot) {
         if (snapshot.val() === '') {
           const update = { ...item, status: 'taken', userToken: id };
@@ -86,9 +76,7 @@ const NoteSelection = ({ note }) => {
             .push().key;
 
           const updates = {};
-          updates[
-            '/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub
-          ] = update;
+          updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
           updates['/private/' + id + '/mySelections/' + key] = selectData;
 
           setBackList([...backList, { item, index, indexSub, queryIndex, selectData, key }]);
@@ -98,7 +86,7 @@ const NoteSelection = ({ note }) => {
             .update(updates)
             .then(() => {
               setData(message);
-              dispatch({ type: 'ADD_MY_NOTE', item: { ...selectData, key } });
+              dispatch_private({ type: 'ADD_MY_NOTE', item: { ...selectData, key } });
             });
         } else setData('daha once alinmis');
       });
@@ -130,8 +118,8 @@ const NoteSelection = ({ note }) => {
 
   const onHandleSubmit = (el) => {
     el.length > 0
-      ? alert(setFlag, 3, () => dispatch({ type: 'SET_NOTE', note: '' }))
-      : dispatch({ type: 'SET_NOTE', note: '' });
+      ? alert(setFlag, 3, () => dispatch_filters({ type: 'SET_NOTE', note: '' }))
+      : dispatch_filters({ type: 'SET_NOTE', note: '' });
   };
 
   return (
@@ -186,9 +174,7 @@ const NoteSelection = ({ note }) => {
 
       {!flag && (
         <div>
-          <button onClick={() => onHandleSubmit(backList)}>
-            {backList.length > 0 ? 'OK' : 'Back'}
-          </button>
+          <button onClick={() => onHandleSubmit(backList)}>{backList.length > 0 ? 'OK' : 'Back'}</button>
           {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
         </div>
       )}

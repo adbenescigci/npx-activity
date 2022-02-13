@@ -1,23 +1,23 @@
 import { useContext, useEffect } from 'react';
-import NoteContext from '../../../context/notes-context';
+import { StateContext, DispatchContext } from '../../../context/notes-context';
 
 const ItemOption = ({ select, length }) => {
-  const { state, dispatch } = useContext(NoteContext);
+  const { state_private } = useContext(StateContext);
+  const { dispatch_private } = useContext(DispatchContext);
   const order = (el) => select[2].indexOf(el);
 
   const onDisView = (list) => {
-    dispatch({ type: 'VIEW_NOTE', view: { list, name: select[0], order: order(list) + 1 } });
+    dispatch_private({ type: 'VIEW_NOTE', view: { list, name: select[0], order: order(list) + 1 } });
   };
   const isActive = (el) => {
-    console.log(select, state);
-    if (select[0] === state.private.view.name) {
-      return state.private.view.order === order(el) + 1;
+    if (select[0] === state_private.view.name) {
+      return state_private.view.order === order(el) + 1;
     }
   };
 
   useEffect(() => {
     if (length === 1)
-      dispatch({
+      dispatch_private({
         type: 'VIEW_NOTE',
         view: { list: select[2][0], name: select[0], order: 1 },
       });

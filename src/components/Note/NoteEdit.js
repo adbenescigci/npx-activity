@@ -1,16 +1,16 @@
 import { useContext } from 'react';
 import Form from '../Form';
-import NoteContext from '../../context/notes-context';
+import { DispatchContext } from '../../context/notes-context';
 
 const NoteEdit = ({ note, setEdit, updateNote }) => {
-  const { dispatch } = useContext(NoteContext);
+  const { dispatch_filters } = useContext(DispatchContext);
 
   return (
     <div>
       <button
         onClick={() => {
           setEdit();
-          dispatch({ type: 'SET_NOTE', note: '' });
+          dispatch_filters({ type: 'SET_NOTE', note: '' });
         }}
       >
         {' '}
@@ -24,7 +24,7 @@ const NoteEdit = ({ note, setEdit, updateNote }) => {
         data={note}
         onSubmitForm={(e) => {
           updateNote(e);
-          dispatch({ type: 'SET_NOTE', note: '' });
+          dispatch_filters({ type: 'SET_NOTE', note: '' });
         }}
       />
     </div>

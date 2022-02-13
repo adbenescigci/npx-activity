@@ -1,22 +1,14 @@
-import { useContext } from 'react';
-import NotesContext from '../../context/notes-context';
+import { useContext, memo } from 'react';
+import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
-import init from '../../actions/init';
 
-const MySelections = ({ className = '' }) => {
-  const { state, dispatch } = useContext(NotesContext);
-  const id = state.filters.uid;
-  const item = state.private.items.filter((e) => e.status !== 'completed');
-
-  async function start() {
-    const notes = await init();
-    if (notes) {
-      dispatch({ type: 'POPULATE_NOTES', notes });
-    }
-  }
+const MySelections = ({ className = '', id }) => {
+  const { state_private, state_notes } = useContext(StateContext);
+  const { dispatch_private } = useContext(DispatchContext);
+  const item = state_private.items.filter((e) => e.status !== 'completed');
 
   async function removeMyItem(el) {
-    const note = state.notes.filter((item) => item.key === el.noteKey)[0];
+    const note = state_notes.filter((item) => item.key === el.noteKey)[0];
     const update = {
       name: el.item,
       number: el.queryIndex + 1,
@@ -25,16 +17,24 @@ const MySelections = ({ className = '' }) => {
     };
 
     const updates = {};
-    updates['/notes/' + note.key + '/selected/' + el.index + '/2/' + el.queryIndex + '/' + el.indexSub] = update;
+    updates[
+      '/notes/' +
+        note.key +
+        '/selected/' +
+        el.index +
+        '/2/' +
+        el.queryIndex +
+        '/' +
+        el.indexSub
+    ] = update;
     updates['/private/' + id + '/mySelections/' + el.key] = [];
 
     await database.ref().update(updates);
-    dispatch({ type: 'REMOVE_MY_NOTE', key: el.key });
-    start();
+    dispatch_private({ type: 'REMOVE_MY_NOTE', key: el.key });
   }
 
   async function editMyItem(el) {
-    const note = state.notes.filter((item) => item.key === el.noteKey)[0];
+    const note = state_notes.filter((item) => item.key === el.noteKey)[0];
     const update = {
       name: el.item,
       number: el.queryIndex + 1,
@@ -42,7 +42,7 @@ const MySelections = ({ className = '' }) => {
       userToken: id,
     };
 
-    const editedItems = state.private.items.map((item) => {
+    const editedItems = state_private.items.map((item) => {
       if (item.key === el.key) {
         item = { ...el, status: 'completed' };
       }
@@ -50,12 +50,20 @@ const MySelections = ({ className = '' }) => {
     });
 
     const updates = {};
-    updates['/notes/' + note.key + '/selected/' + el.index + '/2/' + el.queryIndex + '/' + el.indexSub] = update;
+    updates[
+      '/notes/' +
+        note.key +
+        '/selected/' +
+        el.index +
+        '/2/' +
+        el.queryIndex +
+        '/' +
+        el.indexSub
+    ] = update;
     updates['/private/' + id + '/mySelections/' + el.key + '/status'] = 'completed';
 
     await database.ref().update(updates);
-    dispatch({ type: 'EDIT_MY_NOTE', editedItems });
-    start();
+    dispatch_private({ type: 'EDIT_MY_NOTE', editedItems });
   }
   const style = `mySelections${className}`;
 
@@ -77,8 +85,11 @@ const MySelections = ({ className = '' }) => {
                 </div>
                 <div className="mySelections__buttons">
                   <button onClick={() => editMyItem(el)}>completed</button>
-                  <button className="btn btn--red btn--small" onClick={() => removeMyItem(el)}>
-                    delete
+                  <button
+                    className="btn btn--red btn--small"
+                    onClick={() => removeMyItem(el)}
+                  >
+                    withdraw
                   </button>
                 </div>
               </div>
@@ -89,4 +100,4 @@ const MySelections = ({ className = '' }) => {
   );
 };
 
-export { MySelections as default };
+export default memo(MySelections);

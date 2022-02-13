@@ -1,5 +1,6 @@
 import React from 'react';
 
-const NotesContext = React.createContext();
+const DispatchContext = React.createContext();
+const StateContext = React.createContext();
 
-export { NotesContext as default };
+export { DispatchContext, StateContext };

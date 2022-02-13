@@ -1,22 +1,24 @@
 import { useContext } from 'react';
 import Note from './Note';
-import NotesContext from '../../context/notes-context';
+import { StateContext } from '../../context/notes-context';
 import searchSelector from '../../selectors/notesSearch';
 import Search from '../Search/Search';
 
 const NoteList = () => {
-  const { state } = useContext(NotesContext);
-  const endDate = state.filters.endDate;
-  const startDate = state.filters.startDate;
-  const text = state.filters.text;
-  const sortBy = state.filters.sortBy;
-  const activityType = state.filters.activityType;
+  const { state_filters, state_notes } = useContext(StateContext);
+  const { endDate, startDate, text, sortBy, activityType } = state_filters;
 
   return (
     <div>
       <Search />
       <div className="activity-container">
-        {searchSelector(state.notes, { text, startDate, endDate, sortBy, activityType }).map((note) => (
+        {searchSelector(state_notes, {
+          text,
+          startDate,
+          endDate,
+          sortBy,
+          activityType,
+        }).map((note) => (
           <Note key={note.key} note={note} />
         ))}
       </div>

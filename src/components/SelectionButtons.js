@@ -1,7 +1,13 @@
-const SelectionButtons = ({ flag = false, option, query, index, note, onClickSelectItems }) => {
+const SelectionButtons = ({
+  flag = false,
+  option,
+  query,
+  index,
+  note,
+  onClickSelectItems,
+}) => {
   return option[2][query[index] - 1].map((item) => {
     const indexSub = note.selected[index][2][query[index] - 1].indexOf(item);
-
     return (
       <button
         className="btn btn--small"
@@ -15,4 +21,4 @@ const SelectionButtons = ({ flag = false, option, query, index, note, onClickSel
   });
 };
 
-export { SelectionButtons as default };
+export default SelectionButtons;

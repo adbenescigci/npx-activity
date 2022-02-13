@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import App from './components/App';
 import { history } from './routers/AppRouter';
+import Provider from './provider/Provider';
 
 import { firebase } from './firebase/firebase';
 import 'firebase/auth';
@@ -13,7 +14,9 @@ const renderApp = () => {
   if (!hasRendered) {
     ReactDOM.render(
       <React.StrictMode>
-        <App />
+        <Provider>
+          <App />
+        </Provider>
       </React.StrictMode>,
       document.getElementById('root')
     );
@@ -28,7 +31,7 @@ firebase.auth().onAuthStateChanged((user) => {
       history.push(history.location.pathname);
     } else history.push('/');
   } else {
-    renderApp('');
+    renderApp();
     if (history.location.pathname === '/loginPage') {
       history.push('/loginPage');
     } else history.push('/');

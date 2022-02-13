@@ -20,5 +20,4 @@ const [reducer, initial] = combineReducers({
   filters: [filterReducer, initFilters],
   private: [privateReducer, initPrivate],
 });
-
 export { reducer, initial };
