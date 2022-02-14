@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
 
+import style from '../../utils/modalStyle';
+
 const ModalName = ({ onCloseModal }) => {
   const nameRef = useRef('');
   const { dispatch_private } = useContext(DispatchContext);
@@ -27,12 +29,13 @@ const ModalName = ({ onCloseModal }) => {
       isOpen={true}
       contentLabel="Private Name Modal"
       appElement={document.getElementById('root')}
+      style={style}
+      className="modal modal--name"
     >
       <p> Lutfen Kullanici adi giriniz </p>
-      <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <input placeholder="Kullanici adi giriniz" id="name" ref={nameRef} required />
-        <button> Submit </button>
+      <form className="modal-form" onSubmit={handleSubmit}>
+        <input placeholder="name" id="name" ref={nameRef} required />
+        <button className="btn btn--big"> Submit </button>
       </form>
     </Modal>
   );

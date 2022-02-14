@@ -1,10 +1,20 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Header from './Header';
 import NoteList from './Note/NoteList';
 import MySelections from './MyPage/MySelections';
 
-const DashBoard = ({ id }) => {
-  const className = `dashboard${id !== '' ? '' : ' dashboard--withMySelections'}`;
+const DashBoard = ({ id = '' }) => {
+  const [className, setClassName] = useState('dashboard');
+
+  useEffect(() => {
+    if (id !== '') {
+      setClassName('dashboard dashboard--withMySelections');
+    } else setClassName('dashboard');
+
+    return () => {
+      setClassName('dashboard');
+    };
+  }, [id]);
 
   return (
     <>

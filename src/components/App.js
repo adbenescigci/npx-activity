@@ -24,7 +24,7 @@ const NoteApp = () => {
 
   async function ownStart(id) {
     const myItems = await myInit({ id });
-    database
+    await database
       .ref()
       .child('private/' + id + '/personal')
       .once('value', (data) => {
@@ -32,7 +32,6 @@ const NoteApp = () => {
         else {
           setIsOpen(false);
           dispatch_private({ type: 'PRIVATE_NAME', name: data.val().name });
-
           if (myItems) {
             dispatch_private({ type: 'POPULATE_MY_NOTES', myItems });
           }
@@ -55,7 +54,7 @@ const NoteApp = () => {
         ownStart(user.uid);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

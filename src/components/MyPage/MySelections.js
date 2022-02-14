@@ -1,11 +1,16 @@
-import { useContext, memo } from 'react';
+import { useContext, memo, useMemo } from 'react';
 import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
 
 const MySelections = ({ className = '', id }) => {
   const { state_private, state_notes } = useContext(StateContext);
   const { dispatch_private } = useContext(DispatchContext);
-  const item = state_private.items.filter((e) => e.status !== 'completed');
+  const item = useMemo(
+    () => state_private.items.filter((e) => e.status !== 'completed'),
+    [state_private.items]
+  );
+
+  const style = `mySelections${className}`;
 
   async function removeMyItem(el) {
     const note = state_notes.filter((item) => item.key === el.noteKey)[0];
@@ -65,7 +70,6 @@ const MySelections = ({ className = '', id }) => {
     await database.ref().update(updates);
     dispatch_private({ type: 'EDIT_MY_NOTE', editedItems });
   }
-  const style = `mySelections${className}`;
 
   return (
     <div className="mySelection-container">
