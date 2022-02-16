@@ -5,6 +5,12 @@ const privateReducer = (state, action) => {
         ...state,
         items: action.myItems.items,
         archive: action.myItems.archive,
+        deleted: action.myItems.deleted,
+      };
+    case 'DELETE_ALERT':
+      return {
+        ...state,
+        deleted: undefined,
       };
     case 'VIEW_NOTE':
       return {

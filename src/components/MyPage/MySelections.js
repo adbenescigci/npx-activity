@@ -1,14 +1,43 @@
-import { useContext, memo, useMemo } from 'react';
+import { useContext, memo, useMemo, useEffect, useState } from 'react';
 import { StateContext, DispatchContext } from '../../context/notes-context';
 import database from '../../firebase/firebase';
 
 const MySelections = ({ className = '', id }) => {
+  const [flag, setFlag] = useState(false);
+  const [data, setData] = useState(undefined);
   const { state_private, state_notes } = useContext(StateContext);
   const { dispatch_private } = useContext(DispatchContext);
   const item = useMemo(
     () => state_private.items.filter((e) => e.status !== 'completed'),
     [state_private.items]
   );
+
+  useEffect(() => {
+    if (state_private.deleted) {
+      if (state_private.deleted.length > 0) {
+        setData(
+          <div>
+            <p>Katildiginiz aktivite/ler kaldirilmistir</p>
+            <p> Listenizden dusurulmus olup arsivinize not edilmistir</p>
+            {state_private.deleted.map((item) => (
+              <p key={item.noteKey + item.name + item.item}>
+                {item.name} - {item.item} / {item.noteKey}
+              </p>
+            ))}
+            <button className="btn btn--red" onClick={() => setFlag(false)}>
+              {' '}
+              Tamam{' '}
+            </button>
+          </div>
+        );
+        setFlag(true);
+      }
+    }
+
+    return () => {
+      dispatch_private({ type: 'DELETE_ALERT' });
+    };
+  }, [dispatch_private, state_private.deleted]);
 
   const style = `mySelections${className}`;
 
@@ -76,12 +105,14 @@ const MySelections = ({ className = '', id }) => {
       {className === '' && <h2> My Selections </h2>}
       <div className={style}>
         {className !== '' && <h2> My Selections </h2>}
+
+        {flag && <div className="alert alert--info"> {data} </div>}
+
         {!!item[0]
           ? item.map((el) => (
               <div className="selection-card" key={el.key}>
                 <div>
                   <h3>
-                    {' '}
                     {el.name}-{el.item}
                   </h3>
                   <h6> {el.id} </h6>

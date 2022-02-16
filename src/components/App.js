@@ -2,7 +2,6 @@ import { useState, useContext, useEffect, memo } from 'react';
 
 //Children
 import ModalName from './Modals/ModalName';
-import ModalDelete from './Modals/ModalDelete';
 import AppRouter from '../routers/AppRouter';
 
 //StartUp
@@ -59,7 +58,6 @@ const NoteApp = () => {
 
   return (
     <div>
-      <ModalDelete />
       {modalIsOpen && <ModalName onCloseModal={() => setIsOpen(false)} />}
       <AppRouter />
     </div>

@@ -72,6 +72,7 @@ async function myInit({ id }) {
   const myItems = {
     items: [...(await mySelectedItems)],
     archive: [...(await myArchiveItems)],
+    deleted: [...(await deletedItems)],
   };
   return myItems;
 }
