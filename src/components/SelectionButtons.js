@@ -1,3 +1,4 @@
+import { memo } from 'react';
 const SelectionButtons = ({
   flag = false,
   option,
@@ -21,4 +22,4 @@ const SelectionButtons = ({
   });
 };
 
-export default SelectionButtons;
+export default memo(SelectionButtons);

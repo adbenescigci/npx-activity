@@ -2,7 +2,6 @@ import database from '../firebase/firebase';
 import { getTime } from 'date-fns';
 
 const updates = {};
-const deletedItems = [];
 let noteKeys = [];
 let archivedItems = [];
 
@@ -48,6 +47,8 @@ async function init() {
 
 async function myInit({ id }) {
   const selectedItems = [];
+  const deletedItems = [];
+
   const mySelectedItems = mySelections(id).then((snapshot) => {
     snapshot.forEach((child) => {
       if (noteKeys.includes(child.val().noteKey)) {
@@ -77,4 +78,4 @@ async function myInit({ id }) {
   return myItems;
 }
 
-export { myInit, singleInit, deletedItems, init as default };
+export { myInit, singleInit, init as default };

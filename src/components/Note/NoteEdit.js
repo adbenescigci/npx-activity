@@ -13,8 +13,7 @@ const NoteEdit = ({ note, setEdit, updateNote }) => {
           dispatch_filters({ type: 'SET_NOTE', note: '' });
         }}
       >
-        {' '}
-        Back{' '}
+        Back
       </button>
       <h3>Edit</h3>
       {note.selected.map((e) => {

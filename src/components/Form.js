@@ -192,7 +192,9 @@ const Form = ({ onSubmitForm, data }) => {
 
       <button
         className="btn btn--big"
-        disabled={select.length === 0 || !endDate || !startDate || title === '' || body === ''}
+        disabled={
+          select.length === 0 || !endDate || !startDate || title === '' || body === ''
+        }
       >
         submit
       </button>

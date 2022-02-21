@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import { StateContext, DispatchContext } from '../../context/notes-context';
 import { singleInit } from '../../actions/init';
 import database from '../../firebase/firebase';
@@ -9,7 +9,8 @@ import { alert } from '../../utils/alert';
 
 const NoteSelection = ({ note }) => {
   const { state_filters } = useContext(StateContext);
-  const { dispatch_notes, dispatch_filters, dispatch_private } = useContext(DispatchContext);
+  const { dispatch_notes, dispatch_filters, dispatch_private } =
+    useContext(DispatchContext);
 
   const [query, setQuery] = useState(Array.from(note.selected, () => 1));
   const [counter, setCounter] = useState(1);
@@ -32,7 +33,16 @@ const NoteSelection = ({ note }) => {
     const updates = {};
 
     backList.map((e) => {
-      updates['/notes/' + note.key + '/selected/' + e.index + '/2/' + e.queryIndex + '/' + e.indexSub] = {
+      updates[
+        '/notes/' +
+          note.key +
+          '/selected/' +
+          e.index +
+          '/2/' +
+          e.queryIndex +
+          '/' +
+          e.indexSub
+      ] = {
         ...e.item,
         status: 'unRead',
         userToken: '',
@@ -52,47 +62,73 @@ const NoteSelection = ({ note }) => {
       });
   };
 
-  const onClickSelectItems = (option, item, index, indexSub, queryIndex) => {
-    database
-      .ref('/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub + '/userToken')
-      .once('value', function (snapshot) {
-        if (snapshot.val() === '') {
-          const update = { ...item, status: 'taken', userToken: id };
-          const selectData = {
-            name: option[0],
-            id: note.id,
-            noteKey: note.key,
-            eDate: note.eDate,
-            item: item.name,
-            status: 'taken',
-            index,
-            indexSub,
-            queryIndex,
-          };
+  const onClickSelectItems = useCallback(
+    (option, item, index, indexSub, queryIndex) => {
+      database
+        .ref(
+          '/notes/' +
+            note.key +
+            '/selected/' +
+            index +
+            '/2/' +
+            queryIndex +
+            '/' +
+            indexSub +
+            '/userToken'
+        )
+        .once('value', function (snapshot) {
+          if (snapshot.val() === '') {
+            const update = { ...item, status: 'taken', userToken: id };
+            const selectData = {
+              name: option[0],
+              id: note.id,
+              noteKey: note.key,
+              eDate: note.eDate,
+              item: item.name,
+              status: 'taken',
+              index,
+              indexSub,
+              queryIndex,
+            };
 
-          const key = database
-            .ref()
-            .child('/private/' + id + '/mySelections')
-            .push().key;
+            const key = database
+              .ref()
+              .child('/private/' + id + '/mySelections')
+              .push().key;
 
-          const updates = {};
-          updates['/notes/' + note.key + '/selected/' + index + '/2/' + queryIndex + '/' + indexSub] = update;
-          updates['/private/' + id + '/mySelections/' + key] = selectData;
+            const updates = {};
+            updates[
+              '/notes/' +
+                note.key +
+                '/selected/' +
+                index +
+                '/2/' +
+                queryIndex +
+                '/' +
+                indexSub
+            ] = update;
+            updates['/private/' + id + '/mySelections/' + key] = selectData;
 
-          setBackList([...backList, { item, index, indexSub, queryIndex, selectData, key }]);
+            setBackList([
+              ...backList,
+              { item, index, indexSub, queryIndex, selectData, key },
+            ]);
 
-          database
-            .ref()
-            .update(updates)
-            .then(() => {
-              setData(message);
-              dispatch_private({ type: 'ADD_MY_NOTE', item: { ...selectData, key } });
-            });
-        } else setData('daha once alinmis');
-      });
+            database
+              .ref()
+              .update(updates)
+              .then(() => {
+                setData(message);
+                dispatch_private({ type: 'ADD_MY_NOTE', item: { ...selectData, key } });
+              });
+          } else setData('daha once alinmis');
+        });
 
-    resume(note.key);
-  };
+      resume(note.key);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [query, flag, note.selected]
+  );
 
   const onChangeQuery = (order, length, index) => {
     setCounter(counter + 1);
@@ -123,41 +159,46 @@ const NoteSelection = ({ note }) => {
   };
 
   return (
-    <div>
+    <div className="selection-container">
       {note.selected.map((option) => {
         const index = note.selected.indexOf(option);
         return (
-          <div key={option}>
-            <input
-              onChange={() => onClickListItem(option[0])}
-              type="checkbox"
-              id={option}
-              name="select"
-              value="activity"
-              checked={selectableList.includes(option[0])}
-              disabled={flag}
-            />
-            <label>{option[0]}</label> <br />
+          <div className="sub-select" key={option}>
+            <div className="sub-name">
+              <input
+                onChange={() => onClickListItem(option[0])}
+                type="checkbox"
+                id={option}
+                name="select"
+                value="activity"
+                checked={selectableList.includes(option[0])}
+                disabled={flag}
+              />
+              <label>{option[0]}</label> <br />
+            </div>
             {selectableList.includes(option[0]) && (
-              <div>
-                <SelectQuery
-                  option={option}
-                  index={index}
-                  onChangeQuery={(order, length) => onChangeQuery(order, length, index)}
-                />
+              <div className="buttons-container">
+                <div>
+                  <SelectQuery
+                    option={option}
+                    index={index}
+                    onChangeQuery={(order, length) => onChangeQuery(order, length, index)}
+                  />
+                </div>
 
                 {flag && <div className={className}> {data} </div>}
-
-                <SelectionButtons
-                  flag={flag}
-                  option={option}
-                  query={query}
-                  index={index}
-                  note={note}
-                  onClickSelectItems={(item, indexSub) =>
-                    onClickSelectItems(option, item, index, indexSub, query[index] - 1)
-                  }
-                />
+                <div>
+                  <SelectionButtons
+                    flag={flag}
+                    option={option}
+                    query={query}
+                    index={index}
+                    note={note}
+                    onClickSelectItems={(item, indexSub) =>
+                      onClickSelectItems(option, item, index, indexSub, query[index] - 1)
+                    }
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -173,9 +214,16 @@ const NoteSelection = ({ note }) => {
       })}
 
       {!flag && (
-        <div>
-          <button onClick={() => onHandleSubmit(backList)}>{backList.length > 0 ? 'OK' : 'Back'}</button>
-          {backList.length > 0 && <button onClick={() => onBack()}> Vazgec</button>}
+        <div className="button-decision">
+          <button className="btn btn--big" onClick={() => onHandleSubmit(backList)}>
+            {backList.length > 0 ? 'OK' : 'Back'}
+          </button>
+          {backList.length > 0 && (
+            <button className="btn btn--big" onClick={() => onBack()}>
+              {' '}
+              Vazgec
+            </button>
+          )}
         </div>
       )}
     </div>
