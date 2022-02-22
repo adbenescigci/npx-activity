@@ -7,18 +7,6 @@ const NoteEdit = ({ note, setEdit, updateNote }) => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setEdit();
-          dispatch_filters({ type: 'SET_NOTE', note: '' });
-        }}
-      >
-        Back
-      </button>
-      <h3>Edit</h3>
-      {note.selected.map((e) => {
-        return <p key={note.key + e[1] + e[0]}> {e[1] + 'adet' + e[0]}</p>;
-      })}
       <Form
         data={note}
         onSubmitForm={(e) => {
@@ -26,6 +14,15 @@ const NoteEdit = ({ note, setEdit, updateNote }) => {
           dispatch_filters({ type: 'SET_NOTE', note: '' });
         }}
       />
+      <button
+        className="btn btn--redR"
+        onClick={() => {
+          setEdit();
+          dispatch_filters({ type: 'SET_NOTE', note: '' });
+        }}
+      >
+        Back
+      </button>
     </div>
   );
 };

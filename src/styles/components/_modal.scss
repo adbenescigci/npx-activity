@@ -10,6 +10,17 @@
 
 .modal--selection {
   padding-top: 25px;
+
+  form {
+    padding: 5% 3%;
+    align-items: center;
+    > * {
+      width: 100%;
+    }
+    input {
+      width: 100%;
+    }
+  }
   .selection-container {
     margin: 0.3rem;
     display: flex;
